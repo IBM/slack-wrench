@@ -1,8 +1,17 @@
 {
   "name": "root",
   "private": true,
+  "scripts": {
+    "test": "yarn lint && yarn lerna run test",
+    "lint": "yarn eslint && yarn type",
+    "eslint": "eslint . --ext .js,.ts --max-warnings 0",
+    "type": "tsc --noEmit",
+    "fmt": "pre-commit run --all-files && yarn eslint --fix"
+  },
   "devDependencies": {
-    "lerna": "^3.19.0"
+    "lerna": "^3.19.0",
+    "eslint": "^6.7.2",
+    "typescript": "^3.7.3"
   },
   "workspaces": {
     "packages": [

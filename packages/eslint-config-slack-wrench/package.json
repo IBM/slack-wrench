@@ -1,0 +1,20 @@
+{
+  "name": "eslint-config-slack-wrench",
+  "version": "0.0.0",
+  "description": "Slack wrench eslint config",
+  "main": "index.js",
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
+    "@typescript-eslint/parser": "^2.5.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-simple-import-sort": "^5.0.0"
+  },
+  "peerDependencies": {
+    "typescript": ">=3.0.0",
+    "eslint": ">=6.0.0"
+  }
+}
