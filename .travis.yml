@@ -1,0 +1,10 @@
+matrix:
+  include:
+    - language: python
+      before_install:
+        - pip install pre-commit
+      script: pre-commit run --all-files
+
+branches:
+  only:
+    - master
