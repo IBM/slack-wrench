@@ -1,16 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Slack Block widgets can compose blocks into bigger things 1`] = `
+exports[`Slack Block widgets can compose blocks into bigger components 1`] = `
 Array [
   Object {
     "accessory": Object {
+      "action_id": "changeSearch",
       "text": Object {
         "emoji": true,
         "text": "Search",
         "type": "plain_text",
       },
       "type": "button",
-      "value": "changeSearch",
     },
     "text": Object {
       "text": "Let me help you find some channels.",
@@ -49,6 +49,7 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
   Object {
     "elements": Array [
       Object {
+        "action_id": "thumbsUp",
         "text": Object {
           "emoji": true,
           "text": ":thumbsup:",
@@ -58,6 +59,7 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
         "value": "house-ravenclaw",
       },
       Object {
+        "action_id": "thumbsDown",
         "text": Object {
           "emoji": true,
           "text": ":thumbsdown:",
@@ -90,6 +92,7 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
   Object {
     "elements": Array [
       Object {
+        "action_id": "thumbsUp",
         "text": Object {
           "emoji": true,
           "text": ":thumbsup:",
@@ -99,6 +102,7 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
         "value": "house-hufflepuff",
       },
       Object {
+        "action_id": "thumbsDown",
         "text": Object {
           "emoji": true,
           "text": ":thumbsdown:",
@@ -113,17 +117,15 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
 ]
 `;
 
-exports[`Slack Block widgets creates a formatted date 1`] = `"<!date^1567191506^Posted {date_num}|Posted 2019-09-30>"`;
-
 exports[`Slack Block widgets renders a button 1`] = `
 Object {
+  "action_id": "ravenAgree",
   "text": Object {
     "emoji": true,
     "text": "Ravenclaw is obviously the best house.",
     "type": "plain_text",
   },
   "type": "button",
-  "value": "ravenAgree",
 }
 `;
 
@@ -162,13 +164,13 @@ Object {
 exports[`Slack Block widgets renders a section 1`] = `
 Object {
   "accessory": Object {
+    "action_id": "ravenAgree",
     "text": Object {
       "emoji": true,
       "text": "Ravenclaw is obviously the best house.",
       "type": "plain_text",
     },
     "type": "button",
-    "value": "ravenAgree",
   },
   "fields": Array [
     Object {
@@ -194,22 +196,22 @@ exports[`Slack Block widgets renders an actions 1`] = `
 Object {
   "elements": Array [
     Object {
+      "action_id": "ravenAgree",
       "text": Object {
         "emoji": true,
         "text": "Ravenclaw is obviously the best house.",
         "type": "plain_text",
       },
       "type": "button",
-      "value": "ravenAgree",
     },
     Object {
+      "action_id": "ravenAgree-2",
       "text": Object {
         "emoji": true,
         "text": "Ravenclaw is obviously the best house.",
         "type": "plain_text",
       },
       "type": "button",
-      "value": "ravenAgree-2",
     },
   ],
   "type": "actions",

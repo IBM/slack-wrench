@@ -3,15 +3,16 @@ import { chain } from 'ramda';
 
 import {
   Actions,
+  Blocks,
   Button,
   Context,
-  DateString,
   Divider,
   Markdown,
   MdSection,
   PlainText,
   Section,
 } from './blocks';
+import { DateString } from './formatting';
 
 describe('Slack Block widgets', () => {
   const text = 'Ravenclaw is obviously the best house.';
@@ -70,14 +71,12 @@ describe('Slack Block widgets', () => {
     expect(Context([PlainText(text)])).toMatchSnapshot();
   });
 
-  it('creates a formatted date', () => {
+  it('filters null blocks', () => {
     expect.assertions(1);
-    expect(
-      DateString(1567191506, 'Posted {date_num}', 'Posted 2019-09-30'),
-    ).toMatchSnapshot();
+    expect(Blocks([MdSection(text), null, MdSection(text)]).length).toBe(2);
   });
 
-  it('can compose blocks into bigger things', () => {
+  it('can compose blocks into bigger components', () => {
     expect.assertions(1);
 
     const channels = [
@@ -95,36 +94,38 @@ describe('Slack Block widgets', () => {
       },
     ];
 
-    expect([
-      MdSection(`Let me help you find some channels.`, {
-        accessory: Button('Search', 'changeSearch'),
-      }),
-      Divider(),
-      MdSection('*Channels*'),
-      ...chain(
-        (channel: any): KnownBlock[] => [
-          MdSection(`*${channel.name}*\n${channel.purpose}`),
-          Context([
-            Markdown(
-              `${channel.memberCount} members\n` +
-                `Last post: ${DateString(
-                  channel.lastPost,
-                  '{date_pretty}',
-                  channel.lastPost.toString(),
-                )}`,
-            ),
-          ]),
-          Actions([
-            Button(':thumbsup:', 'thumbsUp', {
-              value: channel.name,
-            }),
-            Button(':thumbsdown:', 'thumbsDown', {
-              value: channel.name,
-            }),
-          ]),
-        ],
-        channels,
-      ),
-    ]).toMatchSnapshot();
+    expect(
+      Blocks([
+        MdSection(`Let me help you find some channels.`, {
+          accessory: Button('Search', 'changeSearch'),
+        }),
+        Divider(),
+        MdSection('*Channels*'),
+        ...chain(
+          (channel: any): KnownBlock[] => [
+            MdSection(`*${channel.name}*\n${channel.purpose}`),
+            Context([
+              Markdown(
+                `${channel.memberCount} members\n` +
+                  `Last post: ${DateString(
+                    channel.lastPost,
+                    '{date_pretty}',
+                    channel.lastPost.toString(),
+                  )}`,
+              ),
+            ]),
+            Actions([
+              Button(':thumbsup:', 'thumbsUp', {
+                value: channel.name,
+              }),
+              Button(':thumbsdown:', 'thumbsDown', {
+                value: channel.name,
+              }),
+            ]),
+          ],
+          channels,
+        ),
+      ]),
+    ).toMatchSnapshot();
   });
 });

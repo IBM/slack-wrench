@@ -3,6 +3,7 @@ import {
   Button as TButton,
   ContextBlock,
   DividerBlock,
+  KnownBlock,
   MrkdwnElement,
   PlainTextElement,
   SectionBlock,
@@ -49,17 +50,14 @@ export const Actions = (elements: ActionsBlock['elements']): ActionsBlock => ({
 
 export const Button = (
   text: string,
-  value: string,
+  action_id: string,
   buttonBlock?: Partial<TButton>,
 ): TButton => ({
   type: 'button',
   text: PlainText(text),
-  value,
+  action_id,
   ...buttonBlock,
 });
 
-export const DateString = (
-  timestamp: number,
-  format: string,
-  fallback: string,
-): string => `<!date^${timestamp}^${format}|${fallback}>`;
+export const Blocks = (blocks: (KnownBlock | null)[]): KnownBlock[] =>
+  blocks.filter(block => block) as KnownBlock[];

@@ -8,5 +8,6 @@
     "strict": true,
     "allowJs": true,
     "checkJs": true
-  }
+  },
+  "exclude": ["node_modules", "**/coverage"]
 }
