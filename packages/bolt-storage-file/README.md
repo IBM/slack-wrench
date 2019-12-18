@@ -1,6 +1,8 @@
 # Bolt File Storage
 
-Bolt [conversation store](https://slack.dev/bolt/concepts#conversation-store) that uses your file system as a database. Useful for retaining conversation state through restarts of your App in development.
+Bolt [conversation store](https://slack.dev/bolt/concepts#conversation-store) that uses your file system as a database.
+
+This package is intended to be used in development to retain conversation state through restarts of your app.
 
 ## Install
 
@@ -18,8 +20,13 @@ npm install --save-dev @slack-wrench/bolt-storage-file
 import { App } from '@slack/bolt';
 import FileStore from '@slack-wrench/bolt-storage-file';
 
-const databasePath = '.db'; // defaults to ".db"
-const fileStore = new FileStore(databasePath);
+const app = new App({ convoStore: new FileStore() });
+```
 
-const app = new App({ convoStore: fileStore });
+## Configuration
+
+You can also pass a path for where you'd like the database to be stored in your file system.
+
+```typescript
+new FileStore('/path/to/db');
 ```

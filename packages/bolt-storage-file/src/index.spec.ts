@@ -7,9 +7,10 @@ import FileStore from './index';
 
 describe('FileStore', () => {
   const defaultDbPath = path.join(process.cwd(), `.db`);
+  const id = 'CONVERSATION_ID';
+
   let dbPath: string;
   let store: FileStore;
-  let id: string;
   let initialState: Record<string, any>;
 
   beforeEach(() => {
@@ -17,7 +18,6 @@ describe('FileStore', () => {
     dbPath = path.join(__dirname, `.db-${shortid.generate()}`);
     store = new FileStore(dbPath);
 
-    id = 'CONVERSATION_ID';
     initialState = { rainbowDashIs20PercentCooler: true };
   });
 
