@@ -1,0 +1,7 @@
+{
+  "name": "@slack-wrench/standards",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Common dev code for all projects",
+  "license": "Apache-2.0"
+}

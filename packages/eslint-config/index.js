@@ -51,7 +51,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.spec.ts'],
+      files: ['*.spec.ts', 'jest.config.js'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         // Incorrectly recognizes packages only used in tests as "dependencies"
