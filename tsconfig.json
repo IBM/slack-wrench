@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./packages",
     "module": "commonjs",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -9,5 +10,8 @@
     "allowJs": true,
     "checkJs": true
   },
-  "exclude": ["node_modules", "**/coverage"]
+  "exclude": ["node_modules", "**/coverage"],
+  "paths": {
+    "@slack-wrench/*": ["./*/src"]
+  }
 }
