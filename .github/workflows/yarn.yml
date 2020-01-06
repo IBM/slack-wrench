@@ -17,9 +17,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
-      - uses: Borales/actions-yarn@v2.1.0
-        with:
-          cmd: install # Yarn command
-      - uses: Borales/actions-yarn@v2.1.0
-        with:
-          cmd: test # Yarn command
+      - name: Install yarn using cache
+        uses: bahmutov/npm-install@v1
+      - name: Yarn test
+        run: yarn test
