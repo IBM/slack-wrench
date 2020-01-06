@@ -1,0 +1,28 @@
+{
+  "name": "@slack-wrench/bolt-storage-file",
+  "version": "1.0.0",
+  "description": "Test bolt db using a local file system.",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "NODE_ENV=test yarn jest"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@slack/bolt": "^1.4.1",
+    "@types/encoding-down": "^5.0.0",
+    "@types/leveldown": "^4.0.2",
+    "@types/levelup": "^4.3.0",
+    "encoding-down": "^6.3.0",
+    "level": "^6.0.0",
+    "leveldown": "^5.4.1",
+    "levelup": "^4.3.2"
+  },
+  "devDependencies": {
+    "@slack-wrench/standards": "1.0.0",
+    "@types/fs-extra": "^8.0.1",
+    "@types/shortid": "^0.0.29",
+    "delay": "^4.3.0",
+    "fs-extra": "^8.1.0",
+    "shortid": "^2.2.15"
+  }
+}
