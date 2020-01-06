@@ -1,13 +1,11 @@
 name: eslint
-on: [pull_request]
+on: pull_request
 jobs:
   eslint:
-    name: runner / eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: eslint
-        uses: reviewdog/action-eslint@v1
+      - name: ESLint checks
+        uses: gimenete/eslint-action@1.0
         with:
           github_token: ${{ secrets.github_token }}
-          reporter: github-pr-review
