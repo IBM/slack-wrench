@@ -16,6 +16,33 @@ describe('Mocked @slack/web-api', () => {
     [mockedClient] = MockedWebClient.mock.instances;
   });
 
+  it('mocks all api families', () => {
+    expect.assertions(1);
+    const { WebClient: RealWebClient } = jest.requireActual('@slack/web-api');
+    const realClient = new RealWebClient();
+    // Keys defined in the client that aren't api families
+    const notFamilyKeys = [
+      'retryConfig',
+      'requestQueue',
+      'tlsConfig',
+      'logger',
+    ];
+
+    const apiFamilies = (clientInstance: WebClient | MockWebClient) =>
+      Object.keys(clientInstance)
+        .filter(
+          key =>
+            typeof (clientInstance as Record<string, any>)[key] === 'object',
+        )
+        .filter(key => !key.startsWith('_'))
+        .filter(key => !notFamilyKeys.includes(key));
+
+    const expectedApiFamilies = apiFamilies(realClient);
+    const actualApiFamilies = apiFamilies(client);
+
+    expect(actualApiFamilies).toEqual(expectedApiFamilies);
+  });
+
   it('mocks web client instance functions', () => {
     expect.assertions(1);
     expect(jest.isMockFunction(client.chat.postMessage)).toBeTruthy();

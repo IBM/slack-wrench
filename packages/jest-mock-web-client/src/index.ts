@@ -5,15 +5,59 @@ const mockApi = (): jest.Mock => jest.fn().mockResolvedValue({ ok: true });
 /**
  * This class is mocking slack's `web-api` WebClient.ts. In order to get the
  * typings correct, this file needs to be pretty verbose. As such, this file is
- * copied from it's source, and modified to expose a mockApi instead of it's
- * actual call. When modifying this file, please keep it in line with it's source.
+ * copied from its source, and modified to expose a mockApi instead of its
+ * actual call. When modifying this file, please keep it in line with its source.
  *
- * Source File: https://github.com/slackapi/node-slack-sdk/blob/8266961af5657ce82d63a410a946a49d29e2bafa/packages/web-api/src/WebClient.ts#L273
+ * Source File: https://github.com/slackapi/node-slack-sdk/blob/master/packages/web-api/src/WebClient.ts
  *
  * Disabling prefer-default-export as jest doesn't like modules, but typescript does
  */
 export class MockWebClient implements Partial<WebClient> {
   public apiCall = mockApi();
+
+  /**
+   * admin method family
+   */
+  public readonly admin = {
+    apps: {
+      approve: mockApi(),
+      requests: {
+        list: mockApi(),
+      },
+      restrict: mockApi(),
+    },
+    inviteRequests: {
+      approve: mockApi(),
+      deny: mockApi(),
+      list: mockApi(),
+      approved: {
+        list: mockApi(),
+      },
+      denied: {
+        list: mockApi(),
+      },
+    },
+    teams: {
+      admins: {
+        list: mockApi(),
+      },
+      owners: {
+        list: mockApi(),
+      },
+      create: mockApi(),
+    },
+    users: {
+      session: {
+        reset: mockApi(),
+      },
+      assign: mockApi(),
+      invite: mockApi(),
+      remove: mockApi(),
+      setAdmin: mockApi(),
+      setOwner: mockApi(),
+      setRegular: mockApi(),
+    },
+  };
 
   /**
    * api method family
@@ -97,6 +141,16 @@ export class MockWebClient implements Partial<WebClient> {
     setPurpose: mockApi(),
     setTopic: mockApi(),
     unarchive: mockApi(),
+  };
+
+  /**
+   * view method family
+   */
+  public readonly views = {
+    open: mockApi(),
+    publish: mockApi(),
+    push: mockApi(),
+    update: mockApi(),
   };
 
   /**
