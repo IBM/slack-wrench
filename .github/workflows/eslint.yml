@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - uses: hallee/eslint-action@master
-        with:
-          repo-token: ${{secrets.GITHUB_TOKEN}}
+      - name: ESLint checks
+        uses: gimenete/eslint-action@1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  // here
