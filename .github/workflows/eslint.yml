@@ -1,4 +1,4 @@
-name: quality
+name: eslint
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     branches: [master]
 
 jobs:
-  yarn:
+  eslint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
