@@ -10,14 +10,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Read .nvmrc
+      - name: Read .nvmrc and pass it on
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
-      - name: Setup node
+      - name: Setup node w/ nvm version
         uses: actions/setup-node@v1
         with:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
-      - name: Install yarn using cache
+      - name: Install yarn w/ cache
         uses: bahmutov/npm-install@v1
-      - name: Yarn test
-        run: yarn test
+      - run: yarn test
