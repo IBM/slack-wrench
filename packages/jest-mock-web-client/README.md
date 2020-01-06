@@ -1,6 +1,14 @@
 # Jest Mock Slack Web Client
 
-This package contains a type-safe mock of `@slack/web-api`.
+This package contains a type-safe mock of `@slack/web-api`. `@slack-wrench/jest-mock-web-client` allows you to easily mock your calls to Slack's api and allows you to return a fake response. This means you get all the power of `jest.fn()` with maintainable and predictable test cases.
+
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+  - [Getting the mocked client](#getting-the-mocked-client)
+  - [Mocking responses](#mocking-responses)
+- [Typescript](#typescript)
 
 ## Install
 
@@ -37,13 +45,14 @@ describe('The Bot', () => {
   beforeEach(() => {
     // Reset mocks for each test
     WebClient.clearMocks();
-    // In this example, bot create's a `new WebClient`
+    // In this example, bot creates a `new WebClient()`
     bot = new Bot();
     client = WebClient.mock.instances[0];
   });
 
   it('Can say things', async () => {
     const message = 'Mocking Slack is easy!';
+    // With the mock setup, this won't actually call to Slack's servers
     await bot.say(message);
 
     expect(client.chat.postMessage).toHaveBeenCalledWith(
@@ -57,7 +66,7 @@ describe('The Bot', () => {
 
 ### Getting the mocked client
 
-Mocked instances are exposed in the normal way for [automatic mocks](https://jestjs.io/docs/en/es6-class-mocks#automatic-mock). You can find created instances at `WebClient.mock.instances`.
+Mocked instances are exposed as [jest automatic mocks](https://jestjs.io/docs/en/es6-class-mocks#automatic-mock). You can find created instances at `WebClient.mock.instances`.
 
 ### Mocking responses
 

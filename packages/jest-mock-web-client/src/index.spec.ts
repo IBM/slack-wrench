@@ -10,7 +10,7 @@ describe('Mocked @slack/web-api', () => {
     // How typescript projects setup create tests
     MockedWebClient.mockClear();
 
-    // How "project" could would use this.
+    // How a upstream project would initialize a client in application code.
     client = new WebClient();
 
     [mockedClient] = MockedWebClient.mock.instances;

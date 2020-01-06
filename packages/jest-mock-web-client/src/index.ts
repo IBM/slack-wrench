@@ -12,7 +12,9 @@ const mockApi = (): jest.Mock => jest.fn().mockResolvedValue({ ok: true });
  *
  * Disabling prefer-default-export as jest doesn't like modules, but typescript does
  */
-export class MockWebClient {
+export class MockWebClient implements Partial<WebClient> {
+  public apiCall = mockApi();
+
   /**
    * api method family
    */
@@ -312,13 +314,12 @@ export class MockWebClient {
   };
 
   public constructor() {
-    this.users.info.mockResolvedValue({
+    // Default for bolt apps
+    // https://github.com/slackapi/bolt/blob/1655999346077e9521722a667414758da856ede2/src/App.ts#L579
+    this.auth.test.mockResolvedValue({
       ok: true,
-      user: {
-        profile: {
-          bot_id: 'BOT_ID',
-        },
-      },
+      user_id: 'BOT_USER_ID',
+      bot_id: 'BOT_ID',
     });
   }
 }
@@ -327,7 +328,7 @@ export class MockWebClient {
 // @ts-ignore Typing seems to be wrong, this can take a class
 export const MockedWebClient = jest.fn().mockImplementation(MockWebClient);
 
-const mockWebApi = (jest: any): jest.Mocked<WebClient> => {
+const mockWebApi = (jest: any): jest.Mock => {
   const mock = jest.genMockFromModule('@slack/web-api');
 
   mock.WebClient = MockedWebClient;
