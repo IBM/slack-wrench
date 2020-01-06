@@ -1,0 +1,18 @@
+name: yarn
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  yarn:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: dcodeIO/setup-node-nvm@master
+    - name: yarn test
+      uses: Borales/actions-yarn@v2.1.0
+      with:
+        # Yarn command
+        cmd: test
