@@ -23,5 +23,5 @@ jobs:
       - name: yarn install w/ cache
         uses: bahmutov/npm-install@v1
 
-      - name: ESlint
+      - name: Typecheck
         run: yarn type

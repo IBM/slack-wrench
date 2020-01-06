@@ -9,7 +9,7 @@ import {
   SectionBlock,
 } from '@slack/types';
 
-export const Divider = () => ({
+export const Divider = (): string => ({
   type: 'divider',
 });
 
