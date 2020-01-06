@@ -23,8 +23,5 @@ jobs:
       - name: yarn install w/ cache
         uses: bahmutov/npm-install@v1
 
-      - name: Prettier
-        run: yarn run fmt:check
-
       - name: ESlint
-        run: yarn run eslint:github-action  . --ext .js,.ts --max-warnings 0
+        run: yarn run eslint
