@@ -24,4 +24,4 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: ESlint
-        run: yarn run eslint
+        run: yarn eslint

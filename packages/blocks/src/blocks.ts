@@ -1,8 +1,8 @@
 import {
   ActionsBlock,
   Button as TButton,
-  ContextBlock,
   DividerBlock,
+  ContextBlock,
   KnownBlock,
   MrkdwnElement,
   PlainTextElement,
