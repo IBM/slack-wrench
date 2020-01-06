@@ -1,19 +1,25 @@
 import { events } from './index';
 
-// Not including snapshot tests as typing should serve that purpose
 describe('Events fixtures', () => {
   const user_id = 'UPINKIE';
+  const command = '/command';
 
-  it('generates slashCommand Events', () => {
+  it('slashCommand Events return an object', () => {
     expect.assertions(1);
-    expect(() => events.slashCommand('/command')).not.toThrow();
+
+    // Not including more in depth tests as typing should serve that purpose
+    expect(events.slashCommand(command)).toEqual(
+      expect.objectContaining({ command }),
+    );
   });
 
   it('can override slashCommand fields', () => {
     expect.assertions(1);
 
-    expect(events.slashCommand('/command', { user_id })).toEqual(
-      expect.objectContaining({ user_id }),
+    const options = { user_id };
+
+    expect(events.slashCommand(command, options)).toEqual(
+      expect.objectContaining(options),
     );
   });
 
@@ -22,18 +28,21 @@ describe('Events fixtures', () => {
     const action_id = 'button';
     const event = events.blockButtonAction({ action_id });
 
+    // Not including more in depth tests as typing should serve that purpose
     expect(event.actions[0].action_id).toEqual(action_id);
   });
 
   it('can override block action fields', () => {
     expect.assertions(1);
-    const user = {
-      id: user_id,
-      name: 'Pinkie',
+    const options = {
+      user: {
+        id: user_id,
+        name: 'Pinkie',
+      },
     };
 
-    expect(events.blockButtonAction({}, { user })).toEqual(
-      expect.objectContaining({ user }),
+    expect(events.blockButtonAction({}, options)).toEqual(
+      expect.objectContaining(options),
     );
   });
 });

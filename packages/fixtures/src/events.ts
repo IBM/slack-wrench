@@ -42,9 +42,8 @@ export const slashCommand = (
   ...options,
 });
 
-export function blockAction<
-  Action extends BasicElementAction = BlockElementAction
->(
+// Helper function to create more specific Block Actions
+function blockAction<Action extends BasicElementAction = BlockElementAction>(
   action: Action,
   options: Partial<BlockAction<Action>> = {},
 ): BlockAction<Action> {

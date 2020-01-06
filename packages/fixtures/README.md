@@ -22,54 +22,42 @@ import { events } from '@slack-wrench/fixtures';
 
 ### Slash Commands
 
-```
-events.slashCommand(command, [options])
-// => { command, user_id, team_id, ... }
+```typescript
+events.slashCommand = (
+  command: string,
+  options?: Partial<SlashCommand>,
+)
+// : SlashCommand => { command, user_id, team_id, ... }
 ```
 
-Creates a slack command event
+Creates a slash command event.
 
 Arguments:
 
-- `command (string)`: command name
-- `options (Partial<SlashCommand>)`: Any fields to override from default
+- `command`: command name
+- `options`: Any fields to override from default
 
 Returns:
-
-- `(SlashCommand)`: Object containing a Slash Command event
+Object containing a Slash Command event
 
 ### Block Actions
 
-```
-events.blockAction(action, [options])
-// => { type: 'block_actions', actions: [ ... ], user, ... }
-```
-
-Creates an event from a block action. This is mostly intended to be used by other more specific block actions.
-
-Arguments:
-
-- `action (Action)`: Specific block action
-- `options (Partial<BlockAction>)`: Any fields to override from default top level event
-
-Returns:
-
-- `(BlockAction)`: Object containing a block action event
-
 #### Block Button Action
 
-```
-events.blockButtonAction(action, [options])
-// => { type: 'block_actions', actions: [ { type: 'button', ...} ], user, ... }
+```typescript
+events.blockButtonAction(
+  action?: Partial<ButtonAction>,
+  options?: Partial<BlockButtonAction>,
+)
+// : BlockButtonAction => { type: 'block_actions', actions: [ { type: 'button', ...} ], user, ... }
 ```
 
 Creates an event from a block button action.
 
 Arguments:
 
-- `action (Action)`: Overrides to button action values (normally a subset of `{ action_id, block_id, value }`
-- `options (Partial<BlockButtonAction>)`: Any fields to override from default top level event
+- `action`: Overrides to button action values (normally a subset of `{ action_id, block_id, value }`
+- `options`: Any fields to override on the default top level event
 
 Returns:
-
-- `(BlockButtonAction)`: Object containing a block action event
+Object containing a block action event
