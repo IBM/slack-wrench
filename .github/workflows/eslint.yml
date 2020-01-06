@@ -1,11 +1,30 @@
-name: eslint
-on: pull_request
+name: quality
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
 jobs:
-  eslint:
+  yarn:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: ESLint checks
-        uses: gimenete/eslint-action@1.0
+
+      - name: Read .nvmrc and pass it on
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node w/ nvm version
+        uses: actions/setup-node@v1
         with:
-          github_token: ${{ secrets.github_token }}
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: yarn install w/ cache
+        uses: bahmutov/npm-install@v1
+
+      - name: Prettier
+        run: yarn run fmt:check
+
+      - name: ESlint
+        run: yarn run eslint:github-action  . --ext .js,.ts --max-warnings 0
