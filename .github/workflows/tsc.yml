@@ -1,0 +1,27 @@
+name: typecheck
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Read .nvmrc and pass it on
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node w/ nvm version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: yarn install w/ cache
+        uses: bahmutov/npm-install@v1
+
+      - name: Typecheck
+        run: yarn type
