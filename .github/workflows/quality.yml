@@ -1,0 +1,21 @@
+name: quality
+
+on:
+  pull_request:
+  push:
+    branches: [master]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Secret Scan
+        uses: max/secret-scan@1.0.0
+      - name: Spellcheck Action
+        uses: rojopolis/spellcheck-github-actions@0.2.0
+      - name: EditorConfig-Action
+        uses: zbeekman/EditorConfig-Action@v1.1.1
+      - name: Merge Conflict Finder
+        uses: olivernybroe/action-conflict-finder@v1.0
