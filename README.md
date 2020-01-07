@@ -1,5 +1,7 @@
 # Slack 🔧 Wrench
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/IBM/slack-wrench.svg)](https://greenkeeper.io/)
+
 Tools to help build and test Slack applications.
 
 ## Contributing
