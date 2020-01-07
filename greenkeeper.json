@@ -11,5 +11,6 @@
         "packages/standards/package.json"
       ]
     }
-  }
+  },
+  "ignore": ["@types/node"]
 }
