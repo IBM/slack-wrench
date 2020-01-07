@@ -4,49 +4,65 @@ import {
   BlockButtonAction,
   BlockElementAction,
   ButtonAction,
+  MessageEvent,
   SlashCommand,
 } from '@slack/bolt';
 
-const token = 'TOKEN';
-const response_url = 'https://fake.slack/response_url';
-const trigger_id = 'TRIGGER_ID';
-const api_app_id = 'API_APP_ID';
-const user = {
-  id: 'UUSERID',
-  name: 'USER',
-};
-const channel = {
-  id: 'CCHANNELID',
-  name: 'channel',
-};
-const team = {
-  id: 'TTEAMID',
-  domain: 'team-domain',
+import fields from './fields';
+
+export const message = (
+  text: string,
+  options: Partial<MessageEvent> = {},
+): MessageEvent => {
+  const { user, channel, ts } = fields;
+
+  return {
+    type: 'message',
+    text,
+    ts,
+    channel: channel.id,
+    user: user.id,
+    ...options,
+  };
 };
 
 export const slashCommand = (
   command: string,
   options: Partial<SlashCommand> = {},
-): SlashCommand => ({
-  command,
-  text: '',
-  token,
-  response_url,
-  trigger_id,
-  user_id: user.id,
-  user_name: user.name,
-  team_id: team.id,
-  team_domain: team.domain,
-  channel_id: channel.id,
-  channel_name: channel.name,
-  ...options,
-});
+): SlashCommand => {
+  const { token, response_url, trigger_id, team, user, channel } = fields;
+
+  return {
+    command,
+    text: '',
+    token,
+    response_url,
+    trigger_id,
+    user_id: user.id,
+    user_name: user.name,
+    team_id: team.id,
+    team_domain: team.domain,
+    channel_id: channel.id,
+    channel_name: channel.name,
+    ...options,
+  };
+};
 
 // Helper function to create more specific Block Actions
 function blockAction<Action extends BasicElementAction = BlockElementAction>(
   action: Action,
   options: Partial<BlockAction<Action>> = {},
 ): BlockAction<Action> {
+  const {
+    token,
+    response_url,
+    trigger_id,
+    api_app_id,
+    team,
+    user,
+    channel,
+  } = fields;
+
   return {
     type: 'block_actions',
     actions: [action],

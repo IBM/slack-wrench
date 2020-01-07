@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Defaults has all the fields 1`] = `
+Fields {
+  "api_app_id": "API_APP_ID",
+  "callback_id": "CALLBACK_ID",
+  "channel": Object {
+    "id": "CCHANNELID",
+    "name": "channel",
+  },
+  "response_url": "https://fake.slack/response_url",
+  "team": Object {
+    "domain": "team-domain",
+    "id": "TTEAMID",
+  },
+  "token": "TOKEN",
+  "trigger_id": "TRIGGER_ID",
+  "ts": "0000000000.000000",
+  "user": Object {
+    "id": "UUSERID",
+    "name": "USER",
+  },
+}
+`;
