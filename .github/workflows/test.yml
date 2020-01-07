@@ -1,4 +1,4 @@
-name: yarn
+name: test
 
 on:
   pull_request:
@@ -6,7 +6,7 @@ on:
     branches: [master]
 
 jobs:
-  yarn:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -19,4 +19,5 @@ jobs:
           node-version: '${{ steps.nvm.outputs.NVMRC }}'
       - name: Install yarn w/ cache
         uses: bahmutov/npm-install@v1
-      - run: yarn test
+      - name: Run all tests
+        run: yarn lerna run test
