@@ -1350,9 +1350,9 @@
   integrity sha512-1Xrfq+PR9fQBWQRJolMuB8Gk6kniwKltMHphNSdKMi/U51p+N5WfI27ppc1K3HiDTsRZ068THta5almGOTIFkQ==
 
 "@types/node@^12.12.17":
-  version "12.12.23"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.23.tgz#e82e3b4dca7e840b53ebbefd3a0f3d4ddfc332fa"
-  integrity sha512-mHScXQHFSGNmJQq8O3nQMUA8IBtRxXCwBlSpxaPRFaSsFl7HxNuk569j6WUzjcud6Ew5LIHhuGQ/kAH7J0E7zA==
+  version "12.12.24"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.12.24.tgz#d4606afd8cf6c609036b854360367d1b2c78931f"
+  integrity sha512-1Ciqv9pqwVtW6FsIUKSZNB82E5Cu1I2bBTj1xuIHXLe/1zYLl3956Nbhg2MzSYHVfl9/rmanjbQIb7LibfCnug==
 
 "@types/p-queue@^2.3.2":
   version "2.3.2"

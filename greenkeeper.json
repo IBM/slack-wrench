@@ -1,0 +1,16 @@
+{
+  "groups": {
+    "default": {
+      "packages": [
+        "package.json",
+        "packages/blocks/package.json",
+        "packages/bolt-storage-file/package.json",
+        "packages/eslint-config/package.json",
+        "packages/fixtures/package.json",
+        "packages/jest-mock-web-client/package.json",
+        "packages/standards/package.json"
+      ]
+    }
+  },
+  "ignore": ["@types/node"]
+}
