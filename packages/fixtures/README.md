@@ -2,6 +2,18 @@
 
 This package contains type-safe fixtures for testing slack applications.
 
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+  - [Events](#events)
+  - [Messages](#messages)
+  - [Slash Commands](#slash-commands)
+  - [Block Actions](#block-actions)
+    - [Block Button Action](#block-button-action)
+  - [Global Fields](#global-fields)
+    - [Overriding](#overriding)
+
 ## Install
 
 ```bash
@@ -20,10 +32,30 @@ Currently, we only support a subset of Slack's [Event's API](https://api.slack.c
 import { events } from '@slack-wrench/fixtures';
 ```
 
+### Messages
+
+```typescript
+events.message(
+  text: string,
+  options: Partial<MessageEvent> = {},
+)
+// : MessageEvent => { text, user, ts, ... }
+```
+
+Creates a message event.
+
+Arguments:
+
+- `text`: Text sent in the message
+- `options`: Any [MessageEvent fields](https://github.com/slackapi/bolt/blob/master/src/types/events/base-events.ts#L450) to override from default.
+
+Returns:
+Object containing a message event
+
 ### Slash Commands
 
 ```typescript
-events.slashCommand = (
+events.slashCommand(
   command: string,
   options?: Partial<SlashCommand>,
 )
@@ -32,10 +64,17 @@ events.slashCommand = (
 
 Creates a slash command event.
 
+Example:
+
+```typescript
+// sending a text field
+events.slashCommand('/command', { text: 'I just used a command!' });
+```
+
 Arguments:
 
 - `command`: command name
-- `options`: Any fields to override from default
+- `options`: Any [SlashCommand fields](https://github.com/slackapi/bolt/blob/master/src/types/command/index.ts#L21) to override from default.
 
 Returns:
 Object containing a Slash Command event
@@ -56,8 +95,45 @@ Creates an event from a block button action.
 
 Arguments:
 
-- `action`: Overrides to button action values (normally a subset of `{ action_id, block_id, value }`
-- `options`: Any fields to override on the default top level event
+- `action`: Overrides to [ButtonAction](https://github.com/slackapi/bolt/blob/master/src/types/actions/block-action.ts#L41) values (normally a subset of `{ action_id, block_id, value }`
+- `options`: Any fields to override on the default [BlockAction event](https://github.com/slackapi/bolt/blob/master/src/types/actions/block-action.ts#L193)
 
 Returns:
 Object containing a block action event
+
+## Global Fields
+
+```typescript
+import { fields } from '@slack-wrench/fixtures';
+```
+
+The fields returned for all of the fixtures are set and accessible through `fields` . This can be really helpful when writing tests. It also enables you to change the fields if you need them to be specific.
+
+### Overriding
+
+All of the fields used by fixtures can be overridden globally. This might be helpful if you need something like the `team` `domain` and `id` to be specific for your app.
+
+```typescript
+// Here are a few examples of things you can change. This will affect all fixtures.
+
+// Update the team id
+fields.team.id = 'TANOTHERTEAM';
+fields.team.domain = 'another-team';
+
+// or as an object
+fields.team = {
+  id: 'TANOTHERTEAM',
+  domain: 'another-team',
+};
+
+// Update the callback_id
+fields.callback_id = 'FancyCallbackId';
+```
+
+If you want to reset the fields to their original values, you can call `reset`. This is potentially helpful in testing hooks.
+
+```typescript
+beforeEach(() => {
+  fields.reset();
+});
+```
