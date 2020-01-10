@@ -30,8 +30,8 @@ export default class JestReceiver extends EventEmitter implements Receiver {
     return event;
   }
 
-  // For things that fall under "Base Events"
-  // https://github.com/slackapi/bolt/blob/1655999346077e9521722a667414758da856ede2/src/types/events/base-events.ts
+  // For Events that fall under "Base Events"
+  // https://github.com/slackapi/bolt/blob/master/src/types/events/base-events.ts
   private sendEvent(body: Record<string, any>): ReceiverEvent {
     return this.send({ event: body });
   }

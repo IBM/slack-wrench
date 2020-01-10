@@ -1,16 +1,14 @@
-import { fields } from '@slack-wrench/fixtures';
 import { App } from '@slack/bolt';
 import delay from 'delay';
 
 import JestReceiver from './index';
 
 describe('Jest Bolt receiver', () => {
-  let receiver: JestReceiver;
+  const receiver = new JestReceiver();
   let app: App;
 
   beforeEach(() => {
-    receiver = new JestReceiver();
-    app = new App({ receiver, token: fields.token });
+    app = new App({ receiver, token: '' });
   });
 
   it('Can send a slash command', async () => {
