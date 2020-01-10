@@ -47,12 +47,12 @@ describe('My Awesome App', () => {
 
 ### Sending Events
 
-This project uses [@slack-wrench/fixtures](../fixtures) to generate and send events. As such, it supports all of the features it does like global overrides and customizing payloads. Check it's documentation for details.
+This project uses [@slack-wrench/fixtures](../fixtures) to generate and send events. As such, this project supports all of the features supported in fixtures such as global overrides and customizing payloads. Check its documentation for details.
 
 Send a message:
 
 ```typescript
-reciever.message(
+receiver.message(
   text: string,
   options?: Partial<SlashCommand>,
 )
@@ -62,7 +62,7 @@ reciever.message(
 Send a slash command:
 
 ```typescript
-reciever.sendSlashCommand(
+receiver.sendSlashCommand(
   name: string,
   options?: Partial<SlashCommand>,
 )
@@ -72,7 +72,7 @@ reciever.sendSlashCommand(
 Send a block button action:
 
 ```typescript
-reciever.sendBlockButtonAction(
+receiver.sendBlockButtonAction(
   action: ButtonActionArgs,
   options?: Partial<BlockButtonAction>,
 )
