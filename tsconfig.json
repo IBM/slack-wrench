@@ -7,10 +7,11 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "strict": true,
+    "preserveSymlinks": true,
     "allowJs": true
   },
   "exclude": ["node_modules", "**/coverage"],
   "paths": {
-    "@slack-wrench/*": ["./*/src"]
+    "@slack-wrench/*": ["*/src"]
   }
 }
