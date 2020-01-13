@@ -1,0 +1,12 @@
+{
+  "name": "@slack-wrench/slackctl",
+  "version": "1.0.0",
+  "description": "Utilities for managing slack applications",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "NODE_ENV=test yarn jest"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {}
+}
