@@ -8,7 +8,7 @@ const random = 'RANDOM';
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noop = () => {};
 
-InteractionFlow.interactionIdGenerator = () => random;
+const defaultInteractionIdGenerator = InteractionFlow.interactionIdGenerator;
 
 describe('Bolt interaction flows', () => {
   const flowName = 'test';
@@ -20,12 +20,18 @@ describe('Bolt interaction flows', () => {
   let state: any;
 
   beforeEach(() => {
+    InteractionFlow.interactionIdGenerator = () => random;
+
     store = new MemoryStore();
     InteractionFlow.store = store;
     receiver = new JestReceiver();
     state = { foo: 'bar' };
 
     app = new App({ receiver, token: 'TOKEN' });
+  });
+
+  afterEach(() => {
+    InteractionFlow.interactionIdGenerator = defaultInteractionIdGenerator;
   });
 
   it('prevents duplicate flow names', () => {
@@ -56,6 +62,14 @@ describe('Bolt interaction flows', () => {
 
     expect(ack).toBeCalled();
     expect(await store.get(flowId)).toEqual(state);
+  });
+
+  it('uses a uuid as a default id generator', () => {
+    expect.assertions(1);
+
+    expect(defaultInteractionIdGenerator()).toMatch(
+      /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/,
+    );
   });
 
   describe('stateful actions', () => {

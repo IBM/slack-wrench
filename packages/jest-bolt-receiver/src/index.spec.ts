@@ -4,10 +4,11 @@ import delay from 'delay';
 import JestReceiver from './index';
 
 describe('Jest Bolt receiver', () => {
-  const receiver = new JestReceiver();
+  let receiver: JestReceiver;
   let app: App;
 
   beforeEach(() => {
+    receiver = new JestReceiver();
     app = new App({ receiver, token: '' });
   });
 

@@ -10,13 +10,7 @@ import {
 import { WebClient } from '@slack/web-api';
 import uuid from 'uuid/v4';
 
-import {
-  FlowInteractionIds,
-  InteractionActionConstraints,
-  InteractionController,
-  InteractionFlowActionMiddlewareArgs,
-  InteractionFlowContext,
-} from './types';
+import { Interaction } from './types';
 
 export class InteractionFlow<FlowState = unknown> {
   public static interactionIdGenerator: () => string = uuid;
@@ -40,7 +34,7 @@ export class InteractionFlow<FlowState = unknown> {
   constructor(
     name: string,
     app: App,
-    controller: InteractionController<FlowState>,
+    controller: Interaction.Controller<FlowState>,
   ) {
     const flowNames = InteractionFlow.appFlows.get(app) || [];
 
@@ -89,18 +83,22 @@ export class InteractionFlow<FlowState = unknown> {
     interactionId: string,
   ): string => [flowId, interactionId].join(InteractionFlow.interactionSep);
 
-  private flowInteractionIds = (flowId: string): FlowInteractionIds =>
-    this.interactionIds.reduce((map, actionId) => {
+  private flowInteractionIds = (flowId: string): Interaction.FlowIds =>
+    this.interactionIds.reduce((ids, interactionId) => {
+      // Safe to perform in a `reduce` operation
       // eslint-disable-next-line no-param-reassign
-      map[actionId] = InteractionFlow.createInteractionId(flowId, actionId);
+      ids[interactionId] = InteractionFlow.createInteractionId(
+        flowId,
+        interactionId,
+      );
 
-      return map;
-    }, {} as FlowInteractionIds);
+      return ids;
+    }, {} as Interaction.FlowIds);
 
-  private contextExtentions(
+  private contextExtensions(
     flowId: string,
     state: FlowState,
-  ): InteractionFlowContext<FlowState> {
+  ): Interaction.FlowContext<FlowState> {
     const { store } = InteractionFlow;
 
     return {
@@ -118,7 +116,7 @@ export class InteractionFlow<FlowState = unknown> {
     const flowId = this.getFlowId(args);
     const state = await store.get(flowId);
 
-    Object.assign(context, this.contextExtentions(flowId, state));
+    Object.assign(context, this.contextExtensions(flowId, state));
 
     next();
   };
@@ -136,7 +134,7 @@ export class InteractionFlow<FlowState = unknown> {
 
   public async start(
     initialState: FlowState,
-  ): Promise<InteractionFlowContext<FlowState>> {
+  ): Promise<Interaction.FlowContext<FlowState>> {
     const { store } = InteractionFlow;
 
     const flowId = InteractionFlow.createFlowId(
@@ -146,13 +144,13 @@ export class InteractionFlow<FlowState = unknown> {
 
     await store.set(flowId, initialState);
 
-    return this.contextExtentions(flowId, initialState);
+    return this.contextExtensions(flowId, initialState);
   }
 
   action<ActionType extends SlackAction>(
-    actionIdOrConstraints: string | InteractionActionConstraints,
+    actionIdOrConstraints: string | Interaction.ActionConstraints,
     ...listeners: Middleware<
-      InteractionFlowActionMiddlewareArgs<FlowState, ActionType>
+      Interaction.FlowActionMiddlewareArgs<FlowState, ActionType>
     >[]
   ): void {
     const constraints =
@@ -173,7 +171,7 @@ export class InteractionFlow<FlowState = unknown> {
 
 export function interactionFlow<FlowState>(
   name: string,
-  controller: InteractionController<FlowState>,
+  controller: Interaction.Controller<FlowState>,
 ) {
   return (app: App): InteractionFlow =>
     new InteractionFlow<FlowState>(name, app, controller);

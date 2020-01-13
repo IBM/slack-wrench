@@ -48,6 +48,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+    '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
   },
   overrides: [
     {
