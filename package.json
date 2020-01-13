@@ -1,5 +1,6 @@
 {
   "name": "root",
+  "private": "true",
   "scripts": {
     "test": "yarn lint && yarn lerna run test",
     "lint": "yarn eslint && yarn type",
