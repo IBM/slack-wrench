@@ -31,11 +31,6 @@ jobs:
       - name: Test
         run: yarn test
 
-      - name: Authenticate with Registry
-        run: echo "registry=https://registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Configure CI Git User
         run: |
           git remote rm origin
@@ -48,6 +43,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
 
       - name: Publish package
-        run: yarn lerna:publish --yes
+        run: yarn lerna:publish --yes --registry="https://registry.npmjs.org/:_authToken=$NPM_TOKEN"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
