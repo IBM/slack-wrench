@@ -11,8 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Checkout master
-      #   uses: actions/checkout@v2.0.0
+      - uses: actions/checkout@v1
 
       - name: Install rsync
         run: sudo apt install rsync
