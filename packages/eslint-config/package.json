@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/eslint-config",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Slack wrench eslint config",
   "main": "index.js",
   "dependencies": {
@@ -17,5 +17,5 @@
     "eslint": ">=6.0.0",
     "typescript": ">=3.0.0"
   },
-  "gitHead": "38f2e7f22b274996d7e10190695b72b4fd8c6976"
+  "gitHead": "731a8980e4cbc1018b1d371640149bb62d78ffec"
 }
