@@ -1,0 +1,56 @@
+name: publish
+
+on:
+  pull_request: # TODO: remove this before merging, adding for testing purposes
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+
+      - name: Checkout master
+        run: git checkout master
+
+      - name: Install rsync
+        run: sudo apt install rsync
+
+      - name: Read .nvmrc and pass it on
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node w/ nvm version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: Install Packages
+        run: yarn install
+
+      - name: Test
+        run: yarn test
+
+      - name: Authenticate with Registry
+        run: echo "registry=//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Configure CI Git User
+        run: |
+          git remote rm origin
+          git remote add origin "https://$USER_NAME:$GITHUB_PAT@github.com/IBM/slack-wrench.git"
+          git fetch
+          git config --global user.email octobot@github.com
+          git config --global user.name GitHub Actions
+        env:
+          USER_NAME: ${{ secrets.DEPLOYING_USER_NAME }}
+          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+
+      - name: Publish package
+        run: yarn lerna:publish --yes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
