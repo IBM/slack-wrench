@@ -19,8 +19,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Prepare repository
-        run: git checkout master
+      # - name: Prepare repository
+      #   run: git checkout master
 
       - name: Pulling
         run: git pull
