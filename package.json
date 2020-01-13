@@ -8,7 +8,7 @@
     "type": "tsc --noEmit",
     "fmt": "pre-commit run --all-files && yarn eslint --fix",
     "lerna:version": "lerna version --no-push",
-    "lerna:publish": "lerna publish from-package -y --no-verify-access"
+    "lerna:publish": "lerna publish from-package"
   },
   "devDependencies": {
     "@types/jest": "^24.0.25",
