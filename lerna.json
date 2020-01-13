@@ -1,8 +1,12 @@
 {
   "version": "1.0.0-alpha.1",
-  "packages": [
-    "packages/*"
-  ],
+  "packages": ["packages/*"],
+  "command": {
+    "publish": {
+      "npmClient": "npm",
+      "verifyAccess": false
+    }
+  },
   "npmClient": "yarn",
   "useWorkspaces": true,
   "access": "public"
