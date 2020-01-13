@@ -27,7 +27,7 @@ Based on the changes since the last release, determine which type of
 release this is, `major`, `minor`, or `patch`.
 
 Use lerna to update all of the packages to the new version, and create a pull
-request. Travis will handle publishing to npm.
+request. A GitHub Action will handle publishing to npm once it's merged.
 
 For example, to release a new major version...
 
