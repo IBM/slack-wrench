@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/fixtures",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Slack api fixtures for testing",
   "main": "src/index.ts",
   "repository": {
@@ -16,7 +16,7 @@
     "@slack/bolt": "^1.5.0"
   },
   "devDependencies": {
-    "@slack-wrench/standards": "^1.0.0-alpha.2"
+    "@slack-wrench/standards": "^1.0.0-alpha.3"
   },
   "publishConfig": {
     "access": "public"

@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/eslint-config",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Slack wrench eslint config",
   "main": "index.js",
   "repository": {
