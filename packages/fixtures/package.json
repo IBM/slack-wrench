@@ -12,5 +12,6 @@
   },
   "devDependencies": {
     "@slack-wrench/standards": "^1.0.0"
-  }
+  },
+  "gitHead": "38f2e7f22b274996d7e10190695b72b4fd8c6976"
 }
