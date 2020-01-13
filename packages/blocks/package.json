@@ -3,6 +3,11 @@
   "version": "1.0.0-alpha.0",
   "description": "Typescript Slack Blockkit components",
   "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/slack-wrench",
+    "directory": "packages/blocks"
+  },
   "scripts": {
     "test": "jest"
   },
@@ -15,5 +20,8 @@
     "@types/ramda": "^0.26.38",
     "ramda": "^0.26.1"
   },
-  "gitHead": "f1fc256f642d50dfad6d71e83f617bf2bddd1f92"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "cd7eab883fd6821aae57ad834705682676ea81b6"
 }

@@ -3,6 +3,11 @@
   "version": "1.0.0-alpha.0",
   "description": "Slack wrench eslint config",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/slack-wrench",
+    "directory": "packages/eslint-config"
+  },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
@@ -17,5 +22,8 @@
     "eslint": ">=6.0.0",
     "typescript": ">=3.0.0"
   },
-  "gitHead": "f1fc256f642d50dfad6d71e83f617bf2bddd1f92"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "cd7eab883fd6821aae57ad834705682676ea81b6"
 }
