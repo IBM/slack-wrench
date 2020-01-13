@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/jest-mock-web-client",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "Mock @slack/web-api for jest",
   "main": "src/index.ts",
   "repository": {
@@ -13,7 +13,7 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@slack-wrench/standards": "^1.0.0-alpha.0",
+    "@slack-wrench/standards": "^1.0.0-alpha.1",
     "@slack/web-api": "^5.6.0"
   },
   "peerDependencies": {
