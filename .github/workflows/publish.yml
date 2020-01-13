@@ -29,6 +29,6 @@ jobs:
         run: yarn test
 
       - name: Publish package
-        run: yarn publish-ci
+        run: yarn lerna:publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
