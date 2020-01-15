@@ -13,12 +13,14 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
+        with:
+          ref: 'master'
 
-      - name: Install Packages
-        run: yarn
+      # - name: Install Packages
+      #   run: yarn
 
-      - name: Test
-        run: yarn test
+      # - name: Test
+      #   run: yarn test
 
       - name: Configure CI Git User
         run: |
