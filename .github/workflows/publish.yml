@@ -14,10 +14,10 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@master
         with:
-          ref: 'master'
+          ref: 'release/v1.0.0'
 
       - name: Install Packages
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Test
         run: yarn test
