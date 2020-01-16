@@ -12,6 +12,6 @@
     "@slack/web-api": "^5.7.0"
   },
   "peerDependencies": {
-    "@slack/web-api": "^5.0.0"
+    "@slack/web-api": "^5.7.0"
   }
 }
