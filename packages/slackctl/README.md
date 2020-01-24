@@ -25,14 +25,14 @@ npm install -g @slack-wrench/slackctl
 ## Updating a Slack App
 
 ```bash
-slackctl update [flags]
+slackctl apply [flags]
 ```
 
-Update an existing Slack app with a configuration. It will check the existing configuration, and update it to match the configuration file. If you made any changes using the UI without updating the config, they will be overridden.
+Update an existing Slack app with a configuration. It will check the existing configuration, and apply it to match the configuration file. If you made any changes using the UI without updating the config, they will be overridden.
 
-If your event subscription url needs changing, that url must be active and able to respond to a [`url_verification` event](https://api.slack.com/events/url_verification). If you're using the ngrok flag, then your local app should be running before trying to update the config.
+If your event subscription url needs changing, that url must be active and able to respond to a [`url_verification` event](https://api.slack.com/events/url_verification). If you're using the ngrok flag, then your local app should be running before trying to apply the config.
 
-If you are using the ngrok flag, the command will wait for the specific localhost port to become active before trying to update configuration.
+If you are using the ngrok flag, the command will wait for the specific localhost port to become active before trying to apply configuration.
 
 You will need a [session token](#getting-a-session-token) to run this command. These tokens are not supported via Slack, use caution to keep them safe.
 
@@ -62,7 +62,7 @@ Example:
 # slack.config.yaml
 version: v1.0
 
-# Id of the app to update. Can be found under `App ID` of your App Credentials
+# Id of the app to apply. Can be found under `App ID` of your App Credentials
 id: AS7PZ4B2N
 
 # Base URL to resolve subscription paths
@@ -153,10 +153,10 @@ When running commands, these config options will be merged into the root options
 # slack.local.config.yaml
 version: v1.0
 
-# Id of the app to update. Can be found under `App ID` of your App Credentials
+# Id of the app to apply. Can be found under `App ID` of your App Credentials
 id: AS7PZ4B2N
 
-# This token is needed to update your app. It should be kept secret and
+# This token is needed to apply your app. It should be kept secret and
 # will only be loaded from a local config or from the
 # environment variable SLACK_SESSION_TOKEN
 sessionToken: xoxs-###-###-###-###
