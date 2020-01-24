@@ -1,0 +1,4 @@
+version: v1.0
+
+# Id of the app to apply. Can be found under `App ID` of your App Credentials
+id: FROMLOCAL

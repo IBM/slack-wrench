@@ -3,9 +3,25 @@
   "version": "1.1.0",
   "description": "Utilities for managing slack applications",
   "main": "lib/index.js",
-  "scripts": {},
+  "bin": {
+    "slackctl": "lib/cli.js"
+  },
+  "scripts": {
+    "cli": "ts-node src/cli.ts apply",
+    "start": "ts-node src/test/app.ts"
+  },
   "license": "Apache-2.0",
-  "publishConfig": {
-    "access": "public"
+  "dependencies": {
+    "@slack/web-api": "^5.7.0",
+    "@types/yaml": "^1.2.0",
+    "@types/yargs": "^15.0.1",
+    "cosmiconfig": "^6.0.0",
+    "deepmerge": "^4.2.2",
+    "runtypes": "^4.0.3",
+    "wait-port": "^0.2.7",
+    "yargs": "^15.1.0"
+  },
+  "devDependencies": {
+    "@slack/bolt": "^1.6.0"
   }
 }

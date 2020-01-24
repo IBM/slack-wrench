@@ -1,0 +1,27 @@
+version: v1.0
+
+# Id of the app to apply. Can be found under `App ID` of your App Credentials
+id: AS7PZ4B2N
+
+# Base URL to resolve subscription paths
+baseUrl: https://example.com
+
+events:
+  # Your app can subscribe to be notified of events in Slack (for example, when a user adds a reaction or creates a file) at a URL you choose.
+  requestPath: /slack/events
+
+  # Bot users can subscribe to events related to the channels and conversations they're part of.
+  botEvents:
+    - app_mention
+    - message.channels
+    - message.groups
+
+  # To subscribe to an event, your app must have access to the related OAuth permission scope.
+  workspaceEvents:
+    - message.im
+
+  # Your app can be notified when users post links from up to 5 domains. This requires the links:read scope and a subscription to the link_shared event.
+  # You'll receive events for any subdomain, or path of the selected domains or hosts. Ports are ignored, so requests on any port will trigger an event. Using IP addresses is not allowed.
+  unfurlDomains:
+    - ibm.com
+    - twitter.com

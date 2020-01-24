@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The apply command should load a correct config 1`] = `
+Object {
+  "baseUrl": "https://example.com",
+  "events": Object {
+    "botEvents": Array [
+      "app_mention",
+      "message.channels",
+      "message.groups",
+    ],
+    "requestPath": "/slack/events",
+    "unfurlDomains": Array [
+      "ibm.com",
+      "twitter.com",
+    ],
+    "workspaceEvents": Array [
+      "message.im",
+    ],
+  },
+  "id": "AKH8DK7J7",
+  "sessionToken": "xoxs-8709467270-220587980003-938427407255-f3fa6bd49e60c1516838b8dea08ade749e2f7869301020141695f6db629749fd",
+  "version": "v1.0",
+}
+`;
+
+exports[`The apply command should output help 1`] = `
+"jest apply
+
+apply a Slack app configuration
+
+Options:
+  --version      Show version number                                   [boolean]
+  --help         Show help                                             [boolean]
+  -n, --ngrok                                                           [number]
+  -t, --timeout                                            [number] [default: 0]
+  -c, --config                                                [string] [default:
+                  \\"/Users/michael/workspace/ibm/slack-wrench/packages/slackctl\\"]"
+`;

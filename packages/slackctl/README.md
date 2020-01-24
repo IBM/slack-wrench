@@ -59,8 +59,9 @@ You can set it via the environment variable `SLACK_SESSION_TOKEN`, a [local conf
 
 **Flags:**
 
-- `-n,--ngrok='3000'` - Start an [ngrok tunnel](https://ngrok.com/) to your localhost at a specific port, defaults to 3000. This will also modify your configuration to change urls to the one exposed by ngrok.
-- `-t,--timeout='10'` - Used with the `--ngrok` flag, how long to wait (in seconds) for your localhost app to become active before timing out.
+- `-n,--ngrok='3000'` - Start an [ngrok tunnel](https://ngrok.com/) to your localhost at a specified port. This will also modify your configuration to change the `baseUrl` to the one exposed by ngrok.
+- `-t,--timeout='0'` - Used with the `--ngrok` flag, how long to wait (in seconds) for your localhost app to become active before timing out. Defaults to 0, indefinitely.
+- `-c,--config='.'` - Path to the directory with your config files. Defaults to the current working directory.
 
 ### Validating your config
 
