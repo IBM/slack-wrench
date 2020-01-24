@@ -1,4 +1,5 @@
 .env
+slack.local.config.*
 
 *.log
 node_modules/
