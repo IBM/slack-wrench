@@ -162,7 +162,7 @@ Arguments:
 - `initialState`: The starting state of the flow. Flow middleware will get this value whenever they're called.
 
 Returns:
-Object containing [flow context](#flow-context)
+The [flow context](#flow-context)
 
 ### flow.action
 
