@@ -3,10 +3,9 @@ import { App, SlackAction, SlackActionMiddlewareArgs } from '@slack/bolt';
 import { InteractionFlow } from '../interaction-flow';
 
 declare namespace Interaction {
-  type Controller<FlowState> = (
-    flow: InteractionFlow<FlowState>,
-    app: App,
-  ) => void;
+  interface Controller<FlowState> {
+    (flow: InteractionFlow<FlowState>, app: App): void;
+  }
 
   type FlowIds = Record<string, string>;
 
@@ -21,10 +20,12 @@ declare namespace Interaction {
     context: Record<string, string> & FlowContext<FlowState>;
   }
 
-  type FlowActionMiddlewareArgs<
+  interface FlowActionMiddlewareArgs<
     FlowState,
     ActionType extends SlackAction = SlackAction
-  > = FlowMiddlewareArgs<FlowState> & SlackActionMiddlewareArgs<ActionType>;
+  >
+    extends FlowMiddlewareArgs<FlowState>,
+      SlackActionMiddlewareArgs<ActionType> {}
 
   interface ActionConstraints {
     action_id: string;

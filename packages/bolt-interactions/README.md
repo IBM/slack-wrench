@@ -18,7 +18,6 @@ This package creates a new concept of a user interaction called a `flow`. A `flo
 
 `flow`s are implemented as a set of bolt event listeners linked by a shared state.
 
-
 Here's an example:
 
 ```typescript
