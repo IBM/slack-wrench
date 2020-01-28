@@ -2,7 +2,7 @@
 
 Bolt interactions allows you to effortlessly create stateful user action `flows` with your [Bolt](https://github.com/slackapi/bolt) app.
 
-Vanilla Bolt gives you some ability to do this already, but it's state is scoped to a whole channel. This library keeps the scope to the interaction allowing for faster data fetching and a greater ability to rationalize how your app works.
+Vanilla Bolt gives you some ability to do this already, but its state is scoped to a whole channel. This library keeps the scope to the interaction allowing for faster data fetching and a greater ability to rationalize how your app works.
 
 ## Install
 
@@ -14,7 +14,10 @@ npm install --save @slack-wrench/bolt-interactions
 
 ## Understanding Flows
 
-Bolt interactions creates a new concept of a user interaction called a `flow`. A flow is set of bolt event listeners that are linked by a shared state.
+This package creates a new concept of a user interaction called a `flow`. A `flow` logically represents a set of linked actions typically associated with a user flow. Introducing this new concept makes your application easier to reason about and keeps your focus on the outcome and user interaction.
+
+`flow`s are implemented as a set of bolt event listeners linked by a shared state.
+
 
 Here's an example:
 
@@ -35,7 +38,7 @@ const app = new App({
   convoStore,
 });
 
-// Create a new interaction, usually this will be the default export of it's own file
+// Create a new interaction, usually this will be the default export of its own file
 const commandFlow = interactionFlow('yourCommand', (flow, app) => {
   app.command('/bolt-interaction', ({ say }) => {
     // Start a new flow from a command, set an initial state
@@ -122,13 +125,13 @@ Flow listeners are a special set of bolt [event listeners](https://github.com/sl
 
 ### Flow Context
 
-Flow listeners have their `context` extended with some extra functions and data. You can also get these through [`flow.start`](#flow.start)` as well.
+Flow listeners have their `context` extended with some extra functions and data. You can also get these through [`flow.start`](#flow.start).
 
 When you create a new flow with `flow.start`, you've created a "flow instance" that is unique to that interaction.
 
 - `state` **(FlowState)** - The current state of that flow instance.
 - `setState` **((state: any, expiresAt?: number) => Promise<unknown>)** - Function to update the state
-- `endFlow` **(() => Promise<unknown>)** - Function to end the flow, and clean up it's state
+- `endFlow` **(() => Promise<unknown>)** - Function to end the flow, and clean up its state
 - `interactionIds` **(Record<string, string))** - ids to pass to block kit for various actions, usually `action_id`.
 
 ### interactionFlow
@@ -153,11 +156,11 @@ interactionFlow<FlowState>((flow, app) => {
 });
 ```
 
-Start's a new flow and set's the initial state.
+Starts a new flow and sets the initial state.
 
 Arguments:
 
-- `initialState`: The starting state of the flow, flow middleware will get this value whenever they're called.
+- `initialState`: The starting state of the flow. Flow middleware will get this value whenever they're called.
 
 Returns:
 Object containing [flow context](#flow-context)
@@ -185,5 +188,5 @@ InteractionFlow.store = new MemoryStore();
 
 // Change the function that randomly generates ids to something a
 // bit more predictable
-InteractionFlow.interactionIdGenerator = () => 'a-random-string'
+InteractionFlow.interactionIdGenerator = () => 'a-random-string';
 ```
