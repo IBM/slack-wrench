@@ -12,17 +12,23 @@ A utility for managing Slack [App](https://api.slack.com/start/overview) configu
   - [Setting up a `local` config](#setting-up-a-local-config)
 - [Getting a session token](#getting-a-session-token)
 
-## Install
+## Usage
 
-Install the package globally for usage as a cli.
+With `npx`
 
-```bash
-yarn global add @slack-wrench/slackctl
-# or
-npm install -g @slack-wrench/slackctl
+```
+npx @slack-wrench/slackctl [command] [flags]
 ```
 
-## Updating a Slack App
+Or install the package into your project as a cli.
+
+```bash
+yarn add --dev @slack-wrench/slackctl
+# or
+npm install --save-dev @slack-wrench/slackctl
+```
+
+### Updating a Slack App
 
 ```bash
 slackctl apply [flags]
@@ -40,9 +46,10 @@ You can set it via the environment variable `SLACK_SESSION_TOKEN`, a [local conf
 
 **Flags:**
 
-- `-s,--session-token=''` - A [session token](#getting-a-session-token) used for authentication
-- `-n,--ngrok='3000'` - Start an [ngrok tunnel](https://ngrok.com/) to your localhost. This will also modify your configuration to change urls to the url exposed from ngrok.
-- `-t,--timeout='10'` - Used with the `--ngrok` flag, how long to wait for your localhost app to become active before timing out.
+- `-n,--ngrok='3000'` - Start an [ngrok tunnel](https://ngrok.com/) to your localhost at a specific port, defaults to 3000. This will also modify your configuration to change urls to the one exposed by ngrok.
+- `-t,--timeout='10'` - Used with the `--ngrok` flag, how long to wait (in seconds) for your localhost app to become active before timing out.
+
+### Validating your config
 
 ```bash
 slackctl validate
@@ -78,7 +85,7 @@ interactiveComponents:
   # Edit message actions and their callbacks
   actions:
     # A good name is short and descriptive. Please use sentence case (e.g. File a bug, not File A Bug).
-    - name: File a Bug
+    - name: File a bug
       # A short description for your action
       description: Creates a bug report in Super App
       # Your app uses this to identify the action. It’s not visible to users.
@@ -96,12 +103,16 @@ slashCommands:
     # Escape channels, users, and links sent to your app
     escape: true
 
+# OAuth scopes let you specify exactly how your app needs to access a Slack user’s account.
 oauth:
-  # OAuth scopes let you specify exactly how your app needs to access a Slack user’s account.
+  # Scopes that access user data and act on behalf of users that authorize them.
   scopes:
-    - bot
-    - commands
-    - incoming-webhook
+    - users.profile:read
+    - reactions:write
+
+  # Scopes that govern what your app can access.
+  botScopes:
+    - app_mentions:read
 
   # Slack can limit use of your app’s OAuth tokens to a list of IP addresses and ranges you provide. Slack will then reject Web API method calls from unlisted IP addresses.
   ipRanges:
