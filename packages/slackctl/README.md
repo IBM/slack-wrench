@@ -2,7 +2,7 @@
 
 A utility for managing Slack [App](https://api.slack.com/start/overview) configurations as code with helpful integrations to make dev environments easy.
 
-⚠️ Slack doesn't currently support this. To make this project work, we rely heavily on undocumented apis and client tokens. These tokens should be protected very carefully. Use at your own risk. This is not intended to be used for production, though it does make dev a whole lot easier.
+⚠️ Slack doesn't currently officially support this. To make this project work, we rely heavily on undocumented apis and client tokens. These tokens should be protected very carefully. Use at your own risk. This is not intended to be used for production, though it does make dev a whole lot easier.
 
 # Table of Contents
 
@@ -36,7 +36,7 @@ If you are using the ngrok flag, the command will wait for the specific localhos
 
 You will need a [session token](#getting-a-session-token) to run this command. These tokens are not supported via Slack, use caution to keep them safe.
 
-You can it via the environment variable `SLACK_SESSION_TOKEN`, a [local config](#setting-up-a-local-config), or via a flag (--session-token)
+You can set it via the environment variable `SLACK_SESSION_TOKEN`, a [local config](#setting-up-a-local-config), or via a flag (--session-token)
 
 **Flags:**
 
@@ -52,7 +52,7 @@ This will read your configuration and validate that it meets the correct schema.
 
 ## App Configuration File
 
-Use this file to define your app's oauth scopes, commands, and app urls you would normally do on your App's [configuration page](https://api.slack.com/apps).
+Use this file to define your app's oauth scopes, commands, and app urls you would normally manually set in your App's [configuration page](https://api.slack.com/apps).
 
 This file should be in the root of your project and be named one of `slack.config.yaml`, `slack.config.yml`, `slack.config.js`, or `slack.config.json`.
 
@@ -139,13 +139,13 @@ bot:
 
 ### Setting up a `local` config
 
-Normally team development, each person will have their own test app so they can build features in isolation from each other. Because of this, it's often necessary to be able to override parts of the config.
+Often when developing with a team, each person will have their own test app so they can build features in isolation from each other. Because of this, it's often necessary to be able to override parts of the config.
 
 We can also use this file to configure your environment with user-specific secrets.
 
 **You should git ignore this file**
 
-For this, create a second file beside the first named one of `slack.local.config.yaml`, `slack.local.config.yml`, `slack.local.config.js`, or `slack.local.config.json`.
+For this, create a second file in the project root named `slack.local.config.yaml`, `slack.local.config.yml`, `slack.local.config.js`, or `slack.local.config.json`.
 
 When running commands, these config options will be merged into the root options taking precedence. Normally it would look something like this:
 
