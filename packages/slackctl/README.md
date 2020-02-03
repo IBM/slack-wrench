@@ -28,6 +28,19 @@ yarn add --dev @slack-wrench/slackctl
 npm install --save-dev @slack-wrench/slackctl
 ```
 
+⚠️ This package is incomplete and the documentation below is our to-be state rather than what's current.
+
+Current implementation status:
+
+- [ ] `slackctl apply`
+  - [ ] ngrok proxy
+  - [ ] Interactive Components
+  - [ ] Slash Commands
+  - [ ] OAuth permissions
+  - [ ] Events subscriptions
+  - [ ] Bot/App configuration
+- [ ] `slackctl validate`
+
 ### Updating a Slack App
 
 ```bash
@@ -139,13 +152,17 @@ events:
     - ibm.com
     - twitter.com
 
-bot:
+app:
   # Names must be shorter than 80 characters, and can’t use punctuation (other than apostrophes and periods).
   displayName: Botty McBotter
   # If this username isn’t available on any workspace that tries to install it, we will slightly change it to make it work. Usernames must be all lowercase. They cannot be longer than 21 characters and can only contain letters, numbers, periods, hyphens, and underscores.
   defaultUsername: botty
-  # When this is false, Slack automatically displays whether your bot is online based on usage of the RTM API.
-  showOnline: true
+  # Show your bot's status as active, when this is false, Slack will instead automatically update your bot's status based on usage of the RTM API.
+  showAsOnline: true
+  # Show a home tab
+  homeTab: true
+  # Show a tab where direct messages your app sends will show
+  messagesTab: true
 ```
 
 ### Setting up a `local` config
