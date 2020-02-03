@@ -8,9 +8,15 @@
     "noImplicitAny": true,
     "strict": true,
     "preserveSymlinks": true,
-    "allowJs": true
+    "allowJs": true,
+    "noLib": false,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "lib": ["es6"]
   },
-  "exclude": ["node_modules", "**/coverage"],
+  "exclude": ["node_modules", "**/coverage", "**/*.spec.ts"],
   "paths": {
     "@slack-wrench/*": ["*/src"]
   }
