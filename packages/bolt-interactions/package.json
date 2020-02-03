@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/bolt-interactions",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "Easily create interaction patterns in bolt.",
   "main": "src/index.ts",
   "scripts": {
@@ -15,7 +15,7 @@
     "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "@slack-wrench/jest-mock-web-client": "^1.0.0-alpha.3",
+    "@slack-wrench/jest-mock-web-client": "^1.0.0-alpha.5",
     "delay": "^4.3.0"
   },
   "publishConfig": {
