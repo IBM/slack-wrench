@@ -9,6 +9,7 @@
     "directory": "packages/blocks"
   },
   "scripts": {
+    "tsc": "tsc",
     "test": "jest"
   },
   "author": "",

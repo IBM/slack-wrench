@@ -4,6 +4,7 @@
   "description": "Easily create interaction patterns in bolt.",
   "main": "src/index.ts",
   "scripts": {
+    "tsc": "tsc",
     "test": "NODE_ENV=test yarn jest"
   },
   "license": "Apache-2.0",
