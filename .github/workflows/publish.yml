@@ -39,7 +39,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish with Lerna
-        run: yarn lerna:publish --yes --registry https://registry.npmjs.org/:_authToken=${NPM_TOKEN}
+        run: lerna publish --yes --message 'chore: release new versions'
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_PAT }}
