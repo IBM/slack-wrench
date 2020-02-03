@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/jest-bolt-receiver",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Slack api fixtures for testing",
   "main": "src/index.ts",
   "repository": {

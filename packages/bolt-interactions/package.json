@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/bolt-interactions",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha.4",
   "description": "Easily create interaction patterns in bolt.",
   "main": "src/index.ts",
   "scripts": {
