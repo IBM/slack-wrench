@@ -2,6 +2,8 @@ import { App, SlackAction, SlackActionMiddlewareArgs } from '@slack/bolt';
 
 import { InteractionFlow } from '../interaction-flow';
 
+// for now - can convert to es6 module later or turn off rule
+/* eslint @typescript-eslint/no-namespace: 0 */
 declare namespace Interaction {
   interface Controller<FlowState> {
     (flow: InteractionFlow<FlowState>, app: App): void;

@@ -2,14 +2,14 @@
   "name": "@slack-wrench/bolt-storage-file",
   "version": "1.0.0-alpha.8",
   "description": "Test bolt db using a local file system.",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/IBM/slack-wrench",
     "directory": "packages/bolt-storage-file"
   },
   "scripts": {
-    "tsc": "tsc",
+    "tsc": "tsc -p ./tsconfig.build.json",
     "test": "NODE_ENV=test yarn jest"
   },
   "license": "Apache-2.0",

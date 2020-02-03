@@ -2,9 +2,9 @@
   "name": "@slack-wrench/bolt-interactions",
   "version": "1.0.0-alpha.8",
   "description": "Easily create interaction patterns in bolt.",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "scripts": {
-    "tsc": "tsc",
+    "tsc": "tsc -p ./tsconfig.build.json",
     "test": "NODE_ENV=test yarn jest"
   },
   "license": "Apache-2.0",
