@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/bolt-storage-file",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.6",
   "description": "Test bolt db using a local file system.",
   "main": "src/index.ts",
   "repository": {
