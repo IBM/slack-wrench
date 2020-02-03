@@ -11,8 +11,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v1
+      # temp allows us to run on this PR
+      - name: Checkout repo
+        uses: actions/checkout@master
+        with:
+          ref: 'release/v1.0.0'
+
+      # replace above with this before merging, when removing run on PR
+      # - name: checkout
+      #   uses: actions/checkout@v1
 
       - name: Configure CI Git User
         run: |
@@ -23,7 +30,7 @@ jobs:
           GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
 
       - name: Install Packages
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - name: Test
         run: yarn test
@@ -39,7 +46,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish with Lerna
-        run: yarn lerna:publish
+        run: yarn lerna:publish --yes
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_PAT }}
