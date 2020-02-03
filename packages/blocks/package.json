@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/blocks",
-  "version": "1.0.0-alpha.7",
+  "version": "1.0.0-alpha.9",
   "description": "Typescript Slack Blockkit components",
   "main": "lib/index.js",
   "repository": {

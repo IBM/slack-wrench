@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/jest-bolt-receiver",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description": "Slack api fixtures for testing",
   "main": "lib/index.js",
   "repository": {
@@ -14,11 +14,11 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@slack-wrench/fixtures": "^1.0.0-alpha.8",
+    "@slack-wrench/fixtures": "^1.0.0-alpha.9",
     "@slack/bolt": "^1.5.0"
   },
   "devDependencies": {
-    "@slack-wrench/jest-mock-web-client": "^1.0.0-alpha.8",
+    "@slack-wrench/jest-mock-web-client": "^1.0.0-alpha.9",
     "@slack-wrench/standards": "^1.0.0-alpha.3",
     "delay": "^4.3.0"
   },

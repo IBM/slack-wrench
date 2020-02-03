@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/fixtures",
-  "version": "1.0.0-alpha.8",
+  "version": "1.0.0-alpha.9",
   "description": "Slack api fixtures for testing",
   "main": "lib/index.js",
   "repository": {
