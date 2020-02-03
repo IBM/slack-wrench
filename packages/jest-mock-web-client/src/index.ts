@@ -21,10 +21,19 @@ export class MockWebClient implements Partial<WebClient> {
   public readonly admin = {
     apps: {
       approve: mockApi(),
+      approved: {
+        list: mockApi(),
+      },
       requests: {
         list: mockApi(),
       },
       restrict: mockApi(),
+      restricted: {
+        list: mockApi(),
+      },
+    },
+    conversations: {
+      setTeams: mockApi(),
     },
     inviteRequests: {
       approve: mockApi(),
@@ -41,10 +50,19 @@ export class MockWebClient implements Partial<WebClient> {
       admins: {
         list: mockApi(),
       },
+      create: mockApi(),
+      list: mockApi(),
       owners: {
         list: mockApi(),
       },
-      create: mockApi(),
+      settings: {
+        info: mockApi(),
+        setDefaultChannels: mockApi(),
+        setDescription: mockApi(),
+        setDiscoverability: mockApi(),
+        setIcon: mockApi(),
+        setName: mockApi(),
+      },
     },
     users: {
       session: {
@@ -52,8 +70,10 @@ export class MockWebClient implements Partial<WebClient> {
       },
       assign: mockApi(),
       invite: mockApi(),
+      list: mockApi(),
       remove: mockApi(),
       setAdmin: mockApi(),
+      setExpiration: mockApi(),
       setOwner: mockApi(),
       setRegular: mockApi(),
     },
