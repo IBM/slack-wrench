@@ -1207,6 +1207,23 @@
     p-queue "^2.4.2"
     p-retry "^4.0.0"
 
+"@slack/web-api@~5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@slack/web-api/-/web-api-5.6.0.tgz#22511740d5a01b214f271e9233eccb8b067e1c88"
+  integrity sha512-/HxTI9/4fMk3su1UAa7oN0n8fGSZLHXGUne3WJ+vjxGek2rvvzazqL6yTRWWWcpttPtsNyjk4KI9FkPq+6yLNg==
+  dependencies:
+    "@slack/logger" ">=1.0.0 <3.0.0"
+    "@slack/types" "^1.2.1"
+    "@types/is-stream" "^1.1.0"
+    "@types/node" ">=8.9.0"
+    "@types/p-queue" "^2.3.2"
+    axios "^0.18.0"
+    eventemitter3 "^3.1.0"
+    form-data "^2.5.0"
+    is-stream "^1.1.0"
+    p-queue "^2.4.2"
+    p-retry "^4.0.0"
+
 "@types/abstract-leveldown@*":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@types/abstract-leveldown/-/abstract-leveldown-5.0.1.tgz#3c7750d0186b954c7f2d2f6acc8c3c7ba0c3412e"
