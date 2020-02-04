@@ -1,7 +1,7 @@
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: './tsconfig.json',
+    project: ['./tsconfig.json', './packages/**/tsconfig.json'],
   },
   env: {
     'jest/globals': true,
@@ -48,10 +48,11 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
+    '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
   },
   overrides: [
     {
-      files: ['*.spec.ts', 'jest.config.js'],
+      files: ['*.spec.ts', 'jest.config.js', '**/__mocks__/**/*'],
       rules: {
         '@typescript-eslint/explicit-function-return-type': 'off',
         // Incorrectly recognizes packages only used in tests as "dependencies"

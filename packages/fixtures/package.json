@@ -1,0 +1,16 @@
+{
+  "name": "@slack-wrench/fixtures",
+  "version": "1.0.0",
+  "description": "Slack api fixtures for testing",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "jest"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@slack/bolt": "^1.5.0"
+  },
+  "devDependencies": {
+    "@slack-wrench/standards": "^1.0.0"
+  }
+}
