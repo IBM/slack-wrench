@@ -9,7 +9,7 @@
     "directory": "packages/blocks"
   },
   "scripts": {
-    "tsc": "tsc",
+    "tsc": "tsc -p ./tsconfig.build.json",
     "test": "jest"
   },
   "author": "",
