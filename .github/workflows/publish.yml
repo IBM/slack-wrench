@@ -49,5 +49,3 @@ jobs:
         run: yarn build && yarn lerna:publish --yes
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_PAT }}
-          GH_TOKEN: ${{ secrets.GITHUB_PAT }}
