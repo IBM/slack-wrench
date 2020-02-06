@@ -1,7 +1,6 @@
 name: publish
 
 on:
-  pull_request: # TODO: remove this before merging, adding for testing purposes
   push:
     branches:
       - master
@@ -11,15 +10,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # temp allows us to run on this PR
-      - name: Checkout repo
-        uses: actions/checkout@master
-        with:
-          ref: 'release/v1.0.0'
-
-      # replace above with this before merging, when removing run on PR
-      # - name: checkout
-      #   uses: actions/checkout@v1
+      - name: checkout
+        uses: actions/checkout@v2
 
       - name: Configure CI Git User
         run: |
