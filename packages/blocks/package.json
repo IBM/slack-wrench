@@ -2,8 +2,14 @@
   "name": "@slack-wrench/blocks",
   "version": "1.0.0",
   "description": "Typescript Slack Blockkit components",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/slack-wrench",
+    "directory": "packages/blocks"
+  },
   "scripts": {
+    "tsc": "tsc -p ./tsconfig.build.json",
     "test": "jest"
   },
   "author": "",

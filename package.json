@@ -6,7 +6,11 @@
     "lint": "yarn eslint && yarn type",
     "eslint": "eslint . --ext .js,.ts --max-warnings 0",
     "type": "tsc --noEmit",
-    "fmt": "pre-commit run --all-files && yarn eslint --fix"
+    "fmt": "pre-commit run --all-files && yarn eslint --fix",
+    "build": "lerna run tsc",
+    "cleanBuilds": "find ./packages -type d -name lib -prune -exec rm -rf {} \\;",
+    "lerna:version": "lerna version --no-push",
+    "lerna:publish": "lerna publish from-package"
   },
   "devDependencies": {
     "@types/jest": "^25.1.0",

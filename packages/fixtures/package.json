@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "Slack api fixtures for testing",
   "main": "src/index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM/slack-wrench",
+    "directory": "packages/fixtures"
+  },
   "scripts": {
+    "tsc": "tsc -p ./tsconfig.build.json",
     "test": "jest"
   },
   "license": "Apache-2.0",
@@ -12,5 +18,8 @@
   },
   "devDependencies": {
     "@slack-wrench/standards": "^1.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

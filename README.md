@@ -17,3 +17,24 @@ We use [pre-commit](https://pre-commit.com) to share git pre-commit hooks. You'l
 ```bash
 pre-commit install
 ```
+
+## Releasing a New Version
+
+> Note: For maintainers only.
+
+`slack-wrench` uses [Semver](https://semver.org/) for versioning.
+Based on the changes since the last release, determine which type of
+release this is, `major`, `minor`, or `patch`.
+
+Use lerna to update all of the packages to the new version, and create a pull
+request. A GitHub Action will handle publishing to npm once it's merged.
+
+For example, to release a new major version...
+
+```bash
+$ git checkout -b release/v1.0.0
+$ yarn lerna:version major
+$ git push origin release/v1.0.0 --follow-tags
+
+# Open a pull request from `release/v1.0.0` => `master`
+```
