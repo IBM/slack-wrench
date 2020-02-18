@@ -1,6 +1,6 @@
 # Slack Fixtures
 
-This package contains type-safe fixtures for testing slack applications.
+This package contains type-safe fixtures and application wrappers for testing slack applications.
 
 ## Table of Contents
 
@@ -13,6 +13,9 @@ This package contains type-safe fixtures for testing slack applications.
     - [Block Button Action](#block-button-action)
   - [Global Fields](#global-fields)
     - [Overriding](#overriding)
+  - [Serverless Tester](#serverless-tester)
+    - [Send Slack Events](#send-slack-events)
+    - [Send HTTP Requests](#send-http-requests)
 
 ## Install
 
@@ -137,3 +140,57 @@ beforeEach(() => {
   fields.reset();
 });
 ```
+
+## Serverless Tester
+
+```typescript
+import { ServerlessTester } from '@slack-wrench/fixtures';
+```
+
+A helper class for testing root level applications exposing slack endpoints.
+
+```typescript
+import { ServerlessTester } from '@slack-wrench/fixtures';
+import { App, ExpressReceiver } from '@slack/bolt';
+
+const receiver = new ExpressReceiver({ signingSecret, endpoints });
+const app = new App({ receiver, token });
+handler = new ServerlessTester(receiver.app, signingSecret);
+```
+
+Arguments:
+
+- `application`: Fixture/Slack event to simulate
+- `signingSecret`: Secret to sign all requests with, this should be the same string your application uses to verify requests.
+
+### Send Slack Events
+
+Use `handler.sendSlackEvent` to send Slack fixture events to your application.
+
+```typescript
+const result = await handler.sendSlackEvent(events.slashCommand(command));
+expect(result.statusCode).toEqual(200);
+```
+
+Arguments:
+
+- `event`: Fixture/Slack event to simulate.
+- `path`: a path to `POST` the event to, defaults to `/slack/events`, Bolt's default.
+
+### Send HTTP Requests
+
+Use `handler.sendHttp` to send any http event to your application.
+
+```typescript
+const result = await handler.sendHttp({
+  body: 'How are you?',
+  httpMethod: 'GET',
+  path: '/',
+});
+expect(result.statusCode).toEqual(200);
+```
+
+Arguments:
+
+- `event`: Request [event](https://github.com/DefinitelyTyped/DefinitelyTyped/blob/master/types/aws-lambda/trigger/api-gateway-proxy.d.ts#L13) to simulate.
+- `path`: a path to `POST` the event to, defaults to `/slack/events`, Bolt's default.
