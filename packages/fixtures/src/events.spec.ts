@@ -63,4 +63,21 @@ describe('Events fixtures', () => {
       expect.objectContaining(options),
     );
   });
+
+  it('generates a appMention block', () => {
+    expect.assertions(1);
+
+    // Not including more in depth tests as typing should serve that purpose
+    expect(events.appMention(text)).toEqual(expect.objectContaining({ text }));
+  });
+
+  it('can override appMention fields', () => {
+    expect.assertions(1);
+
+    const options = { user: user_id };
+
+    expect(events.appMention(text, options)).toEqual(
+      expect.objectContaining(options),
+    );
+  });
 });
