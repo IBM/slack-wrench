@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "baseUrl": "./packages",
+    "baseUrl": ".",
     "declaration": true,
     "module": "commonjs",
     "esModuleInterop": true,
@@ -14,10 +14,10 @@
     "sourceMap": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "@slack-wrench/*": ["packages/*/src"]
+    }
   },
-  "exclude": ["node_modules", "**/coverage", "**/lib"],
-  "paths": {
-    "@slack-wrench/*": ["*/src"]
-  }
+  "exclude": ["node_modules", "**/coverage", "**/lib"]
 }
