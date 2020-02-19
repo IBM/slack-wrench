@@ -1,4 +1,18 @@
 {
-  "extends": "./tsconfig.json",
-  "exclude": ["./**/*.spec.ts"]
+  "extends": "../../tsconfig.build.json",
+  "include": ["./src"],
+  "exclude": ["./**/*.spec.ts"],
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./lib",
+    "composite": true
+  },
+  "references": [
+    {
+      "path": "../jest-mock-web-client/tsconfig.build.json"
+    },
+    {
+      "path": "../fixtures/tsconfig.build.json"
+    }
+  ]
 }

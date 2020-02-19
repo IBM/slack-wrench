@@ -4,11 +4,13 @@
   "scripts": {
     "test": "yarn lint && yarn lerna run test",
     "lint": "yarn eslint && yarn type",
-    "eslint": "eslint . --ext .js,.ts --max-warnings 0",
+    "eslint": "eslint . --ext .js,.ts --max-warnings 0 --report-unused-disable-directives",
     "type": "tsc --noEmit",
     "fmt": "pre-commit run --all-files && yarn eslint --fix",
     "build": "lerna run tsc",
-    "cleanBuilds": "find ./packages -type d -name lib -prune -exec rm -rf {} \\;",
+    "cleanbuilds": "yarn cleanBuilds:out && yarn cleanBuilds:buildinfo",
+    "cleanBuilds:out": "find ./packages -type d -name lib -prune -exec rm -rf {} \\;",
+    "cleanBuilds:buildinfo": "find ./packages -type f -name tsconfig.build.tsbuildinfo -prune -exec rm  {} \\;",
     "lerna:version": "lerna version --no-push",
     "lerna:publish": "lerna publish from-package"
   },
