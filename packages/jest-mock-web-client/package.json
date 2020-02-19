@@ -2,7 +2,7 @@
   "name": "@slack-wrench/jest-mock-web-client",
   "version": "1.0.0",
   "description": "Mock @slack/web-api for jest",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/IBM/slack-wrench",

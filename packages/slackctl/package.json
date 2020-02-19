@@ -2,7 +2,7 @@
   "name": "@slack-wrench/slackctl",
   "version": "1.0.0-alpha.11",
   "description": "Utilities for managing slack applications",
-  "main": "src/index.ts",
+  "main": "lib/index.js",
   "scripts": {},
   "license": "Apache-2.0",
   "publishConfig": {
