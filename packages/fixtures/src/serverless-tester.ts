@@ -23,9 +23,10 @@ export default class ServerlessTester {
     const body = JSON.stringify(data);
     const version = 'v0';
     const timestamp = Math.floor(Date.now() / 1000);
-    const hmac = crypto.createHmac('sha256', this.signingSecret);
-
-    hmac.update(`${version}:${timestamp}:${body}`);
+    const signature = crypto
+      .createHmac('sha256', this.signingSecret)
+      .update(`${version}:${timestamp}:${body}`)
+      .digest('hex');
 
     return {
       body,
@@ -33,7 +34,7 @@ export default class ServerlessTester {
       headers: {
         'content-type': 'application/json',
         'x-slack-request-timestamp': timestamp.toString(),
-        'x-slack-signature': `${version}=${hmac.digest('hex')}`,
+        'x-slack-signature': `${version}=${signature}`,
       },
       httpMethod: 'POST',
     };

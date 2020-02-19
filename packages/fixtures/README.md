@@ -160,7 +160,7 @@ handler = new ServerlessTester(receiver.app, signingSecret);
 
 Arguments:
 
-- `application`: Fixture/Slack event to simulate
+- `application`: App to test, supports any framework that [`serverless-http` does](https://github.com/dougmoscrop/serverless-http#supported-frameworks) eg: Express and Koa
 - `signingSecret`: Secret to sign all requests with, this should be the same string your application uses to verify requests.
 
 ### Send Slack Events

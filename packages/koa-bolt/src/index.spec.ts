@@ -5,33 +5,27 @@ import Koa, { Middleware } from 'koa';
 
 import koaBolt from './index';
 
-const identityRoute = (path: string): Middleware<any, any> => {
-  const route = new Router();
-
-  route.get(path, ctx => {
-    ctx.body = path;
-  });
-
-  return route.middleware();
-};
+const identityRoute = (path: string): Middleware<any, any> =>
+  new Router()
+    .get(path, ctx => {
+      ctx.body = path;
+    })
+    .middleware();
 
 describe('Koa Bolt Middleware', () => {
-  let app: Koa;
-  let bolt: App;
-  let receiver: ExpressReceiver;
   let handler: ServerlessTester;
   let listener: jest.Mock;
 
-  const rootPath = '/';
-  const nonRootPath = '/some/interesting/path';
+  const beforePath = '/before/path';
+  const afterPath = '/after/path';
 
   const command = '/command';
 
   const setupFixtures = (endpoints?: Record<string, string>) => {
     const signingSecret = '';
-    receiver = new ExpressReceiver({ signingSecret, endpoints });
+    const receiver = new ExpressReceiver({ signingSecret, endpoints });
 
-    bolt = new App({ receiver, token: '' });
+    const bolt = new App({ receiver, token: '' });
 
     listener = jest.fn(({ ack }) => {
       ack();
@@ -39,10 +33,10 @@ describe('Koa Bolt Middleware', () => {
 
     bolt.command(command, listener);
 
-    app = new Koa();
-    app.use(identityRoute(rootPath));
+    const app = new Koa();
+    app.use(identityRoute(beforePath));
     app.use(koaBolt({ receiver, endpoints }));
-    app.use(identityRoute(nonRootPath));
+    app.use(identityRoute(afterPath));
     handler = new ServerlessTester(app, signingSecret);
   };
 
@@ -59,25 +53,31 @@ describe('Koa Bolt Middleware', () => {
     expect(result.statusCode).toEqual(200);
   });
 
-  it('Will respond from non-bolt routes', async () => {
-    expect.assertions(3);
+  it('will respond from non-bolt routes defined before koaBolt', async () => {
+    expect.assertions(2);
 
     const rootResponse = await handler.sendHttp({
       httpMethod: 'GET',
-      path: rootPath,
-    });
-
-    const nonRootResponse = await handler.sendHttp({
-      httpMethod: 'GET',
-      path: nonRootPath,
+      path: beforePath,
     });
 
     expect(listener).not.toHaveBeenCalled();
-    expect(rootResponse.body).toEqual(rootPath);
-    expect(nonRootResponse.body).toEqual(nonRootPath);
+    expect(rootResponse.body).toEqual(beforePath);
   });
 
-  it('Can handle slack events sent to non-default paths', async () => {
+  it('will respond from non-bolt routes defined after koaBolt', async () => {
+    expect.assertions(2);
+
+    const nonRootResponse = await handler.sendHttp({
+      httpMethod: 'GET',
+      path: afterPath,
+    });
+
+    expect(listener).not.toHaveBeenCalled();
+    expect(nonRootResponse.body).toEqual(afterPath);
+  });
+
+  it('can handle slack events sent to non-default paths', async () => {
     expect.assertions(2);
 
     const eventPath = '/slack/event/custom/route';

@@ -2,8 +2,6 @@ import { events, ServerlessTester } from '@slack-wrench/fixtures';
 import { App, ExpressReceiver } from '@slack/bolt';
 
 describe('Serverless Tester', () => {
-  let app: App;
-  let receiver: ExpressReceiver;
   let handler: ServerlessTester;
   let listener: jest.Mock;
   let expressMiddleware: jest.Mock;
@@ -12,9 +10,8 @@ describe('Serverless Tester', () => {
 
   const setupFixtures = (endpoints?: Record<string, string>) => {
     const signingSecret = '';
-    receiver = new ExpressReceiver({ signingSecret, endpoints });
-
-    app = new App({ receiver, token: '' });
+    const receiver = new ExpressReceiver({ signingSecret, endpoints });
+    const app = new App({ receiver, token: '' });
 
     listener = jest.fn(({ ack }) => {
       ack();
@@ -28,7 +25,7 @@ describe('Serverless Tester', () => {
     receiver.app.use('/', expressMiddleware);
   };
 
-  it('can be used by a bolt app', async () => {
+  it('can be used by a bolt app with default endpoints', async () => {
     expect.assertions(2);
 
     setupFixtures();
@@ -55,7 +52,7 @@ describe('Serverless Tester', () => {
     expect(result.statusCode).toEqual(200);
   });
 
-  it('Will respond from non-bolt express routes', async () => {
+  it('will respond from non-bolt express routes', async () => {
     expect.assertions(2);
 
     const result = await handler.sendHttp({
