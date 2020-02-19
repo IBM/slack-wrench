@@ -9,7 +9,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
       - name: set PY
         run: echo "::set-env name=PY::$(python --version --version | sha256sum | cut -d' ' -f1)"
@@ -17,12 +17,12 @@ jobs:
         with:
           path: ~/.cache/pre-commit
           key: pre-commit|${{ env.PY }}|${{ hashFiles('.pre-commit-config.yaml') }}
-      - uses: pre-commit/action@v1.0.0
+      - uses: pre-commit/action@v1.0.1
 
-  eslint:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
 
       - name: Read .nvmrc and pass it on
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
@@ -37,32 +37,12 @@ jobs:
         uses: bahmutov/npm-install@v1
 
       - name: ESlint
-        run: yarn eslint
-
-  typecheck:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Read .nvmrc and pass it on
-        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
-        id: nvm
-
-      - name: Setup node w/ nvm version
-        uses: actions/setup-node@v1
-        with:
-          node-version: '${{ steps.nvm.outputs.NVMRC }}'
-
-      - name: yarn install w/ cache
-        uses: bahmutov/npm-install@v1
-
-      - name: Typecheck
-        run: yarn type
+        run: yarn lint
 
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Read .nvmrc and pass it on
         run: echo ::set-output name=NVMRC::$(cat .nvmrc)
         id: nvm
@@ -77,6 +57,8 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    needs: [pre-commit, lint, test]
 
     steps:
       - name: checkout
