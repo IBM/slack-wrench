@@ -1,6 +1,6 @@
 # Slack 🔧 Wrench
 
-[![Workflow badge](https://github.com/IBM/slack-wrench/workflows/main/badge.svg?branch=master)](https://github.com/IBM/slack-wrench/actions?query=workflow%3Amain)
+[![Workflow badge](https://github.com/IBM/slack-wrench/workflows/main/badge.svg?branch=master)](https://github.com/IBM/slack-wrench/actions?query=workflow%3Amain+branch%3Amaster)
 [![Greenkeeper badge](https://badges.greenkeeper.io/IBM/slack-wrench.svg)](https://greenkeeper.io/)
 
 Tools to help build and test Slack applications.
