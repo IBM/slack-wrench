@@ -1,10 +1,10 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "packages": ["packages/*"],
   "npmClient": "yarn",
   "command": {
     "publish": {
-      "message": "chore(release): publish"
+      "message": "🧹 chore(release): publish"
     }
   },
   "useWorkspaces": true,

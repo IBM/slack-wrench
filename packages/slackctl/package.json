@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/slackctl",
-  "version": "1.0.0-alpha.11",
+  "version": "1.1.0",
   "description": "Utilities for managing slack applications",
   "main": "lib/index.js",
   "scripts": {},
