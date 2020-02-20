@@ -9,7 +9,6 @@
     "strict": true,
     "preserveSymlinks": true,
     "allowJs": true,
-    "noLib": false,
     "sourceMap": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
