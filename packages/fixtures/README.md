@@ -4,6 +4,7 @@ This package contains type-safe fixtures and application wrappers for testing sl
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Install](#install)
 - [Usage](#usage)
   - [Events](#events)
@@ -11,11 +12,11 @@ This package contains type-safe fixtures and application wrappers for testing sl
   - [Slash Commands](#slash-commands)
   - [Block Actions](#block-actions)
     - [Block Button Action](#block-button-action)
-  - [Global Fields](#global-fields)
-    - [Overriding](#overriding)
-  - [Serverless Tester](#serverless-tester)
-    - [Send Slack Events](#send-slack-events)
-    - [Send HTTP Requests](#send-http-requests)
+- [Global Fields](#global-fields)
+  - [Overriding](#overriding)
+- [Serverless Tester](#serverless-tester)
+  - [Send Slack Events](#send-slack-events)
+  - [Send HTTP Requests](#send-http-requests)
 
 ## Install
 
