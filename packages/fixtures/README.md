@@ -2,9 +2,6 @@
 
 This package contains type-safe fixtures and application wrappers for testing slack applications.
 
-## Table of Contents
-
-- [Table of Contents](#table-of-contents)
 - [Install](#install)
 - [Usage](#usage)
   - [Events](#events)
