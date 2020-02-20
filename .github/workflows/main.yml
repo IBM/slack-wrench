@@ -23,6 +23,26 @@ jobs:
 
       - uses: pre-commit/action@v1.0.1
 
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Read .nvmrc and pass it on
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Setup node w/ nvm version
+        uses: actions/setup-node@v1
+        with:
+          node-version: '${{ steps.nvm.outputs.NVMRC }}'
+
+      - name: yarn install w/ cache
+        uses: bahmutov/npm-install@v1
+
+      - name: Run tsc build
+        run: yarn build
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -74,9 +94,6 @@ jobs:
 
       - name: Install Packages
         run: yarn install --frozen-lockfile
-
-      - name: Test
-        run: yarn test
 
       - name: Authenticate with Registry
         run: |

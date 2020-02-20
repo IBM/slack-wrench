@@ -9,7 +9,7 @@
     "directory": "packages/jest-bolt-receiver"
   },
   "scripts": {
-    "tsc": "tsc -p ./tsconfig.build.json",
+    "tsc": "tsc -b ./tsconfig.build.json",
     "test": "jest"
   },
   "license": "Apache-2.0",
