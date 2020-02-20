@@ -1,4 +1,5 @@
 import {
+  AppMentionEvent,
   BasicElementAction,
   BlockAction,
   BlockButtonAction,
@@ -20,6 +21,23 @@ export const message = (
     type: 'message',
     text,
     ts,
+    channel: channel.id,
+    user: user.id,
+    ...options,
+  };
+};
+
+export const appMention = (
+  text: string,
+  options: Partial<AppMentionEvent> = {},
+): AppMentionEvent => {
+  const { user, channel, ts } = fields;
+
+  return {
+    type: 'app_mention',
+    text,
+    ts,
+    event_ts: ts,
     channel: channel.id,
     user: user.id,
     ...options,
