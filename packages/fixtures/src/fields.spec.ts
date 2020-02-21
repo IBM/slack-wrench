@@ -1,4 +1,4 @@
-import { events, fields } from './index';
+import { actions, fields } from './index';
 
 describe('Defaults', () => {
   afterEach(() => {
@@ -15,7 +15,7 @@ describe('Defaults', () => {
     const overrideToken = 'a-very-different-token';
     const originalToken = fields.token;
 
-    expect(events.blockButtonAction()).toEqual(
+    expect(actions.blockButtonAction()).toEqual(
       expect.objectContaining({
         token: originalToken,
       }),
@@ -23,7 +23,7 @@ describe('Defaults', () => {
 
     fields.token = overrideToken;
 
-    expect(events.blockButtonAction()).toEqual(
+    expect(actions.blockButtonAction()).toEqual(
       expect.objectContaining({
         token: overrideToken,
       }),

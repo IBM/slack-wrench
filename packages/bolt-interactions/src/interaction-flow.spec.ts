@@ -1,3 +1,4 @@
+import { actions, slashCommand } from '@slack-wrench/fixtures';
 import JestReceiver from '@slack-wrench/jest-bolt-receiver';
 import { App, ConversationStore, MemoryStore } from '@slack/bolt';
 import delay from 'delay';
@@ -56,7 +57,7 @@ describe('Bolt interaction flows', () => {
       });
     })(app);
 
-    const { ack } = receiver.sendSlashCommand(command);
+    const { ack } = receiver.send(slashCommand(command));
 
     await delay(0);
 
@@ -90,9 +91,11 @@ describe('Bolt interaction flows', () => {
         });
       })(app);
 
-      const { ack } = receiver.sendBlockButtonAction({
-        action_id,
-      });
+      const { ack } = receiver.send(
+        actions.blockButtonAction({
+          action_id,
+        }),
+      );
 
       await delay(0);
       expect(ack).toBeCalled();
@@ -108,10 +111,12 @@ describe('Bolt interaction flows', () => {
         });
       })(app);
 
-      receiver.sendBlockButtonAction({
-        action_id,
-        block_id,
-      });
+      receiver.send(
+        actions.blockButtonAction({
+          action_id,
+          block_id,
+        }),
+      );
 
       await delay(0);
     });
@@ -130,9 +135,11 @@ describe('Bolt interaction flows', () => {
         });
       })(app);
 
-      receiver.sendBlockButtonAction({
-        action_id,
-      });
+      receiver.send(
+        actions.blockButtonAction({
+          action_id,
+        }),
+      );
 
       await delay(0);
 
@@ -148,9 +155,11 @@ describe('Bolt interaction flows', () => {
         });
       })(app);
 
-      receiver.sendBlockButtonAction({
-        action_id,
-      });
+      receiver.send(
+        actions.blockButtonAction({
+          action_id,
+        }),
+      );
 
       await delay(0);
       await expect(store.get(flowId)).rejects.toThrow('Conversation expired');

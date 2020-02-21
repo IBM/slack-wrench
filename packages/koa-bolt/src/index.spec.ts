@@ -1,5 +1,5 @@
 import Router from '@koa/router';
-import { events, ServerlessTester } from '@slack-wrench/fixtures';
+import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
 import { App, ExpressReceiver } from '@slack/bolt';
 import Koa, { Middleware } from 'koa';
 
@@ -47,7 +47,7 @@ describe('Koa Bolt Middleware', () => {
   it('can be used by a koa app', async () => {
     expect.assertions(2);
 
-    const result = await handler.sendSlackEvent(events.slashCommand(command));
+    const result = await handler.sendSlackEvent(slashCommand(command));
 
     expect(listener).toHaveBeenCalled();
     expect(result.statusCode).toEqual(200);
@@ -85,7 +85,7 @@ describe('Koa Bolt Middleware', () => {
     setupFixtures({ events: eventPath });
 
     const result = await handler.sendSlackEvent(
-      events.slashCommand(command),
+      slashCommand(command),
       eventPath,
     );
 

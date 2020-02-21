@@ -1,39 +1,77 @@
-import {
-  AppMentionEvent,
-  BasicElementAction,
-  BlockAction,
-  BlockButtonAction,
-  BlockElementAction,
-  ButtonAction,
-  MessageEvent,
-  SlashCommand,
-} from '@slack/bolt';
+/**
+ * For all events that arrive via event's api subscription
+ */
+import { AppMentionEvent, BasicSlackEvent, MessageEvent } from '@slack/bolt';
 
 import fields from './fields';
+
+/**
+ * A Slack Events API event wrapped in the standard envelope.
+ *
+ * This describes the entire JSON-encoded body of a request from Slack's Events API.
+ *
+ * Non-exported type from bolt:
+ * https://github.com/slackapi/bolt/blob/master/src/types/events/index.ts#L22
+ */
+interface EnvelopedEvent<Event = BasicSlackEvent> extends Record<string, any> {
+  token: string;
+  team_id: string;
+  enterprise_id?: string;
+  api_app_id: string;
+  event: Event;
+  type: 'event_callback';
+  event_id: string;
+  event_time: number;
+  authed_users?: string[];
+}
+
+export function apiEvent<Event = BasicSlackEvent>(
+  event: Event,
+): EnvelopedEvent<Event> {
+  const {
+    token,
+    api_app_id,
+    team,
+    event_id,
+    event_time,
+    authed_users,
+  } = fields;
+
+  return {
+    type: 'event_callback',
+    team_id: team.id,
+    event,
+    token,
+    api_app_id,
+    event_id,
+    event_time,
+    authed_users,
+  };
+}
 
 export const message = (
   text: string,
   options: Partial<MessageEvent> = {},
-): MessageEvent => {
+): EnvelopedEvent<MessageEvent> => {
   const { user, channel, ts } = fields;
 
-  return {
+  return apiEvent<MessageEvent>({
     type: 'message',
     text,
     ts,
     channel: channel.id,
     user: user.id,
     ...options,
-  };
+  });
 };
 
 export const appMention = (
   text: string,
   options: Partial<AppMentionEvent> = {},
-): AppMentionEvent => {
+): EnvelopedEvent<AppMentionEvent> => {
   const { user, channel, ts } = fields;
 
-  return {
+  return apiEvent<AppMentionEvent>({
     type: 'app_mention',
     text,
     ts,
@@ -41,78 +79,5 @@ export const appMention = (
     channel: channel.id,
     user: user.id,
     ...options,
-  };
+  });
 };
-
-export const slashCommand = (
-  command: string,
-  options: Partial<SlashCommand> = {},
-): SlashCommand => {
-  const { token, response_url, trigger_id, team, user, channel } = fields;
-
-  return {
-    command,
-    text: '',
-    token,
-    response_url,
-    trigger_id,
-    user_id: user.id,
-    user_name: user.name,
-    team_id: team.id,
-    team_domain: team.domain,
-    channel_id: channel.id,
-    channel_name: channel.name,
-    ...options,
-  };
-};
-
-// Helper function to create more specific Block Actions
-function blockAction<Action extends BasicElementAction = BlockElementAction>(
-  action: Action,
-  options: Partial<BlockAction<Action>> = {},
-): BlockAction<Action> {
-  const {
-    token,
-    response_url,
-    trigger_id,
-    api_app_id,
-    team,
-    user,
-    channel,
-  } = fields;
-
-  return {
-    type: 'block_actions',
-    actions: [action],
-    team,
-    user,
-    channel,
-    token,
-    response_url,
-    trigger_id,
-    api_app_id,
-    container: {},
-    ...options,
-  };
-}
-
-export function blockButtonAction(
-  action?: Partial<ButtonAction>,
-  options?: Partial<BlockButtonAction>,
-): BlockButtonAction {
-  return blockAction<ButtonAction>(
-    {
-      type: 'button',
-      action_ts: 'ACTION_TS',
-      text: {
-        type: 'plain_text',
-        text: 'TEXT',
-      },
-      action_id: 'ACTION_ID',
-      block_id: 'BLOCK_ID',
-      value: 'VALUE',
-      ...action,
-    },
-    options,
-  );
-}

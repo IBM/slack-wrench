@@ -20,6 +20,12 @@ class Fields {
 
   public ts!: string;
 
+  public event_time!: number;
+
+  public event_id!: string;
+
+  public authed_users!: string[];
+
   constructor() {
     this.reset();
   }
@@ -43,6 +49,9 @@ class Fields {
       domain: 'team-domain',
     };
     this.ts = '0000000000.000000';
+    this.event_time = 1234567890;
+    this.event_id = 'EVENT_ID';
+    this.authed_users = [this.user.id];
   }
 }
 

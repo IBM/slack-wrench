@@ -1,3 +1,4 @@
+import { actions, events, slashCommand } from '@slack-wrench/fixtures';
 import { App } from '@slack/bolt';
 import delay from 'delay';
 
@@ -19,7 +20,7 @@ describe('Jest Bolt receiver', () => {
     const listener = jest.fn();
 
     app.command(command, listener);
-    receiver.sendSlashCommand(command);
+    receiver.send(slashCommand(command));
     await delay(0);
 
     expect(listener).toHaveBeenCalledTimes(1);
@@ -32,7 +33,7 @@ describe('Jest Bolt receiver', () => {
     const listener = jest.fn();
 
     app.action(action_id, listener);
-    receiver.sendBlockButtonAction({ action_id });
+    receiver.send(actions.blockButtonAction({ action_id }));
     await delay(0);
 
     expect(listener).toHaveBeenCalledTimes(1);
@@ -48,7 +49,7 @@ describe('Jest Bolt receiver', () => {
       respond('You Clicked it!');
     });
 
-    const { respond } = receiver.sendBlockButtonAction({ action_id });
+    const { respond } = receiver.send(actions.blockButtonAction({ action_id }));
     await delay(0);
 
     expect(respond).toHaveBeenCalledTimes(1);
@@ -61,7 +62,7 @@ describe('Jest Bolt receiver', () => {
     const listener = jest.fn();
 
     app.message(message, listener);
-    receiver.sendMessage(message);
+    receiver.send(events.message(message));
     await delay(0);
 
     expect(listener).toHaveBeenCalledTimes(1);
