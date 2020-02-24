@@ -59,7 +59,7 @@ describe('My Awesome App', () => {
 
 ### Sending Events
 
-We recommend you use [@slack-wrench/fixtures](../fixtures) to generate and send events. That way, you can easily generate fixtures and have as global overrides and customizing payloads. Check its documentation for details.
+We recommend you use [@slack-wrench/fixtures](../fixtures) to generate and send events. That way, you can easily generate fixtures, set global overrides, and customize payloads. Check its documentation for details.
 
 Send an event to bolt:
 
