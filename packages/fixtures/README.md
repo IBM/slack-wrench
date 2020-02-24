@@ -5,9 +5,9 @@ This package contains type-safe fixtures and application wrappers for testing sl
 - [Install](#install)
 - [Usage](#usage)
   - [Events](#events)
-  - [Messages](#messages)
+    - [Messages](#messages)
   - [Slash Commands](#slash-commands)
-  - [Block Actions](#block-actions)
+  - [Actions](#actions)
     - [Block Button Action](#block-button-action)
 - [Global Fields](#global-fields)
   - [Overriding](#overriding)
@@ -33,7 +33,7 @@ Currently, we only support a subset of Slack's [Event's API](https://api.slack.c
 import { events } from '@slack-wrench/fixtures';
 ```
 
-### Messages
+#### Messages
 
 ```typescript
 events.message(
@@ -56,7 +56,9 @@ Object containing a message event
 ### Slash Commands
 
 ```typescript
-events.slashCommand(
+import { slashCommand } from '@slack-wrench/fixtures';
+
+slashCommand(
   command: string,
   options?: Partial<SlashCommand>,
 )
@@ -69,7 +71,7 @@ Example:
 
 ```typescript
 // sending a text field
-events.slashCommand('/command', { text: 'I just used a command!' });
+slashCommand('/command', { text: 'I just used a command!' });
 ```
 
 Arguments:
@@ -80,12 +82,16 @@ Arguments:
 Returns:
 Object containing a Slash Command event
 
-### Block Actions
+### Actions
+
+```typescript
+import { actions } from '@slack-wrench/fixtures';
+```
 
 #### Block Button Action
 
 ```typescript
-events.blockButtonAction(
+actions.blockButtonAction(
   action?: Partial<ButtonAction>,
   options?: Partial<BlockButtonAction>,
 )
@@ -166,7 +172,7 @@ Arguments:
 Use `handler.sendSlackEvent` to send Slack fixture events to your application.
 
 ```typescript
-const result = await handler.sendSlackEvent(events.slashCommand(command));
+const result = await handler.sendSlackEvent(slashCommand(command));
 expect(result.statusCode).toEqual(200);
 ```
 

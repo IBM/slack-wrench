@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@slack/bolt": "^1.6.0",
-    "@slack-wrench/fixtures": "^1.1.0",
+    "@slack-wrench/fixtures": "^2.0.0",
     "koa": "^2.11.0",
     "koa-compose": "^4.1.0",
     "serverless-http": "^2.3.1"

@@ -19,6 +19,7 @@ npm install --save-dev @slack-wrench/jest-bolt-receiver
 ## Usage
 
 ```typescript
+import { slashCommand } from '@slack-wrench/fixtures';
 import JestReceiver from '@slack-wrench/jest-bolt-receiver';
 import {
   MockedWebClient,
@@ -43,7 +44,7 @@ describe('My Awesome App', () => {
 
   it('Can handle a slash command', async () => {
     const message = '@slack-wrench makes testing easy!';
-    receiver.sendSlashCommand('/echo', { text: message });
+    receiver.send(slashCommand('/echo', { text: message }));
     await delay(0); // Wait for anything async.
 
     // Test what should have happened.
@@ -58,34 +59,13 @@ describe('My Awesome App', () => {
 
 ### Sending Events
 
-This project uses [@slack-wrench/fixtures](../fixtures) to generate and send events. As such, this project supports all of the features supported in fixtures such as global overrides and customizing payloads. Check its documentation for details.
+We recommend you use [@slack-wrench/fixtures](../fixtures) to generate and send events. That way, you can easily generate fixtures, set global overrides, and customize payloads. Check its documentation for details.
 
-Send a message:
-
-```typescript
-receiver.message(
-  text: string,
-  options?: Partial<SlashCommand>,
-)
-//: => ReceiverEvent
-```
-
-Send a slash command:
+Send an event to bolt:
 
 ```typescript
-receiver.sendSlashCommand(
-  name: string,
-  options?: Partial<SlashCommand>,
-)
-//: => ReceiverEvent
-```
-
-Send a block button action:
-
-```typescript
-receiver.sendBlockButtonAction(
-  action: ButtonActionArgs,
-  options?: Partial<BlockButtonAction>,
+receiver.send(
+  body: Record<string, any>,
 )
 //: => ReceiverEvent
 ```

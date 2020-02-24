@@ -3,11 +3,16 @@
 exports[`Defaults has all the fields 1`] = `
 Fields {
   "api_app_id": "API_APP_ID",
+  "authed_users": Array [
+    "UUSERID",
+  ],
   "callback_id": "CALLBACK_ID",
   "channel": Object {
     "id": "CCHANNELID",
     "name": "channel",
   },
+  "event_id": "EVENT_ID",
+  "event_time": 1234567890,
   "response_url": "https://fake.slack/response_url",
   "team": Object {
     "domain": "team-domain",
