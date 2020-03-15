@@ -2,7 +2,6 @@
 
 [![Workflow badge](https://github.com/IBM/slack-wrench/workflows/main/badge.svg?branch=master)](https://github.com/IBM/slack-wrench/actions?query=workflow%3Amain+branch%3Amaster)
 
-
 Tools to help build and test Slack applications.
 
 ## Contributing
