@@ -1,6 +1,7 @@
 # Slack 🔧 Wrench
 
 [![Workflow badge](https://github.com/IBM/slack-wrench/workflows/main/badge.svg?branch=master)](https://github.com/IBM/slack-wrench/actions?query=workflow%3Amain+branch%3Amaster)
+[![Known Vulnerabilities](https://snyk.io/test/github/IBM/slack-wrench/badge.svg?targetFile=package.json)](https://snyk.io/test/github/IBM/slack-wrench?targetFile=package.json)
 
 Tools to help build and test Slack applications.
 
