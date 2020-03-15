@@ -1,6 +1,8 @@
 import {
   Button as TButton,
   MrkdwnElement,
+  Option,
+  Overflow,
   PlainTextElement,
 } from '@slack/types';
 
@@ -21,6 +23,17 @@ export const PlainText = (text: string, emoji = true): PlainTextElement => ({
 // --- Confirmation Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
 
 // --- Option Object --- https://api.slack.com/reference/block-kit/composition-objects#option
+
+export const OptionObject = (
+  // only works with PlainText at the moment https://github.com/slackapi/node-slack-sdk/issues/973
+  text: string,
+  value: string,
+  optionBlock?: Partial<Option>,
+): Option => ({
+  text: PlainText(text),
+  value,
+  ...optionBlock,
+});
 
 // --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
 
@@ -47,6 +60,17 @@ export const Button = (
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
 // --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#image
+
+export const OverflowMenu = (
+  options: Option[],
+  action_id: string,
+  menuBlock?: Partial<Overflow>,
+): Overflow => ({
+  type: 'overflow',
+  options,
+  action_id,
+  ...menuBlock,
+});
 
 // --- Plain-text Input Element --- https://api.slack.com/reference/block-kit/block-elements#input
 
