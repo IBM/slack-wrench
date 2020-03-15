@@ -4,38 +4,34 @@ import { chain } from 'ramda';
 import {
   Actions,
   Blocks,
-  Button,
   Context,
   Divider,
-  Markdown,
+  FieldsSection,
   MdSection,
-  PlainText,
   Section,
 } from './blocks';
+import { Button, Markdown, PlainText } from './elements';
 import { DateString } from './formatting';
 
 describe('Slack Block widgets', () => {
   const text = 'Ravenclaw is obviously the best house.';
   const buttonId = 'ravenAgree';
 
+  it('renders an actions', () => {
+    expect.assertions(1);
+    expect(
+      Actions([Button(text, buttonId), Button(text, `${buttonId}-2`)]),
+    ).toMatchSnapshot();
+  });
+
+  it('renders context', () => {
+    expect.assertions(1);
+    expect(Context([PlainText(text)])).toMatchSnapshot();
+  });
+
   it('renders a divider', () => {
     expect.assertions(1);
     expect(Divider()).toMatchSnapshot();
-  });
-
-  it('renders markdown text', () => {
-    expect.assertions(1);
-    expect(Markdown(text)).toMatchSnapshot();
-  });
-
-  it('renders a plaintext block', () => {
-    expect.assertions(1);
-    expect(PlainText(text)).toMatchSnapshot();
-  });
-
-  it('renders a plaintext block without emoji', () => {
-    expect.assertions(1);
-    expect(PlainText(text, false)).toMatchSnapshot();
   });
 
   it('renders a section', () => {
@@ -54,26 +50,9 @@ describe('Slack Block widgets', () => {
     expect(MdSection(text)).toMatchSnapshot();
   });
 
-  it('renders an actions', () => {
+  it('renders a fields section', () => {
     expect.assertions(1);
-    expect(
-      Actions([Button(text, buttonId), Button(text, `${buttonId}-2`)]),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a button', () => {
-    expect.assertions(1);
-    expect(Button(text, buttonId)).toMatchSnapshot();
-  });
-
-  it('renders context', () => {
-    expect.assertions(1);
-    expect(Context([PlainText(text)])).toMatchSnapshot();
-  });
-
-  it('filters null blocks', () => {
-    expect.assertions(1);
-    expect(Blocks([MdSection(text), null, MdSection(text)]).length).toBe(2);
+    expect(FieldsSection([text, text])).toMatchSnapshot();
   });
 
   it('can compose blocks into bigger components', () => {
@@ -127,5 +106,10 @@ describe('Slack Block widgets', () => {
         ),
       ]),
     ).toMatchSnapshot();
+  });
+
+  it('filters null blocks', () => {
+    expect.assertions(1);
+    expect(Blocks([MdSection(text), null, MdSection(text)]).length).toBe(2);
   });
 });

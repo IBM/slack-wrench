@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Slack Element widgets renders a button 1`] = `
+Object {
+  "action_id": "ravenAgree",
+  "text": Object {
+    "emoji": true,
+    "text": "Ravenclaw is obviously the best house.",
+    "type": "plain_text",
+  },
+  "type": "button",
+}
+`;
+
+exports[`Slack Element widgets renders a plaintext block 1`] = `
+Object {
+  "emoji": true,
+  "text": "Ravenclaw is obviously the best house.",
+  "type": "plain_text",
+}
+`;
+
+exports[`Slack Element widgets renders a plaintext block without emoji 1`] = `
+Object {
+  "emoji": false,
+  "text": "Ravenclaw is obviously the best house.",
+  "type": "plain_text",
+}
+`;
+
+exports[`Slack Element widgets renders markdown text 1`] = `
+Object {
+  "text": "Ravenclaw is obviously the best house.",
+  "type": "mrkdwn",
+}
+`;

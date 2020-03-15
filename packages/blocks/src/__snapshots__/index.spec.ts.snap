@@ -1,16 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`The index exports exports everything 1`] = `
+exports[`The index exports everything 1`] = `
 Array [
+  "Actions",
+  "Context",
   "Divider",
-  "Markdown",
-  "PlainText",
   "Section",
   "MdSection",
-  "Context",
-  "Actions",
-  "Button",
+  "FieldsSection",
   "Blocks",
+  "Markdown",
+  "PlainText",
+  "Button",
   "DateString",
   "User",
 ]

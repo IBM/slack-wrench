@@ -10,7 +10,7 @@
     "preserveSymlinks": true,
     "allowJs": true,
     "sourceMap": true,
-    "removeComments": true,
+    "removeComments": false,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },

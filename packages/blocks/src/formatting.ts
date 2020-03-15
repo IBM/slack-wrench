@@ -1,3 +1,5 @@
+// https://api.slack.com/reference/surfaces/formatting#date-formatting
+
 export const DateString = (
   timestamp: number,
   format: string,
