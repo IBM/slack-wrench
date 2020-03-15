@@ -117,21 +117,25 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
 ]
 `;
 
-exports[`Slack Block widgets renders a button 1`] = `
-Object {
-  "action_id": "ravenAgree",
-  "text": Object {
-    "emoji": true,
-    "text": "Ravenclaw is obviously the best house.",
-    "type": "plain_text",
-  },
-  "type": "button",
-}
-`;
-
 exports[`Slack Block widgets renders a divider 1`] = `
 Object {
   "type": "divider",
+}
+`;
+
+exports[`Slack Block widgets renders a fields section 1`] = `
+Object {
+  "fields": Array [
+    Object {
+      "text": "Ravenclaw is obviously the best house.",
+      "type": "mrkdwn",
+    },
+    Object {
+      "text": "Ravenclaw is obviously the best house.",
+      "type": "mrkdwn",
+    },
+  ],
+  "type": "section",
 }
 `;
 
@@ -142,22 +146,6 @@ Object {
     "type": "mrkdwn",
   },
   "type": "section",
-}
-`;
-
-exports[`Slack Block widgets renders a plaintext block 1`] = `
-Object {
-  "emoji": true,
-  "text": "Ravenclaw is obviously the best house.",
-  "type": "plain_text",
-}
-`;
-
-exports[`Slack Block widgets renders a plaintext block without emoji 1`] = `
-Object {
-  "emoji": false,
-  "text": "Ravenclaw is obviously the best house.",
-  "type": "plain_text",
 }
 `;
 
@@ -228,12 +216,5 @@ Object {
     },
   ],
   "type": "context",
-}
-`;
-
-exports[`Slack Block widgets renders markdown text 1`] = `
-Object {
-  "text": "Ravenclaw is obviously the best house.",
-  "type": "mrkdwn",
 }
 `;

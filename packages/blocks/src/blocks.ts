@@ -1,29 +1,40 @@
 import {
   ActionsBlock,
-  Button as TButton,
   ContextBlock,
   DividerBlock,
   KnownBlock,
-  MrkdwnElement,
-  PlainTextElement,
   SectionBlock,
 } from '@slack/types';
 
+import { Markdown } from './elements';
+
+// This file provides abstractions for layout blocks, sub-block objects, and related common patterns
+// https://api.slack.com/reference/block-kit/blocks
+
+// --- Actions --- https://api.slack.com/reference/block-kit/blocks#actions
+export const Actions = (elements: ActionsBlock['elements']): ActionsBlock => ({
+  type: 'actions',
+  elements,
+});
+
+// --- Context --- https://api.slack.com/reference/block-kit/blocks#context
+export const Context = (elements: ContextBlock['elements']): ContextBlock => ({
+  type: 'context',
+  elements,
+});
+
+// --- Divider --- https://api.slack.com/reference/block-kit/blocks#divider
 export const Divider = (): DividerBlock => ({
   type: 'divider',
 });
 
-export const Markdown = (text: string): MrkdwnElement => ({
-  type: 'mrkdwn',
-  text,
-});
+// --- File --- https://api.slack.com/reference/block-kit/blocks#file
 
-export const PlainText = (text: string, emoji = true): PlainTextElement => ({
-  type: 'plain_text',
-  text,
-  emoji,
-});
+// --- Image --- https://api.slack.com/reference/block-kit/blocks#image
 
+// --- Input --- https://api.slack.com/reference/block-kit/blocks#input
+
+// --- Section --- https://api.slack.com/reference/block-kit/blocks#section
 export const Section = (sectionBlock: Partial<SectionBlock>): SectionBlock => ({
   ...sectionBlock,
   type: 'section',
@@ -38,26 +49,19 @@ export const MdSection = (
     text: Markdown(text),
   });
 
-export const Context = (elements: ContextBlock['elements']): ContextBlock => ({
-  type: 'context',
-  elements,
-});
+/**
+ * Takes array of markdown strings "fields" to create a section block
+ * https://api.slack.com/reference/block-kit/blocks#fields
+ */
+export const FieldsSection = (
+  fields: string[],
+  sectionBlock?: Partial<SectionBlock>,
+): SectionBlock =>
+  Section({
+    ...sectionBlock,
+    fields: fields.map(Markdown),
+  });
 
-export const Actions = (elements: ActionsBlock['elements']): ActionsBlock => ({
-  type: 'actions',
-  elements,
-});
-
-export const Button = (
-  text: string,
-  action_id: string,
-  buttonBlock?: Partial<TButton>,
-): TButton => ({
-  type: 'button',
-  text: PlainText(text),
-  action_id,
-  ...buttonBlock,
-});
-
+// Top-level blocks helper to filter out any null blocks
 export const Blocks = (blocks: (KnownBlock | null)[]): KnownBlock[] =>
   blocks.filter(block => block) as KnownBlock[];
