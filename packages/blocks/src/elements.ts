@@ -59,7 +59,7 @@ export const Button = (
 
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
-// --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#image
+// --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow
 
 export const OverflowMenu = (
   options: Option[],
