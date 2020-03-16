@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Slack Element widgets renders a button 1`] = `
+exports[`Slack Element widgets renders a button element 1`] = `
 Object {
   "action_id": "ravenAgree",
   "text": Object {
@@ -12,7 +12,7 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders a plaintext block 1`] = `
+exports[`Slack Element widgets renders a plaintext object 1`] = `
 Object {
   "emoji": true,
   "text": "Ravenclaw is obviously the best house.",
@@ -20,7 +20,7 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders a plaintext block without emoji 1`] = `
+exports[`Slack Element widgets renders a plaintext object without emoji 1`] = `
 Object {
   "emoji": false,
   "text": "Ravenclaw is obviously the best house.",
@@ -28,7 +28,43 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders markdown text 1`] = `
+exports[`Slack Element widgets renders an option object 1`] = `
+Object {
+  "text": Object {
+    "emoji": true,
+    "text": "Why best?",
+    "type": "plain_text",
+  },
+  "value": "why-best-raven",
+}
+`;
+
+exports[`Slack Element widgets renders an overflow menu element 1`] = `
+Object {
+  "action_id": "house-actions",
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "Why best?",
+        "type": "plain_text",
+      },
+      "value": "why-best-raven",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "Ping JK",
+        "type": "plain_text",
+      },
+      "value": "notify-author",
+    },
+  ],
+  "type": "overflow",
+}
+`;
+
+exports[`Slack Element widgets renders markdown object 1`] = `
 Object {
   "text": "Ravenclaw is obviously the best house.",
   "type": "mrkdwn",

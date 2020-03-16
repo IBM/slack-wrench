@@ -11,7 +11,9 @@ Array [
   "Blocks",
   "Markdown",
   "PlainText",
+  "OptionObject",
   "Button",
+  "OverflowMenu",
   "DateString",
   "User",
 ]
