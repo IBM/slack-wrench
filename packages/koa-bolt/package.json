@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/koa-bolt",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Run bolt as koa middleware",
   "main": "lib/index.js",
   "repository": {
@@ -24,8 +24,8 @@
     "koa-compose": "^4.0.0"
   },
   "devDependencies": {
+    "@slack-wrench/fixtures": "^1.1.1",
     "@slack/bolt": "^1.6.0",
-    "@slack-wrench/fixtures": "^2.0.0",
     "koa": "^2.11.0",
     "koa-compose": "^4.1.0",
     "serverless-http": "^2.3.1"

@@ -18,9 +18,9 @@
     "@slack/bolt": ">=1.0.0 <3.0.0"
   },
   "devDependencies": {
-    "@slack-wrench/fixtures": "^2.0.0",
-    "@slack-wrench/jest-bolt-receiver": "^2.0.0",
-    "@slack-wrench/jest-mock-web-client": "^1.1.0",
+    "@slack-wrench/fixtures": "^1.1.1",
+    "@slack-wrench/jest-bolt-receiver": "^1.1.1",
+    "@slack-wrench/jest-mock-web-client": "^1.1.1",
     "@slack/bolt": "^1.4.1",
     "delay": "^4.3.0"
   },
