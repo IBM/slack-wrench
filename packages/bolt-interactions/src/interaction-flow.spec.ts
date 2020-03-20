@@ -49,6 +49,28 @@ describe('Bolt interaction flows', () => {
     expect.assertions(2);
 
     const command = '/command';
+    const instanceId = 'a/lovely/instance';
+    const customFlowId = InteractionFlow.createFlowId(flowName, instanceId);
+
+    interactionFlow(flowName, flow => {
+      app.command(command, async ({ ack }) => {
+        ack();
+        await flow.start(state, instanceId);
+      });
+    })(app);
+
+    const { ack } = receiver.send(slashCommand(command));
+
+    await delay(0);
+
+    expect(ack).toBeCalled();
+    expect(await store.get(customFlowId)).toEqual(state);
+  });
+
+  it('Allows flows to be started with a custom instanceId', async () => {
+    expect.assertions(2);
+
+    const command = '/command';
 
     interactionFlow(flowName, flow => {
       app.command(command, async ({ ack }) => {
@@ -71,6 +93,16 @@ describe('Bolt interaction flows', () => {
     expect(defaultInteractionIdGenerator()).toMatch(
       /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}/,
     );
+  });
+
+  it('can parse flow ids', () => {
+    expect.assertions(1);
+
+    expect(InteractionFlow.parseFlowId(flowId)).toEqual({
+      flowId,
+      instanceId: random,
+      name: flowName,
+    });
   });
 
   describe('stateful actions', () => {
@@ -163,6 +195,18 @@ describe('Bolt interaction flows', () => {
 
       await delay(0);
       await expect(store.get(flowId)).rejects.toThrow('Conversation expired');
+    });
+
+    it('can parse interaction ids', () => {
+      expect.assertions(1);
+
+      expect(InteractionFlow.parseInteractionId(action_id)).toEqual({
+        flowId,
+        instanceId: random,
+        name: flowName,
+        interaction: buttonId,
+        interactionId: action_id,
+      });
     });
   });
 });

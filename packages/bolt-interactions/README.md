@@ -155,11 +155,12 @@ interactionFlow<FlowState>((flow, app) => {
 });
 ```
 
-Starts a new flow and sets the initial state.
+Starts a new flow and sets the initial state. You can also pass an optional `instanceId`.
 
 Arguments:
 
-- `initialState`: The starting state of the flow. Flow middleware will get this value whenever they're called.
+- `initialState` **(any)**: The starting state of the flow. Flow middleware will get this value whenever they're called.
+- `instanceUd` **(string) Optional**: If you have an instance id that you want to use, otherwise it will be generated with `InteractionFlow.interactionIdGenerator`
 
 Returns:
 The [flow context](#flow-context)
@@ -173,6 +174,36 @@ interactionFlow<FlowState>((flow, app) => {
 ```
 
 Create a [flow listener](#flow-listener) that listens for [actions](https://slack.dev/bolt/concepts#action-listening)
+
+## Working with Ids
+
+If you are working with your own ids for flow instances, it can be helpful to parse them. There some utilities to help with that.
+
+### InteractionFlow.parseFlowId
+
+```typescript
+const parsedFlowId = interactionFlow.parseFlowId('flow_12345');
+
+expect(parsedFlowId).toEqual({
+  flowId: 'flow_12345',
+  name: 'flow',
+  instanceId: '12345',
+});
+```
+
+### InteractionFlow.parseInteractionId
+
+```typescript
+const parsedFlowId = interactionFlow.parseFlowId('flow_12345:::interaction');
+
+expect(parsedFlowId).toEqual({
+  flowId: 'flow_12345',
+  name: 'flow',
+  instanceId: '12345',
+  interaction: 'interaction',
+  interactionId: 'flow_12345:::interaction',
+});
+```
 
 ## Testing your Flow
 

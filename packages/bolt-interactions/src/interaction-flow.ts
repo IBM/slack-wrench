@@ -12,6 +12,17 @@ import uuid from 'uuid/v4';
 
 import { Interaction } from './types';
 
+export interface FlowIdParts {
+  name: string; // Story name
+  instanceId: string; // Unique id for each interaction
+  flowId: string; // Combination name + interaction id
+}
+
+export interface InteractionIdParts extends FlowIdParts {
+  interaction: string; // Action that was taken in the flow
+  interactionId: string; // combination flowId and action
+}
+
 export class InteractionFlow<FlowState = unknown> {
   public static interactionIdGenerator: () => string = uuid;
 
@@ -55,20 +66,34 @@ export class InteractionFlow<FlowState = unknown> {
   public static createFlowId = (name: string, interactionId: string): string =>
     [name, interactionId].join(InteractionFlow.idSep);
 
-  private getFlowId({ body }: AnyMiddlewareArgs): string {
-    /* istanbul ignore else */
-    if ('actions' in body) {
-      const [flowId] = this.parseInteractionId(body.actions[0].action_id);
-      return flowId;
-    }
+  public static parseFlowId = (flowId: string): FlowIdParts => {
+    const [name, instanceId] = flowId.split(InteractionFlow.idSep);
 
-    // Just in case slack does something weird, I'm unsure how to trigger this
-    /* istanbul ignore next */
-    throw new Error("Couldn't find a flow in provided context");
-  }
+    return {
+      flowId,
+      name,
+      instanceId,
+    };
+  };
 
-  private parseInteractionId = (id: string): Array<string> =>
-    id.split(InteractionFlow.interactionSep);
+  public static createInteractionId = (
+    flowId: string,
+    interactionId: string,
+  ): string => [flowId, interactionId].join(InteractionFlow.interactionSep);
+
+  public static parseInteractionId = (
+    interactionId: string,
+  ): InteractionIdParts => {
+    const [flowId, interaction] = interactionId.split(
+      InteractionFlow.interactionSep,
+    );
+
+    return {
+      ...InteractionFlow.parseFlowId(flowId),
+      interaction,
+      interactionId,
+    };
+  };
 
   private interactionIdPattern = (id: string): RegExp =>
     new RegExp(
@@ -78,10 +103,19 @@ export class InteractionFlow<FlowState = unknown> {
       ),
     );
 
-  public static createInteractionId = (
-    flowId: string,
-    interactionId: string,
-  ): string => [flowId, interactionId].join(InteractionFlow.interactionSep);
+  private static getFlowId({ body }: AnyMiddlewareArgs): string {
+    /* istanbul ignore else */
+    if ('actions' in body) {
+      const { flowId } = InteractionFlow.parseInteractionId(
+        body.actions[0].action_id,
+      );
+      return flowId;
+    }
+
+    // Just in case slack does something weird, I'm unsure how to trigger this
+    /* istanbul ignore next */
+    throw new Error("Couldn't find a flow in provided context");
+  }
 
   private flowInteractionIds = (flowId: string): Interaction.FlowIds =>
     this.interactionIds.reduce((ids, interactionId) => {
@@ -112,8 +146,8 @@ export class InteractionFlow<FlowState = unknown> {
 
   private contextMiddleware: Middleware<AnyMiddlewareArgs> = async args => {
     const { context, next } = args;
-    const { store } = InteractionFlow;
-    const flowId = this.getFlowId(args);
+    const { store, getFlowId } = InteractionFlow;
+    const flowId = getFlowId(args);
     const state = await store.get(flowId);
 
     Object.assign(context, this.contextExtensions(flowId, state));
@@ -134,12 +168,13 @@ export class InteractionFlow<FlowState = unknown> {
 
   public async start(
     initialState: FlowState,
+    id?: string,
   ): Promise<Interaction.FlowContext<FlowState>> {
     const { store } = InteractionFlow;
 
     const flowId = InteractionFlow.createFlowId(
       this.name,
-      InteractionFlow.interactionIdGenerator(),
+      id || InteractionFlow.interactionIdGenerator(),
     );
 
     await store.set(flowId, initialState);
