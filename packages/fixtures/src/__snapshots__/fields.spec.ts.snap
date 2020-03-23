@@ -2,10 +2,13 @@
 
 exports[`Defaults has all the fields 1`] = `
 Fields {
+  "action_id": "ACTION_ID",
+  "action_ts": "0000000000.000000",
   "api_app_id": "API_APP_ID",
   "authed_users": Array [
     "UUSERID",
   ],
+  "block_id": "BLOCK_ID",
   "callback_id": "CALLBACK_ID",
   "channel": Object {
     "id": "CCHANNELID",
@@ -18,6 +21,7 @@ Fields {
     "domain": "team-domain",
     "id": "TTEAMID",
   },
+  "text": "TEXT",
   "token": "TOKEN",
   "trigger_id": "TRIGGER_ID",
   "ts": "0000000000.000000",
@@ -25,5 +29,6 @@ Fields {
     "id": "UUSERID",
     "name": "USER",
   },
+  "value": "VALUE",
 }
 `;
