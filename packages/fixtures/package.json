@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/fixtures",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Slack api fixtures for testing",
   "main": "lib/index.js",
   "repository": {
@@ -14,6 +14,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "@slack-wrench/blocks": "^1.2.0",
     "aws-lambda": "^1.0.5",
     "serverless-http": "^2.3.1"
   },

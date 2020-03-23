@@ -1,9 +1,12 @@
+import { PlainText } from '@slack-wrench/blocks';
 import {
   BasicElementAction,
   BlockAction,
   BlockButtonAction,
   BlockElementAction,
+  BlockOverflowAction,
   ButtonAction,
+  OverflowAction,
 } from '@slack/bolt';
 
 import fields from './fields';
@@ -38,23 +41,42 @@ function blockAction<Action extends BasicElementAction = BlockElementAction>(
   };
 }
 
-// Will eventually have more exports
-// eslint-disable-next-line import/prefer-default-export
 export function blockButtonAction(
   action?: Partial<ButtonAction>,
   options?: Partial<BlockButtonAction>,
 ): BlockButtonAction {
+  const { action_ts, text, action_id, block_id, value } = fields;
+
   return blockAction<ButtonAction>(
     {
       type: 'button',
-      action_ts: 'ACTION_TS',
-      text: {
-        type: 'plain_text',
-        text: 'TEXT',
+      action_ts,
+      text: PlainText(text),
+      action_id,
+      block_id,
+      value,
+      ...action,
+    },
+    options,
+  );
+}
+
+export function blockOverflowAction(
+  action?: Partial<OverflowAction>,
+  options?: Partial<BlockOverflowAction>,
+): BlockOverflowAction {
+  const { action_ts, text, action_id, block_id, value } = fields;
+
+  return blockAction<OverflowAction>(
+    {
+      type: 'overflow',
+      action_ts,
+      selected_option: {
+        text: PlainText(text),
+        value,
       },
-      action_id: 'ACTION_ID',
-      block_id: 'BLOCK_ID',
-      value: 'VALUE',
+      action_id,
+      block_id,
       ...action,
     },
     options,
