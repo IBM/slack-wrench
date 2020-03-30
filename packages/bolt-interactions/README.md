@@ -175,6 +175,46 @@ interactionFlow<FlowState>((flow, app) => {
 
 Create a [flow listener](#flow-listener) that listens for [actions](https://slack.dev/bolt/concepts#action-listening)
 
+### flow.view
+
+In handling views, you'll need to pass an interactionId as the callback and reference the same string in a `flow.view` action handler. An example of handling view submissions with a view that is opened when an overflow action is clicked:
+
+```typescript
+interactionFlow<FlowState>((flow, app) => {
+  const callback_id = 'edit';
+
+  flow.action<BlockOverflowAction>(
+    'openEdit',
+    async ({
+      action: { action_id },
+      body: { trigger_id },
+      context: { token, interactionIds },
+    }) => {
+      await flow.client.views.open({
+        trigger_id,
+        token,
+        view: {
+          type: 'modal',
+          // setup callback_id with unique interactionId based on string
+          callback_id: interactionIds[callback_id],
+          title: PlainText('Edit Story'),
+          submit: PlainText('Update Story'),
+          close: PlainText('Cancel'),
+          blocks: [
+            /* ... */
+          ],
+        },
+      });
+    },
+  );
+
+  // handle all submissions of above; callback_id is used to recapture context
+  flow.view<ViewSubmitAction>(callback_id, async ({ view, context, ... }) => {
+    /* do things when a SlackViewAction is triggered */
+  });
+});
+```
+
 ## Working with Ids
 
 If you are working with your own ids for flow instances, it can be helpful to parse them. There some utilities to help with that.

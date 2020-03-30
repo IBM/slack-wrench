@@ -9,6 +9,7 @@ This package contains type-safe fixtures and application wrappers for testing sl
   - [Slash Commands](#slash-commands)
   - [Actions](#actions)
     - [Block Button Action](#block-button-action)
+    - [View Submit Action](#view-submit-action)
 - [Global Fields](#global-fields)
   - [Overriding](#overriding)
 - [Serverless Tester](#serverless-tester)
@@ -107,6 +108,26 @@ Arguments:
 
 Returns:
 Object containing a block action event
+
+#### View Submit Action
+
+```typescript
+view.viewSubmitAction(
+  view?: Partial<ViewOutput>,
+  options?: Partial<BlockButtonAction>,
+)
+// : ViewSubmitAction => { type: 'view_submission', view: { id: 'editView', state: {}, ...} ], user, ... }
+```
+
+Creates an event from a view submit action.
+
+Arguments:
+
+- `view`: Overrides to [ViewOutput](https://github.com/slackapi/bolt/blob/master/src/types/view/index.ts#L73) values, on `ViewSubmitAction.view`
+- `options`: Any fields to override on the default [ViewSubmitAction event](https://github.com/slackapi/bolt/blob/master/src/types/view/index.ts#L31)
+
+Returns:
+Object containing a view submit action event
 
 ## Global Fields
 

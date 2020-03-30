@@ -1,4 +1,10 @@
-import { App, SlackAction, SlackActionMiddlewareArgs } from '@slack/bolt';
+import {
+  App,
+  SlackAction,
+  SlackActionMiddlewareArgs,
+  SlackViewAction,
+  SlackViewMiddlewareArgs,
+} from '@slack/bolt';
 
 import { InteractionFlow } from '../interaction-flow';
 
@@ -25,6 +31,13 @@ export interface FlowActionMiddlewareArgs<
 >
   extends FlowMiddlewareArgs<FlowState>,
     SlackActionMiddlewareArgs<ActionType> {}
+
+export interface FlowViewMiddlewareArgs<
+  FlowState,
+  ViewActionType extends SlackViewAction = SlackViewAction
+>
+  extends FlowMiddlewareArgs<FlowState>,
+    SlackViewMiddlewareArgs<ViewActionType> {}
 
 export interface ActionConstraints {
   action_id: string;

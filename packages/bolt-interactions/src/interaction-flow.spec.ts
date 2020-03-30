@@ -1,4 +1,4 @@
-import { actions, slashCommand } from '@slack-wrench/fixtures';
+import { actions, slashCommand, view } from '@slack-wrench/fixtures';
 import JestReceiver from '@slack-wrench/jest-bolt-receiver';
 import { App, ConversationStore, MemoryStore } from '@slack/bolt';
 import delay from 'delay';
@@ -126,6 +126,29 @@ describe('Bolt interaction flows', () => {
       const { ack } = receiver.send(
         actions.blockButtonAction({
           action_id,
+        }),
+      );
+
+      await delay(0);
+      expect(ack).toBeCalled();
+    });
+
+    it('sets the previous state for stateful view actions', async () => {
+      expect.assertions(2);
+
+      const id = 'test';
+      const callback_id = InteractionFlow.createInteractionId(flowId, id);
+
+      interactionFlow(flowName, flow => {
+        flow.view(id, ({ context, ack }) => {
+          expect(context.state).toEqual(state);
+          ack();
+        });
+      })(app);
+
+      const { ack } = receiver.send(
+        view.viewSubmitAction({
+          callback_id,
         }),
       );
 
