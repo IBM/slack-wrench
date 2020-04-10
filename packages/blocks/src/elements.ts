@@ -1,5 +1,6 @@
 import {
   Button as TButton,
+  ImageElement,
   MrkdwnElement,
   Option,
   Overflow,
@@ -56,7 +57,11 @@ export const Button = (
 // --- Date Picker Element --- https://api.slack.com/reference/block-kit/block-elements#datepicker
 
 // --- Image Element --- https://api.slack.com/reference/block-kit/block-elements#image
-
+export const Image = (image_url: string, alt_text: string): ImageElement => ({
+  type: 'image',
+  image_url,
+  alt_text,
+});
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
 // --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow

@@ -28,6 +28,14 @@ Object {
 }
 `;
 
+exports[`Slack Element widgets renders an image element 1`] = `
+Object {
+  "alt_text": "Ravenclaw is obviously the best house.",
+  "image_url": "http://placekitten.com/700/500",
+  "type": "image",
+}
+`;
+
 exports[`Slack Element widgets renders an option object 1`] = `
 Object {
   "text": Object {
