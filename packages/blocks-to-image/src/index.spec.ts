@@ -13,12 +13,12 @@ import BlockKitRenderer from './index';
 
 expect.extend({ toMatchImageSnapshot });
 
-const Resturant = (description: string, image: string) =>
+const Restaurant = (description: string, image: string) =>
   MdSection(description, {
     accessory: Image(image, 'alt text for image'),
   });
 
-const ResturantBlocks = (resturantTimes = 1) =>
+const RestaurantBlocks = (restaurantTimes = 1) =>
   Blocks([
     MdSection(
       'Hello, Assistant to the Regional Manager Dwight! ' +
@@ -28,13 +28,13 @@ const ResturantBlocks = (resturantTimes = 1) =>
     Divider(),
     ...times(
       () =>
-        Resturant(
+        Restaurant(
           "*Al's Burger Shack*\n" +
             ':star::star::star::star::star: 567 reviews\n' +
             "Al's Burger Shack is a great place to enjoy a juicy burger with delicious, crisp rosemary-dusted crinkle fries.",
           'https://s3-media0.fl.yelpcdn.com/bphoto/ggIUPo985Y2Lc0sjjMqYsg/258s.jpg',
         ),
-      resturantTimes,
+      restaurantTimes,
     ),
     Divider(),
     Actions([
@@ -65,7 +65,7 @@ describe('Block Images', () => {
     expect.assertions(1);
 
     const blockImage = await blockKitRenderer.imageFromBlocks(
-      ResturantBlocks(),
+      RestaurantBlocks(),
     );
 
     expect(blockImage).toMatchImageSnapshot();
@@ -75,7 +75,7 @@ describe('Block Images', () => {
     expect.assertions(1);
 
     const blockImage = await blockKitRenderer.imageFromBlocks(
-      ResturantBlocks(10),
+      RestaurantBlocks(10),
     );
 
     expect(blockImage).toMatchImageSnapshot();
@@ -85,7 +85,7 @@ describe('Block Images', () => {
     expect.assertions(1);
 
     const blockImage = await blockKitRenderer.imageFromBlocks(
-      ResturantBlocks(),
+      RestaurantBlocks(),
       'modal',
     );
 
@@ -96,7 +96,7 @@ describe('Block Images', () => {
     expect.assertions(1);
 
     const blockImage = await blockKitRenderer.imageFromBlocks(
-      ResturantBlocks(),
+      RestaurantBlocks(),
       'appHome',
     );
 
@@ -108,14 +108,14 @@ describe('Block Images', () => {
     const notLoggedInRenderer = new BlockKitRenderer();
 
     await expect(
-      notLoggedInRenderer.imageFromBlocks(ResturantBlocks()),
+      notLoggedInRenderer.imageFromBlocks(RestaurantBlocks()),
     ).rejects.toThrowError();
   });
 
   it('allows overriding snapshot options', async () => {
     expect.assertions(1);
     const blockImage = await blockKitRenderer.imageFromBlocks(
-      ResturantBlocks(),
+      RestaurantBlocks(),
       'appHome',
       { encoding: 'base64' },
     );

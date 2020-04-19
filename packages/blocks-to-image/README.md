@@ -1,6 +1,12 @@
 # Blocks To Images
 
-Render Slack Block Kit json as images. This pairs amazingly with [`jest-image-snapshot`](https://github.com/americanexpress/jest-image-snapshot) for image-based snapshot testing. No more starring at long json files for hours!
+Render Slack Block Kit json as images.
+
+As a side effect, you are also validating the correctness of the JSON you're using, since it won't render if given invalid JSON.
+
+This pairs amazingly with [`jest-image-snapshot`](https://github.com/americanexpress/jest-image-snapshot) for image-based snapshot testing. No more staring at long json files for hours!
+
+![Generated Failed Diff Example](diff-example.png)
 
 ## Table of Contents
 
