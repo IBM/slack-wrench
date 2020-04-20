@@ -5,6 +5,8 @@ import {
   OptionObject,
   OverflowMenu,
   PlainText,
+  PlainTextInputElement,
+  StaticSelectInputElement,
 } from './elements';
 
 describe('Slack Element widgets', () => {
@@ -52,6 +54,62 @@ describe('Slack Element widgets', () => {
         ],
         'house-actions',
       ),
+    ).toMatchSnapshot();
+  });
+
+  it('renders a minimal plain-text input element', () => {
+    expect.assertions(1);
+    expect(
+      PlainTextInputElement(
+        'title',
+        'and the Prisoner of Azkaban',
+        'Enter a title',
+      ),
+    ).toMatchSnapshot();
+  });
+
+  it('renders a plain-text input element with initial value, placeholder, and opts', () => {
+    expect.assertions(1);
+    expect(
+      PlainTextInputElement(
+        'title',
+        'and the Prisoner of Azkaban',
+        'Enter a title',
+        {
+          multiline: true,
+          min_length: 10,
+          max_length: 200,
+        },
+      ),
+    ).toMatchSnapshot();
+  });
+
+  const options = [
+    OptionObject('3', 'and the Prisoner of Azkaban'),
+    OptionObject('6', 'and the Half-Blood Prince'),
+    OptionObject('7', 'and the Deathly Hallows'),
+  ];
+
+  it('renders a minimal static select input element', () => {
+    expect.assertions(1);
+    expect(
+      StaticSelectInputElement('title', 'Select a book', options),
+    ).toMatchSnapshot();
+  });
+
+  it('renders a static select input element with initial option', () => {
+    expect.assertions(1);
+    expect(
+      StaticSelectInputElement('title', 'Select a book', options, options[0]),
+    ).toMatchSnapshot();
+  });
+
+  it('renders a static select input element opts that override', () => {
+    expect.assertions(1);
+    expect(
+      StaticSelectInputElement('title', 'Select a book', options, options[0], {
+        initial_option: options[1],
+      }),
     ).toMatchSnapshot();
   });
 });

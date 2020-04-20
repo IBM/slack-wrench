@@ -1,10 +1,13 @@
 import {
   Button as TButton,
   ImageElement,
+  InputBlock,
   MrkdwnElement,
   Option,
   Overflow,
   PlainTextElement,
+  PlainTextInput,
+  StaticSelect,
 } from '@slack/types';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
@@ -39,6 +42,10 @@ export const OptionObject = (
 // --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
 
 // Block Element Helpers --- https://api.slack.com/reference/block-kit/block-elements
+const InputElement = <T extends InputBlock['element']>(type: T['type']) => (
+  action_id: T['action_id'],
+  opts: Partial<T>,
+): T => ({ type, action_id, ...opts } as T);
 
 // --- Button Element --- https://api.slack.com/reference/block-kit/block-elements#button
 export const Button = (
@@ -62,6 +69,7 @@ export const Image = (image_url: string, alt_text: string): ImageElement => ({
   image_url,
   alt_text,
 });
+
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
 // --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow
@@ -78,7 +86,31 @@ export const OverflowMenu = (
 });
 
 // --- Plain-text Input Element --- https://api.slack.com/reference/block-kit/block-elements#input
+export const PlainTextInputElement = (
+  action_id: PlainTextInput['action_id'],
+  initial_value?: PlainTextInput['initial_value'],
+  placeholder?: string,
+  opts: Partial<PlainTextInput> = {},
+): PlainTextInput =>
+  InputElement<PlainTextInput>('plain_text_input')(action_id, {
+    initial_value,
+    placeholder: placeholder ? PlainText(placeholder) : undefined,
+    ...opts,
+  });
 
 // --- Radio Button Group Element --- https://api.slack.com/reference/block-kit/block-elements#radio
 
 // --- Select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#select
+export const StaticSelectInputElement = (
+  action_id: StaticSelect['action_id'],
+  placeholder: string,
+  options: StaticSelect['options'],
+  initial_option?: StaticSelect['initial_option'],
+  opts: Partial<StaticSelect> = {},
+): StaticSelect =>
+  InputElement<StaticSelect>('static_select')(action_id, {
+    placeholder: PlainText(placeholder),
+    options,
+    initial_option,
+    ...opts,
+  });

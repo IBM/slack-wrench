@@ -5,6 +5,7 @@ Array [
   "Actions",
   "Context",
   "Divider",
+  "Input",
   "Section",
   "MdSection",
   "FieldsSection",
@@ -15,6 +16,8 @@ Array [
   "Button",
   "Image",
   "OverflowMenu",
+  "PlainTextInputElement",
+  "StaticSelectInputElement",
   "DateString",
   "User",
 ]

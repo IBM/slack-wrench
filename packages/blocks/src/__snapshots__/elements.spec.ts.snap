@@ -12,6 +12,74 @@ Object {
 }
 `;
 
+exports[`Slack Element widgets renders a minimal plain-text input element 1`] = `
+Object {
+  "action_id": "title",
+  "initial_value": "and the Prisoner of Azkaban",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Enter a title",
+    "type": "plain_text",
+  },
+  "type": "plain_text_input",
+}
+`;
+
+exports[`Slack Element widgets renders a minimal static select input element 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": undefined,
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "static_select",
+}
+`;
+
+exports[`Slack Element widgets renders a plain-text input element with initial value, placeholder, and opts 1`] = `
+Object {
+  "action_id": "title",
+  "initial_value": "and the Prisoner of Azkaban",
+  "max_length": 200,
+  "min_length": 10,
+  "multiline": true,
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Enter a title",
+    "type": "plain_text",
+  },
+  "type": "plain_text_input",
+}
+`;
+
 exports[`Slack Element widgets renders a plaintext object 1`] = `
 Object {
   "emoji": true,
@@ -25,6 +93,98 @@ Object {
   "emoji": false,
   "text": "Ravenclaw is obviously the best house.",
   "type": "plain_text",
+}
+`;
+
+exports[`Slack Element widgets renders a static select input element opts that override 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "6",
+      "type": "plain_text",
+    },
+    "value": "and the Half-Blood Prince",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "static_select",
+}
+`;
+
+exports[`Slack Element widgets renders a static select input element with initial option 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "3",
+      "type": "plain_text",
+    },
+    "value": "and the Prisoner of Azkaban",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "static_select",
 }
 `;
 
