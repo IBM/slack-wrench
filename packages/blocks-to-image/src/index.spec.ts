@@ -48,7 +48,11 @@ describe('Block Images', () => {
   let blockKitRenderer: BlockKitRenderer;
 
   beforeAll(async () => {
-    blockKitRenderer = new BlockKitRenderer();
+    blockKitRenderer = new BlockKitRenderer({
+      puppeteer: {
+        // headless: false,
+      },
+    });
 
     await blockKitRenderer.login(
       process.env.SLACK_DOMAIN || '',
@@ -120,6 +124,6 @@ describe('Block Images', () => {
       { encoding: 'base64' },
     );
 
-    expect(blockImage).toMatch(/==$/);
+    expect(blockImage).toMatch(/=$/);
   });
 });

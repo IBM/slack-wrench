@@ -1,6 +1,5 @@
 import { KnownBlock } from '@slack/types';
 import puppeteer, {
-  BoundingBox,
   BoxModel,
   Browser,
   LaunchOptions,
@@ -11,27 +10,9 @@ import querystring from 'querystring';
 
 type Screenshot = string | Buffer;
 
-enum BlockSurfaceModeSelectors {
-  'message' = '.p-block_kit_builder_preview__message',
-  'modal' = '.p-block_kit_builder_preview_modal',
-  'appHome' = '.p-block_kit_builder_preview__app_home',
-}
-
-type BlockSurfaceModes = keyof typeof BlockSurfaceModeSelectors;
+type BlockSurfaceModes = 'message' | 'modal' | 'appHome';
 
 const minSlackViewportWidth = 1000; // Magic number, width needed for builder to render
-
-async function setViewportFromClip(
-  page: Page,
-  width: number,
-  clip: BoundingBox,
-): Promise<void> {
-  await page.setViewport({
-    width: Math.ceil(width),
-    height: Math.ceil(clip.height + clip.x),
-    deviceScaleFactor: 1,
-  });
-}
 
 async function screenshotDOMElement(
   page: Page,
@@ -41,37 +22,15 @@ async function screenshotDOMElement(
   const element = await page.waitForSelector(selector, { visible: true });
   // Removing the possibility of `null`
   const elementBox = (await element.boxModel()) as BoxModel;
-
-  const marginTopLeft = elementBox.margin[0];
-  const marginTopRight = elementBox.margin[1];
   const marginBottomRight = elementBox.margin[3];
 
-  const screenshotOptions = {
-    clip: {
-      x: marginTopLeft.x,
-      y: marginTopLeft.y,
-      width: marginTopRight.x - marginTopLeft.x,
-      height: marginBottomRight.y - marginTopRight.y,
-    },
-  };
-
-  await setViewportFromClip(
-    page,
-    minSlackViewportWidth,
-    screenshotOptions.clip,
-  );
-
-  await page.waitForFunction(
-    `document.querySelector('${selector}') && document.querySelector('${selector}').clientHeight != 0`,
-  );
-
-  const screenshot = await page.screenshot({
-    ...options,
-    ...screenshotOptions,
+  await page.setViewport({
+    width: Math.ceil(minSlackViewportWidth),
+    height: Math.ceil(marginBottomRight.y),
+    deviceScaleFactor: 1,
   });
-  await page.close();
 
-  return screenshot;
+  return element.screenshot(options);
 }
 
 export interface BlockKitRendererOptions {
@@ -118,8 +77,7 @@ export default class BlockKitRenderer {
     }
 
     const renderedBlocksSelector = '.p-block_kit_renderer';
-
-    const screenshotElementSelector = BlockSurfaceModeSelectors[mode];
+    const screenshotSelector = '.p-block_kit_builder_preview__container';
 
     const page = await this.browser.newPage();
 
@@ -130,8 +88,18 @@ export default class BlockKitRenderer {
 
     await page.goto(`https://api.slack.com/tools/block-kit-builder?${query}`);
 
+    // Wait for page to load with blocks from query
     await page.waitForSelector(renderedBlocksSelector);
-    return screenshotDOMElement(page, screenshotElementSelector, options);
+
+    const screenshot = await screenshotDOMElement(
+      page,
+      screenshotSelector,
+      options,
+    );
+
+    await page.close();
+
+    return screenshot;
   }
 
   async close(): Promise<void> {

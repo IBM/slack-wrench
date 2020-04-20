@@ -8,6 +8,8 @@ This pairs amazingly with [`jest-image-snapshot`](https://github.com/americanexp
 
 ![Generated Failed Diff Example](diff-example.png)
 
+Block Kit Builder is authenticated, if you use this package and want to help make this package easier to use, [Send Slack a Message](https://fancyfriends.slack.com/help/requests/new) asking them to prioritize them making it unauthenticated.
+
 ## Table of Contents
 
 - [Install](#install)
@@ -62,6 +64,18 @@ describe('My Awesome App', () => {
   });
 });
 ```
+
+### `login`
+
+```typescript
+blockKitRenderer.login(
+    domain: string, // The domain to your slack workspace eg: `community` (emit the `.slack.com)
+    email: string, // The email you use to log into the workspace above
+    password: string, // The password you use for the account
+) => Promise<Screenshot>
+```
+
+This package uses Slack's [Block Kit Builder](https://api.slack.com/tools/block-kit-builder) to render images. You need to log into a workspace that has Block Kit Builder installed.
 
 ### `imageFromBlocks`
 
