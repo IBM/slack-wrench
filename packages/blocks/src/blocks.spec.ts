@@ -7,10 +7,11 @@ import {
   Context,
   Divider,
   FieldsSection,
+  Input,
   MdSection,
   Section,
 } from './blocks';
-import { Button, Markdown, PlainText } from './elements';
+import { Button, Markdown, PlainText, PlainTextInputElement } from './elements';
 import { DateString } from './formatting';
 
 describe('Slack Block widgets', () => {
@@ -32,6 +33,26 @@ describe('Slack Block widgets', () => {
   it('renders a divider', () => {
     expect.assertions(1);
     expect(Divider()).toMatchSnapshot();
+  });
+
+  it('renders a minimal input', () => {
+    expect.assertions(1);
+
+    expect(Input('Title', PlainTextInputElement('title'))).toMatchSnapshot();
+  });
+
+  it('renders an input with block_id, hint, and as optional', () => {
+    expect.assertions(1);
+
+    expect(
+      Input(
+        'Title',
+        PlainTextInputElement('title'),
+        'title',
+        PlainText('keep it to the true 7'),
+        true,
+      ),
+    ).toMatchSnapshot();
   });
 
   it('renders a section', () => {

@@ -2,11 +2,12 @@ import {
   ActionsBlock,
   ContextBlock,
   DividerBlock,
+  InputBlock,
   KnownBlock,
   SectionBlock,
 } from '@slack/types';
 
-import { Markdown } from './elements';
+import { Markdown, PlainText } from './elements';
 
 // This file provides abstractions for layout blocks, sub-block objects, and related common patterns
 // https://api.slack.com/reference/block-kit/blocks
@@ -33,6 +34,20 @@ export const Divider = (): DividerBlock => ({
 // --- Image --- https://api.slack.com/reference/block-kit/blocks#image
 
 // --- Input --- https://api.slack.com/reference/block-kit/blocks#input
+export const Input = (
+  label: string,
+  element: InputBlock['element'],
+  block_id?: InputBlock['block_id'],
+  hint?: InputBlock['hint'],
+  optional?: InputBlock['optional'],
+): InputBlock => ({
+  type: 'input',
+  label: PlainText(label),
+  element,
+  block_id,
+  hint,
+  optional,
+});
 
 // --- Section --- https://api.slack.com/reference/block-kit/blocks#section
 export const Section = (sectionBlock: Partial<SectionBlock>): SectionBlock => ({
