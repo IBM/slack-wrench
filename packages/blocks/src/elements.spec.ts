@@ -1,5 +1,6 @@
 import {
   Button,
+  Image,
   Markdown,
   OptionObject,
   OverflowMenu,
@@ -10,6 +11,7 @@ import {
 
 describe('Slack Element widgets', () => {
   const text = 'Ravenclaw is obviously the best house.';
+  const url = 'http://placekitten.com/700/500';
   const buttonId = 'ravenAgree';
 
   it('renders markdown object', () => {
@@ -35,6 +37,11 @@ describe('Slack Element widgets', () => {
   it('renders a button element', () => {
     expect.assertions(1);
     expect(Button(text, buttonId)).toMatchSnapshot();
+  });
+
+  it('renders an image element', () => {
+    expect.assertions(1);
+    expect(Image(url, text)).toMatchSnapshot();
   });
 
   it('renders an overflow menu element', () => {

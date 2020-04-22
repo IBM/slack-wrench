@@ -11,3 +11,5 @@ coverage/
 # output for tsc compile
 lib/
 *.tsbuildinfo
+
+__diff_output__
