@@ -3,5 +3,6 @@ import * as events from './events';
 import fields from './fields';
 import ServerlessTester from './serverless-tester';
 import slashCommand from './slashCommand';
+import * as view from './view';
 
-export { actions, events, fields, ServerlessTester, slashCommand };
+export { actions, events, view, fields, ServerlessTester, slashCommand };

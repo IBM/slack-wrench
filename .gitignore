@@ -6,6 +6,7 @@ coverage/
 
 .npmrc
 
+.DS_Store
 
 # output for tsc compile
 lib/
