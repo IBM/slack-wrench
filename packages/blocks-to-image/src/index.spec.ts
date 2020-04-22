@@ -48,11 +48,7 @@ describe('Block Images', () => {
   let blockKitRenderer: BlockKitRenderer;
 
   beforeAll(async () => {
-    blockKitRenderer = new BlockKitRenderer({
-      puppeteer: {
-        // headless: false,
-      },
-    });
+    blockKitRenderer = new BlockKitRenderer();
 
     await blockKitRenderer.login(
       process.env.SLACK_DOMAIN || '',

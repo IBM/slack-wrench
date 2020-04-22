@@ -8,7 +8,7 @@ This pairs amazingly with [`jest-image-snapshot`](https://github.com/americanexp
 
 ![Generated Failed Diff Example](diff-example.png)
 
-Block Kit Builder is authenticated, if you use this package and want to help make this package easier to use, [Send Slack a Message](https://fancyfriends.slack.com/help/requests/new) asking them to prioritize them making it unauthenticated.
+Block Kit Builder is authenticated, if you use this package and want to help make this package easier to use, [Send Slack a Message](https://my.slack.com/help/requests/new) asking them to prioritize them making it unauthenticated.
 
 ## Table of Contents
 
