@@ -1,5 +1,133 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Slack Element widgets checkbox input element renders a minimal example 1`] = `
+Object {
+  "action_id": "title",
+  "initial_options": undefined,
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "type": "checkboxes",
+}
+`;
+
+exports[`Slack Element widgets checkbox input element renders with initial options 1`] = `
+Object {
+  "action_id": "title",
+  "initial_options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+  ],
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "type": "checkboxes",
+}
+`;
+
+exports[`Slack Element widgets checkbox input element renders with opts that override 1`] = `
+Object {
+  "action_id": "title",
+  "initial_options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+  ],
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "type": "checkboxes",
+}
+`;
+
 exports[`Slack Element widgets multi-select input channels element renders a minimal example 1`] = `
 Object {
   "action_id": "channels",

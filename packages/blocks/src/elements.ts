@@ -1,6 +1,7 @@
 import {
   Button as TButton,
   ChannelsSelect,
+  Checkboxes,
   ConversationsSelect,
   ImageElement,
   InputBlock,
@@ -66,6 +67,17 @@ export const Button = (
 });
 
 // --- Checkbox Group --- https://api.slack.com/reference/block-kit/block-elements#checkboxes
+export const CheckboxInputElement = (
+  action_id: Checkboxes['action_id'],
+  options: Checkboxes['options'],
+  initial_options?: Checkboxes['initial_options'],
+  opts: Partial<Checkboxes> = {},
+): Checkboxes =>
+  InputElement<Checkboxes>('checkboxes')(action_id, {
+    options,
+    initial_options,
+    ...opts,
+  });
 
 // --- Date Picker Element --- https://api.slack.com/reference/block-kit/block-elements#datepicker
 
