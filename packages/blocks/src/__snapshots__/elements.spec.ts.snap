@@ -25,6 +25,40 @@ Object {
 }
 `;
 
+exports[`Slack Element widgets renders a minimal radio input element 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": undefined,
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "type": "radio_buttons",
+}
+`;
+
 exports[`Slack Element widgets renders a minimal static select input element 1`] = `
 Object {
   "action_id": "title",
@@ -93,6 +127,88 @@ Object {
   "emoji": false,
   "text": "Ravenclaw is obviously the best house.",
   "type": "plain_text",
+}
+`;
+
+exports[`Slack Element widgets renders a radio input element opts that override 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "6",
+      "type": "plain_text",
+    },
+    "value": "and the Half-Blood Prince",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "type": "radio_buttons",
+}
+`;
+
+exports[`Slack Element widgets renders a radio input element with initial option 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "3",
+      "type": "plain_text",
+    },
+    "value": "and the Prisoner of Azkaban",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "type": "radio_buttons",
 }
 `;
 
