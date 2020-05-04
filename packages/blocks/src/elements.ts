@@ -7,6 +7,7 @@ import {
   Overflow,
   PlainTextElement,
   PlainTextInput,
+  RadioButtons,
   StaticSelect,
 } from '@slack/types';
 
@@ -27,7 +28,6 @@ export const PlainText = (text: string, emoji = true): PlainTextElement => ({
 // --- Confirmation Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
 
 // --- Option Object --- https://api.slack.com/reference/block-kit/composition-objects#option
-
 export const OptionObject = (
   // only works with PlainText at the moment https://github.com/slackapi/node-slack-sdk/issues/973
   text: string,
@@ -73,7 +73,6 @@ export const Image = (image_url: string, alt_text: string): ImageElement => ({
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
 // --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow
-
 export const OverflowMenu = (
   options: Option[],
   action_id: string,
@@ -99,6 +98,17 @@ export const PlainTextInputElement = (
   });
 
 // --- Radio Button Group Element --- https://api.slack.com/reference/block-kit/block-elements#radio
+export const RadioInputElement = (
+  action_id: RadioButtons['action_id'],
+  options: RadioButtons['options'],
+  initial_option?: RadioButtons['initial_option'],
+  opts: Partial<RadioButtons> = {},
+): RadioButtons =>
+  InputElement<RadioButtons>('radio_buttons')(action_id, {
+    options,
+    initial_option,
+    ...opts,
+  });
 
 // --- Select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#select
 export const StaticSelectInputElement = (

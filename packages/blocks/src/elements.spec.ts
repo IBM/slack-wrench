@@ -6,6 +6,7 @@ import {
   OverflowMenu,
   PlainText,
   PlainTextInputElement,
+  RadioInputElement,
   StaticSelectInputElement,
 } from './elements';
 
@@ -89,6 +90,25 @@ describe('Slack Element widgets', () => {
     OptionObject('6', 'and the Half-Blood Prince'),
     OptionObject('7', 'and the Deathly Hallows'),
   ];
+
+  it('renders a minimal radio input element', () => {
+    expect.assertions(1);
+    expect(RadioInputElement('title', options)).toMatchSnapshot();
+  });
+
+  it('renders a radio input element with initial option', () => {
+    expect.assertions(1);
+    expect(RadioInputElement('title', options, options[0])).toMatchSnapshot();
+  });
+
+  it('renders a radio input element opts that override', () => {
+    expect.assertions(1);
+    expect(
+      RadioInputElement('title', options, options[0], {
+        initial_option: options[1],
+      }),
+    ).toMatchSnapshot();
+  });
 
   it('renders a minimal static select input element', () => {
     expect.assertions(1);

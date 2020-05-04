@@ -17,6 +17,7 @@ Array [
   "Image",
   "OverflowMenu",
   "PlainTextInputElement",
+  "RadioInputElement",
   "StaticSelectInputElement",
   "DateString",
   "User",
