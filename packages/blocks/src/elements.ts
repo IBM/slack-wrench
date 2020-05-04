@@ -1,5 +1,6 @@
 import {
   Button as TButton,
+  ChannelsSelect,
   ConversationsSelect,
   ImageElement,
   InputBlock,
@@ -171,6 +172,19 @@ export const StaticSelectInputElement = (
     placeholder: PlainText(placeholder),
     options,
     initial_option,
+    ...opts,
+  });
+
+// https://api.slack.com/reference/block-kit/block-elements#channel_select
+export const ChannelsSelectInputElement = (
+  action_id: ChannelsSelect['action_id'],
+  placeholder: string,
+  initial_channel?: ChannelsSelect['initial_channel'],
+  opts: Partial<ChannelsSelect> = {},
+): ChannelsSelect =>
+  InputElement<ChannelsSelect>('channels_select')(action_id, {
+    placeholder: PlainText(placeholder),
+    initial_channel,
     ...opts,
   });
 
