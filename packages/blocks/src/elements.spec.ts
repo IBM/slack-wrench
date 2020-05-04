@@ -1,6 +1,7 @@
 import {
   Button,
   ChannelsSelectInputElement,
+  CheckboxInputElement,
   ConversationsSelectInputElement,
   Image,
   Markdown,
@@ -96,6 +97,29 @@ describe('Slack Element widgets', () => {
     OptionObject('6', 'and the Half-Blood Prince'),
     OptionObject('7', 'and the Deathly Hallows'),
   ];
+
+  describe('checkbox input element', () => {
+    it('renders a minimal example', () => {
+      expect.assertions(1);
+      expect(CheckboxInputElement('title', options)).toMatchSnapshot();
+    });
+
+    it('renders with initial options', () => {
+      expect.assertions(1);
+      expect(
+        CheckboxInputElement('title', options, [options[0], options[1]]),
+      ).toMatchSnapshot();
+    });
+
+    it('renders with opts that override', () => {
+      expect.assertions(1);
+      expect(
+        CheckboxInputElement('title', options, [options[0]], {
+          initial_options: [options[1]],
+        }),
+      ).toMatchSnapshot();
+    });
+  });
 
   describe('radio input element', () => {
     it('renders a minimal example', () => {
