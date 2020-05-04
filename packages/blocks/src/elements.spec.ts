@@ -3,6 +3,7 @@ import {
   ConversationsSelectInputElement,
   Image,
   Markdown,
+  MultiChannelsSelectInputElement,
   MultiConversationsSelectInputElement,
   MultiUsersSelectInputElement,
   OptionObject,
@@ -214,18 +215,18 @@ describe('Slack Element widgets', () => {
   });
 
   describe('multi-select input', () => {
-    describe('conversations element', () => {
+    describe('channels element', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement('channel', 'Select channels'),
+          MultiChannelsSelectInputElement('channels', 'Select channels'),
         ).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement('channel', 'Select channels', [
+          MultiChannelsSelectInputElement('channels', 'Select channels', [
             'GRK5NTHV1',
           ]),
         ).toMatchSnapshot();
@@ -234,9 +235,46 @@ describe('Slack Element widgets', () => {
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement(
-            'channel',
+          MultiChannelsSelectInputElement(
+            'channels',
             'Select channels',
+            ['GRK5NTHV1'],
+            {
+              initial_channels: ['GRK5NTHV2'],
+            },
+          ),
+        ).toMatchSnapshot();
+      });
+    });
+
+    describe('conversations element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          MultiConversationsSelectInputElement(
+            'conversations',
+            'Select conversations',
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          MultiConversationsSelectInputElement(
+            'conversations',
+            'Select conversations',
+            ['GRK5NTHV1'],
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          MultiConversationsSelectInputElement(
+            'conversations',
+            'Select conversations',
             ['GRK5NTHV1'],
             {
               initial_conversations: ['GRK5NTHV2'],
