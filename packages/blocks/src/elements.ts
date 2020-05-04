@@ -1,14 +1,18 @@
 import {
   Button as TButton,
+  ConversationsSelect,
   ImageElement,
   InputBlock,
   MrkdwnElement,
+  MultiConversationsSelect,
+  MultiUsersSelect,
   Option,
   Overflow,
   PlainTextElement,
   PlainTextInput,
   RadioButtons,
   StaticSelect,
+  UsersSelect,
 } from '@slack/types';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
@@ -72,6 +76,37 @@ export const Image = (image_url: string, alt_text: string): ImageElement => ({
 
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
+// https://api.slack.com/reference/block-kit/block-elements#static_multi_select
+
+// https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select
+export const MultiConversationsSelectInputElement = (
+  action_id: MultiConversationsSelect['action_id'],
+  placeholder: string,
+  initial_conversations?: MultiConversationsSelect['initial_conversations'],
+  opts: Partial<MultiConversationsSelect> = {},
+): MultiConversationsSelect =>
+  InputElement<MultiConversationsSelect>('multi_conversations_select')(
+    action_id,
+    {
+      placeholder: PlainText(placeholder),
+      initial_conversations,
+      ...opts,
+    },
+  );
+
+// https://api.slack.com/reference/block-kit/block-elements#users_multi_select
+export const MultiUsersSelectInputElement = (
+  action_id: MultiUsersSelect['action_id'],
+  placeholder: string,
+  initial_users?: MultiUsersSelect['initial_users'],
+  opts: Partial<MultiUsersSelect> = {},
+): MultiUsersSelect =>
+  InputElement<MultiUsersSelect>('multi_users_select')(action_id, {
+    placeholder: PlainText(placeholder),
+    initial_users,
+    ...opts,
+  });
+
 // --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow
 export const OverflowMenu = (
   options: Option[],
@@ -122,5 +157,31 @@ export const StaticSelectInputElement = (
     placeholder: PlainText(placeholder),
     options,
     initial_option,
+    ...opts,
+  });
+
+// https://api.slack.com/reference/block-kit/block-elements#conversation_select
+export const ConversationsSelectInputElement = (
+  action_id: ConversationsSelect['action_id'],
+  placeholder: string,
+  initial_conversation?: ConversationsSelect['initial_conversation'],
+  opts: Partial<ConversationsSelect> = {},
+): ConversationsSelect =>
+  InputElement<ConversationsSelect>('conversations_select')(action_id, {
+    placeholder: PlainText(placeholder),
+    initial_conversation,
+    ...opts,
+  });
+
+// https://api.slack.com/reference/block-kit/block-elements#users_select
+export const UsersSelectInputElement = (
+  action_id: UsersSelect['action_id'],
+  placeholder: string,
+  initial_user?: UsersSelect['initial_user'],
+  opts: Partial<UsersSelect> = {},
+): UsersSelect =>
+  InputElement<UsersSelect>('users_select')(action_id, {
+    placeholder: PlainText(placeholder),
+    initial_user,
     ...opts,
   });
