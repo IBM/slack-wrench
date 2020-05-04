@@ -353,6 +353,45 @@ Object {
 }
 `;
 
+exports[`Slack Element widgets select input channels element renders a minimal example 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_channel": undefined,
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select channel",
+    "type": "plain_text",
+  },
+  "type": "channels_select",
+}
+`;
+
+exports[`Slack Element widgets select input channels element renders with initial option 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_channel": "GRK5NTHV1",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select channel",
+    "type": "plain_text",
+  },
+  "type": "channels_select",
+}
+`;
+
+exports[`Slack Element widgets select input channels element renders with opts that override 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_channel": "GRK5NTHV2",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select channel",
+    "type": "plain_text",
+  },
+  "type": "channels_select",
+}
+`;
+
 exports[`Slack Element widgets select input conversation element renders a minimal example 1`] = `
 Object {
   "action_id": "channel",

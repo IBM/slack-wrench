@@ -1,5 +1,6 @@
 import {
   Button,
+  ChannelsSelectInputElement,
   ConversationsSelectInputElement,
   Image,
   Markdown,
@@ -150,6 +151,31 @@ describe('Slack Element widgets', () => {
               initial_option: options[1],
             },
           ),
+        ).toMatchSnapshot();
+      });
+    });
+
+    describe('channels element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          ChannelsSelectInputElement('channel', 'Select channel'),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          ChannelsSelectInputElement('channel', 'Select channel', 'GRK5NTHV1'),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          ChannelsSelectInputElement('channel', 'Select channel', 'GRK5NTHV1', {
+            initial_channel: 'GRK5NTHV2',
+          }),
         ).toMatchSnapshot();
       });
     });
