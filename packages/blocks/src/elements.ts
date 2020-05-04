@@ -4,6 +4,7 @@ import {
   ImageElement,
   InputBlock,
   MrkdwnElement,
+  MultiChannelsSelect,
   MultiConversationsSelect,
   MultiUsersSelect,
   Option,
@@ -77,6 +78,19 @@ export const Image = (image_url: string, alt_text: string): ImageElement => ({
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
 // https://api.slack.com/reference/block-kit/block-elements#static_multi_select
+
+// https://api.slack.com/reference/block-kit/block-elements#channel_multi_select
+export const MultiChannelsSelectInputElement = (
+  action_id: MultiChannelsSelect['action_id'],
+  placeholder: string,
+  initial_channels?: MultiChannelsSelect['initial_channels'],
+  opts: Partial<MultiChannelsSelect> = {},
+): MultiChannelsSelect =>
+  InputElement<MultiChannelsSelect>('multi_channels_select')(action_id, {
+    placeholder: PlainText(placeholder),
+    initial_channels,
+    ...opts,
+  });
 
 // https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select
 export const MultiConversationsSelectInputElement = (

@@ -15,6 +15,7 @@ Array [
   "OptionObject",
   "Button",
   "Image",
+  "MultiChannelsSelectInputElement",
   "MultiConversationsSelectInputElement",
   "MultiUsersSelectInputElement",
   "OverflowMenu",
