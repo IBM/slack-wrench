@@ -1,57 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Slack Element widgets renders a button element 1`] = `
-Object {
-  "action_id": "ravenAgree",
-  "text": Object {
-    "emoji": true,
-    "text": "Ravenclaw is obviously the best house.",
-    "type": "plain_text",
-  },
-  "type": "button",
-}
-`;
-
-exports[`Slack Element widgets renders a conversation select input element opts that override 1`] = `
-Object {
-  "action_id": "channel",
-  "initial_conversation": "GRK5NTHV2",
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a channel",
-    "type": "plain_text",
-  },
-  "type": "conversations_select",
-}
-`;
-
-exports[`Slack Element widgets renders a conversation select input element with initial option 1`] = `
-Object {
-  "action_id": "channel",
-  "initial_conversation": "GRK5NTHV1",
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a channel",
-    "type": "plain_text",
-  },
-  "type": "conversations_select",
-}
-`;
-
-exports[`Slack Element widgets renders a minimal conversation select input element 1`] = `
-Object {
-  "action_id": "channel",
-  "initial_conversation": undefined,
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a channel",
-    "type": "plain_text",
-  },
-  "type": "conversations_select",
-}
-`;
-
-exports[`Slack Element widgets renders a minimal multi-conversation select input element 1`] = `
+exports[`Slack Element widgets multi-select input conversations element renders a minimal example 1`] = `
 Object {
   "action_id": "channel",
   "initial_conversations": undefined,
@@ -64,7 +13,37 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders a minimal multi-users select input element 1`] = `
+exports[`Slack Element widgets multi-select input conversations element renders with initial option 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_conversations": Array [
+    "GRK5NTHV1",
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select channels",
+    "type": "plain_text",
+  },
+  "type": "multi_conversations_select",
+}
+`;
+
+exports[`Slack Element widgets multi-select input conversations element renders with opts that override 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_conversations": Array [
+    "GRK5NTHV2",
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select channels",
+    "type": "plain_text",
+  },
+  "type": "multi_conversations_select",
+}
+`;
+
+exports[`Slack Element widgets multi-select input users element renders a minimal example 1`] = `
 Object {
   "action_id": "users",
   "initial_users": undefined,
@@ -77,20 +56,37 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders a minimal plain-text input element 1`] = `
+exports[`Slack Element widgets multi-select input users element renders with initial option 1`] = `
 Object {
-  "action_id": "title",
-  "initial_value": "and the Prisoner of Azkaban",
+  "action_id": "users",
+  "initial_users": Array [
+    "DPJ215Q65",
+  ],
   "placeholder": Object {
     "emoji": true,
-    "text": "Enter a title",
+    "text": "Select users",
     "type": "plain_text",
   },
-  "type": "plain_text_input",
+  "type": "multi_users_select",
 }
 `;
 
-exports[`Slack Element widgets renders a minimal radio input element 1`] = `
+exports[`Slack Element widgets multi-select input users element renders with opts that override 1`] = `
+Object {
+  "action_id": "users",
+  "initial_users": Array [
+    "DPBMEQCM8",
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select users",
+    "type": "plain_text",
+  },
+  "type": "multi_users_select",
+}
+`;
+
+exports[`Slack Element widgets radio input element renders a minimal example 1`] = `
 Object {
   "action_id": "title",
   "initial_option": undefined,
@@ -124,10 +120,17 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders a minimal static select input element 1`] = `
+exports[`Slack Element widgets radio input element renders with initial option 1`] = `
 Object {
   "action_id": "title",
-  "initial_option": undefined,
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "3",
+      "type": "plain_text",
+    },
+    "value": "and the Prisoner of Azkaban",
+  },
   "options": Array [
     Object {
       "text": Object {
@@ -154,85 +157,73 @@ Object {
       "value": "and the Deathly Hallows",
     },
   ],
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a book",
-    "type": "plain_text",
-  },
-  "type": "static_select",
+  "type": "radio_buttons",
 }
 `;
 
-exports[`Slack Element widgets renders a minimal users select input element 1`] = `
+exports[`Slack Element widgets radio input element renders with opts that override 1`] = `
 Object {
-  "action_id": "user",
-  "initial_user": undefined,
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a user",
-    "type": "plain_text",
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "6",
+      "type": "plain_text",
+    },
+    "value": "and the Half-Blood Prince",
   },
-  "type": "users_select",
-}
-`;
-
-exports[`Slack Element widgets renders a multi-conversation select input element opts that override 1`] = `
-Object {
-  "action_id": "channel",
-  "initial_conversations": Array [
-    "GRK5NTHV2",
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
   ],
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select channels",
-    "type": "plain_text",
-  },
-  "type": "multi_conversations_select",
+  "type": "radio_buttons",
 }
 `;
 
-exports[`Slack Element widgets renders a multi-conversation select input element with initial option 1`] = `
+exports[`Slack Element widgets renders a button element 1`] = `
 Object {
-  "action_id": "channel",
-  "initial_conversations": Array [
-    "GRK5NTHV1",
-  ],
-  "placeholder": Object {
+  "action_id": "ravenAgree",
+  "text": Object {
     "emoji": true,
-    "text": "Select channels",
+    "text": "Ravenclaw is obviously the best house.",
     "type": "plain_text",
   },
-  "type": "multi_conversations_select",
+  "type": "button",
 }
 `;
 
-exports[`Slack Element widgets renders a multi-users select input element opts that override 1`] = `
+exports[`Slack Element widgets renders a minimal plain-text input element 1`] = `
 Object {
-  "action_id": "users",
-  "initial_users": Array [
-    "DPBMEQCM8",
-  ],
+  "action_id": "title",
+  "initial_value": "and the Prisoner of Azkaban",
   "placeholder": Object {
     "emoji": true,
-    "text": "Select users",
+    "text": "Enter a title",
     "type": "plain_text",
   },
-  "type": "multi_users_select",
-}
-`;
-
-exports[`Slack Element widgets renders a multi-users select input element with initial option 1`] = `
-Object {
-  "action_id": "users",
-  "initial_users": Array [
-    "DPJ215Q65",
-  ],
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select users",
-    "type": "plain_text",
-  },
-  "type": "multi_users_select",
+  "type": "plain_text_input",
 }
 `;
 
@@ -265,206 +256,6 @@ Object {
   "emoji": false,
   "text": "Ravenclaw is obviously the best house.",
   "type": "plain_text",
-}
-`;
-
-exports[`Slack Element widgets renders a radio input element opts that override 1`] = `
-Object {
-  "action_id": "title",
-  "initial_option": Object {
-    "text": Object {
-      "emoji": true,
-      "text": "6",
-      "type": "plain_text",
-    },
-    "value": "and the Half-Blood Prince",
-  },
-  "options": Array [
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "3",
-        "type": "plain_text",
-      },
-      "value": "and the Prisoner of Azkaban",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "6",
-        "type": "plain_text",
-      },
-      "value": "and the Half-Blood Prince",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "7",
-        "type": "plain_text",
-      },
-      "value": "and the Deathly Hallows",
-    },
-  ],
-  "type": "radio_buttons",
-}
-`;
-
-exports[`Slack Element widgets renders a radio input element with initial option 1`] = `
-Object {
-  "action_id": "title",
-  "initial_option": Object {
-    "text": Object {
-      "emoji": true,
-      "text": "3",
-      "type": "plain_text",
-    },
-    "value": "and the Prisoner of Azkaban",
-  },
-  "options": Array [
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "3",
-        "type": "plain_text",
-      },
-      "value": "and the Prisoner of Azkaban",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "6",
-        "type": "plain_text",
-      },
-      "value": "and the Half-Blood Prince",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "7",
-        "type": "plain_text",
-      },
-      "value": "and the Deathly Hallows",
-    },
-  ],
-  "type": "radio_buttons",
-}
-`;
-
-exports[`Slack Element widgets renders a static select input element opts that override 1`] = `
-Object {
-  "action_id": "title",
-  "initial_option": Object {
-    "text": Object {
-      "emoji": true,
-      "text": "6",
-      "type": "plain_text",
-    },
-    "value": "and the Half-Blood Prince",
-  },
-  "options": Array [
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "3",
-        "type": "plain_text",
-      },
-      "value": "and the Prisoner of Azkaban",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "6",
-        "type": "plain_text",
-      },
-      "value": "and the Half-Blood Prince",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "7",
-        "type": "plain_text",
-      },
-      "value": "and the Deathly Hallows",
-    },
-  ],
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a book",
-    "type": "plain_text",
-  },
-  "type": "static_select",
-}
-`;
-
-exports[`Slack Element widgets renders a static select input element with initial option 1`] = `
-Object {
-  "action_id": "title",
-  "initial_option": Object {
-    "text": Object {
-      "emoji": true,
-      "text": "3",
-      "type": "plain_text",
-    },
-    "value": "and the Prisoner of Azkaban",
-  },
-  "options": Array [
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "3",
-        "type": "plain_text",
-      },
-      "value": "and the Prisoner of Azkaban",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "6",
-        "type": "plain_text",
-      },
-      "value": "and the Half-Blood Prince",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "7",
-        "type": "plain_text",
-      },
-      "value": "and the Deathly Hallows",
-    },
-  ],
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a book",
-    "type": "plain_text",
-  },
-  "type": "static_select",
-}
-`;
-
-exports[`Slack Element widgets renders a users select input element opts that override 1`] = `
-Object {
-  "action_id": "channel",
-  "initial_user": "DPBMEQCM8",
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a user",
-    "type": "plain_text",
-  },
-  "type": "users_select",
-}
-`;
-
-exports[`Slack Element widgets renders a users select input element with initial option 1`] = `
-Object {
-  "action_id": "user",
-  "initial_user": "DPJ215Q65",
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Select a user",
-    "type": "plain_text",
-  },
-  "type": "users_select",
 }
 `;
 
@@ -516,5 +307,214 @@ exports[`Slack Element widgets renders markdown object 1`] = `
 Object {
   "text": "Ravenclaw is obviously the best house.",
   "type": "mrkdwn",
+}
+`;
+
+exports[`Slack Element widgets select input conversation element renders a minimal example 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_conversation": undefined,
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a channel",
+    "type": "plain_text",
+  },
+  "type": "conversations_select",
+}
+`;
+
+exports[`Slack Element widgets select input conversation element renders with initial option 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_conversation": "GRK5NTHV1",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a channel",
+    "type": "plain_text",
+  },
+  "type": "conversations_select",
+}
+`;
+
+exports[`Slack Element widgets select input conversation element renders with opts that override 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_conversation": "GRK5NTHV2",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a channel",
+    "type": "plain_text",
+  },
+  "type": "conversations_select",
+}
+`;
+
+exports[`Slack Element widgets select input static element renders a minimal example 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": undefined,
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "static_select",
+}
+`;
+
+exports[`Slack Element widgets select input static element renders with initial option 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "3",
+      "type": "plain_text",
+    },
+    "value": "and the Prisoner of Azkaban",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "static_select",
+}
+`;
+
+exports[`Slack Element widgets select input static element renders with opts that override 1`] = `
+Object {
+  "action_id": "title",
+  "initial_option": Object {
+    "text": Object {
+      "emoji": true,
+      "text": "6",
+      "type": "plain_text",
+    },
+    "value": "and the Half-Blood Prince",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "static_select",
+}
+`;
+
+exports[`Slack Element widgets select input user element renders a minimal example 1`] = `
+Object {
+  "action_id": "user",
+  "initial_user": undefined,
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a user",
+    "type": "plain_text",
+  },
+  "type": "users_select",
+}
+`;
+
+exports[`Slack Element widgets select input user element renders with initial option 1`] = `
+Object {
+  "action_id": "user",
+  "initial_user": "DPJ215Q65",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a user",
+    "type": "plain_text",
+  },
+  "type": "users_select",
+}
+`;
+
+exports[`Slack Element widgets select input user element renders with opts that override 1`] = `
+Object {
+  "action_id": "channel",
+  "initial_user": "DPBMEQCM8",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a user",
+    "type": "plain_text",
+  },
+  "type": "users_select",
 }
 `;

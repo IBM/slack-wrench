@@ -95,151 +95,180 @@ describe('Slack Element widgets', () => {
     OptionObject('7', 'and the Deathly Hallows'),
   ];
 
-  it('renders a minimal radio input element', () => {
-    expect.assertions(1);
-    expect(RadioInputElement('title', options)).toMatchSnapshot();
+  describe('radio input element', () => {
+    it('renders a minimal example', () => {
+      expect.assertions(1);
+      expect(RadioInputElement('title', options)).toMatchSnapshot();
+    });
+
+    it('renders with initial option', () => {
+      expect.assertions(1);
+      expect(RadioInputElement('title', options, options[0])).toMatchSnapshot();
+    });
+
+    it('renders with opts that override', () => {
+      expect.assertions(1);
+      expect(
+        RadioInputElement('title', options, options[0], {
+          initial_option: options[1],
+        }),
+      ).toMatchSnapshot();
+    });
   });
 
-  it('renders a radio input element with initial option', () => {
-    expect.assertions(1);
-    expect(RadioInputElement('title', options, options[0])).toMatchSnapshot();
+  describe('select input', () => {
+    describe('static element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          StaticSelectInputElement('title', 'Select a book', options),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          StaticSelectInputElement(
+            'title',
+            'Select a book',
+            options,
+            options[0],
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          StaticSelectInputElement(
+            'title',
+            'Select a book',
+            options,
+            options[0],
+            {
+              initial_option: options[1],
+            },
+          ),
+        ).toMatchSnapshot();
+      });
+    });
+
+    describe('conversation element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          ConversationsSelectInputElement('channel', 'Select a channel'),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          ConversationsSelectInputElement(
+            'channel',
+            'Select a channel',
+            'GRK5NTHV1',
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          ConversationsSelectInputElement(
+            'channel',
+            'Select a channel',
+            'GRK5NTHV1',
+            {
+              initial_conversation: 'GRK5NTHV2',
+            },
+          ),
+        ).toMatchSnapshot();
+      });
+    });
+
+    describe('user element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          UsersSelectInputElement('user', 'Select a user'),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          UsersSelectInputElement('user', 'Select a user', 'DPJ215Q65'),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          UsersSelectInputElement('channel', 'Select a user', 'DPJ215Q65', {
+            initial_user: 'DPBMEQCM8',
+          }),
+        ).toMatchSnapshot();
+      });
+    });
   });
 
-  it('renders a radio input element opts that override', () => {
-    expect.assertions(1);
-    expect(
-      RadioInputElement('title', options, options[0], {
-        initial_option: options[1],
-      }),
-    ).toMatchSnapshot();
-  });
+  describe('multi-select input', () => {
+    describe('conversations element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          MultiConversationsSelectInputElement('channel', 'Select channels'),
+        ).toMatchSnapshot();
+      });
 
-  it('renders a minimal static select input element', () => {
-    expect.assertions(1);
-    expect(
-      StaticSelectInputElement('title', 'Select a book', options),
-    ).toMatchSnapshot();
-  });
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          MultiConversationsSelectInputElement('channel', 'Select channels', [
+            'GRK5NTHV1',
+          ]),
+        ).toMatchSnapshot();
+      });
 
-  it('renders a static select input element with initial option', () => {
-    expect.assertions(1);
-    expect(
-      StaticSelectInputElement('title', 'Select a book', options, options[0]),
-    ).toMatchSnapshot();
-  });
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          MultiConversationsSelectInputElement(
+            'channel',
+            'Select channels',
+            ['GRK5NTHV1'],
+            {
+              initial_conversations: ['GRK5NTHV2'],
+            },
+          ),
+        ).toMatchSnapshot();
+      });
+    });
 
-  it('renders a static select input element opts that override', () => {
-    expect.assertions(1);
-    expect(
-      StaticSelectInputElement('title', 'Select a book', options, options[0], {
-        initial_option: options[1],
-      }),
-    ).toMatchSnapshot();
-  });
+    describe('users element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          MultiUsersSelectInputElement('users', 'Select users'),
+        ).toMatchSnapshot();
+      });
 
-  it('renders a minimal conversation select input element', () => {
-    expect.assertions(1);
-    expect(
-      ConversationsSelectInputElement('channel', 'Select a channel'),
-    ).toMatchSnapshot();
-  });
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          MultiUsersSelectInputElement('users', 'Select users', ['DPJ215Q65']),
+        ).toMatchSnapshot();
+      });
 
-  it('renders a conversation select input element with initial option', () => {
-    expect.assertions(1);
-    expect(
-      ConversationsSelectInputElement(
-        'channel',
-        'Select a channel',
-        'GRK5NTHV1',
-      ),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a conversation select input element opts that override', () => {
-    expect.assertions(1);
-    expect(
-      ConversationsSelectInputElement(
-        'channel',
-        'Select a channel',
-        'GRK5NTHV1',
-        {
-          initial_conversation: 'GRK5NTHV2',
-        },
-      ),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a minimal users select input element', () => {
-    expect.assertions(1);
-    expect(UsersSelectInputElement('user', 'Select a user')).toMatchSnapshot();
-  });
-
-  it('renders a users select input element with initial option', () => {
-    expect.assertions(1);
-    expect(
-      UsersSelectInputElement('user', 'Select a user', 'DPJ215Q65'),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a users select input element opts that override', () => {
-    expect.assertions(1);
-    expect(
-      UsersSelectInputElement('channel', 'Select a user', 'DPJ215Q65', {
-        initial_user: 'DPBMEQCM8',
-      }),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a minimal multi-conversation select input element', () => {
-    expect.assertions(1);
-    expect(
-      MultiConversationsSelectInputElement('channel', 'Select channels'),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a multi-conversation select input element with initial option', () => {
-    expect.assertions(1);
-    expect(
-      MultiConversationsSelectInputElement('channel', 'Select channels', [
-        'GRK5NTHV1',
-      ]),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a multi-conversation select input element opts that override', () => {
-    expect.assertions(1);
-    expect(
-      MultiConversationsSelectInputElement(
-        'channel',
-        'Select channels',
-        ['GRK5NTHV1'],
-        {
-          initial_conversations: ['GRK5NTHV2'],
-        },
-      ),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a minimal multi-users select input element', () => {
-    expect.assertions(1);
-    expect(
-      MultiUsersSelectInputElement('users', 'Select users'),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a multi-users select input element with initial option', () => {
-    expect.assertions(1);
-    expect(
-      MultiUsersSelectInputElement('users', 'Select users', ['DPJ215Q65']),
-    ).toMatchSnapshot();
-  });
-
-  it('renders a multi-users select input element opts that override', () => {
-    expect.assertions(1);
-    expect(
-      MultiUsersSelectInputElement('users', 'Select users', ['DPJ215Q65'], {
-        initial_users: ['DPBMEQCM8'],
-      }),
-    ).toMatchSnapshot();
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          MultiUsersSelectInputElement('users', 'Select users', ['DPJ215Q65'], {
+            initial_users: ['DPBMEQCM8'],
+          }),
+        ).toMatchSnapshot();
+      });
+    });
   });
 });
