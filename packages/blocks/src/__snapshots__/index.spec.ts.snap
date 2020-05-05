@@ -26,6 +26,7 @@ Array [
   "ChannelsSelectInputElement",
   "ConversationsSelectInputElement",
   "UsersSelectInputElement",
+  "Channel",
   "DateString",
   "User",
 ]

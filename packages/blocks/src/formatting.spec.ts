@@ -1,6 +1,12 @@
-import { DateString, User } from './formatting';
+import { Channel, DateString, User } from './formatting';
 
 describe('Slack formatting widgets', () => {
+  it('creates a formatted channel', () => {
+    expect.assertions(1);
+    const channelId = 'CCHANNELID';
+    expect(Channel(channelId)).toBe(`<#${channelId}>`);
+  });
+
   it('creates a formatted date', () => {
     expect.assertions(1);
     const timestamp = 1567191506;
