@@ -1,5 +1,6 @@
-// https://api.slack.com/reference/surfaces/formatting#date-formatting
+export const Channel = (id: string): string => `<#${id}>`;
 
+// https://api.slack.com/reference/surfaces/formatting#date-formatting
 export const DateString = (
   timestamp: number,
   format: string,
