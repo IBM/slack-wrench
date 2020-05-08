@@ -1,8 +1,9 @@
 {
   "name": "@slack-wrench/koa-bolt",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Run bolt as koa middleware",
   "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/IBM/slack-wrench",
@@ -25,7 +26,7 @@
   },
   "devDependencies": {
     "@slack/bolt": "^1.6.0",
-    "@slack-wrench/fixtures": "^2.0.0",
+    "@slack-wrench/fixtures": "^2.0.1",
     "koa": "^2.11.0",
     "koa-compose": "^4.1.0",
     "serverless-http": "^2.3.1"
