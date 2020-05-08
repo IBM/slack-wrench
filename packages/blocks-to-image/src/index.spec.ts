@@ -71,6 +71,21 @@ describe('Block Images', () => {
     expect(blockImage).toMatchImageSnapshot();
   });
 
+  it('can render a message as a jpeg', async () => {
+    expect.assertions(1);
+
+    const blockImage = await blockKitRenderer.imageFromBlocks(
+      RestaurantBlocks(),
+      'message',
+      {
+        type: 'jpeg',
+      },
+    );
+
+    // `toMatchImageSnapshot` only handles pngs, not sure how to detect a jpeg
+    expect(blockImage).toBeInstanceOf(Buffer);
+  });
+
   it('can render long blocks', async () => {
     expect.assertions(1);
 
@@ -112,7 +127,7 @@ describe('Block Images', () => {
     ).rejects.toThrowError();
   });
 
-  it('allows overriding snapshot options', async () => {
+  it('allows getting base64 images', async () => {
     expect.assertions(1);
     const blockImage = await blockKitRenderer.imageFromBlocks(
       RestaurantBlocks(),
@@ -120,6 +135,6 @@ describe('Block Images', () => {
       { encoding: 'base64' },
     );
 
-    expect(blockImage).toMatch(/=$/);
+    expect(typeof blockImage).toBe('string');
   });
 });

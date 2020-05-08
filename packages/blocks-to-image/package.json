@@ -29,7 +29,14 @@
   "dependencies": {
     "@slack/bolt": "^2.0.0",
     "@slack/types": "^1.6.0",
+    "@types/imagemin": "^7.0.0",
+    "@types/imagemin-jpegtran": "^5.0.0",
+    "@types/imagemin-optipng": "^5.2.0",
     "@types/puppeteer": "^2.0.1",
+    "imagemin": "^7.0.1",
+    "imagemin-jpegtran": "^6.0.0",
+    "imagemin-optipng": "^7.1.0",
+    "imagemin-zopfli": "^6.0.0",
     "puppeteer": "^2.1.1"
   }
 }

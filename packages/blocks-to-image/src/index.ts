@@ -7,6 +7,9 @@ import puppeteer, {
   ScreenshotOptions,
 } from 'puppeteer';
 import querystring from 'querystring';
+import imagemin from 'imagemin';
+import imageminJpegTran from 'imagemin-jpegtran';
+import imageminZopfli from 'imagemin-zopfli';
 
 type Screenshot = string | Buffer;
 
@@ -91,15 +94,20 @@ export default class BlockKitRenderer {
     // Wait for page to load with blocks from query
     await page.waitForSelector(renderedBlocksSelector);
 
-    const screenshot = await screenshotDOMElement(
-      page,
-      screenshotSelector,
-      options,
-    );
+    const screenshot = (await screenshotDOMElement(page, screenshotSelector, {
+      ...options,
+      encoding: 'binary',
+    })) as Buffer;
 
     await page.close();
 
-    return screenshot;
+    const minScreenshot = await imagemin.buffer(screenshot, {
+      plugins: [imageminJpegTran(), imageminZopfli()],
+    });
+
+    return options.encoding === 'base64'
+      ? minScreenshot.toString('base64')
+      : minScreenshot;
   }
 
   async close(): Promise<void> {
