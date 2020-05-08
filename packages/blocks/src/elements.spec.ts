@@ -208,7 +208,10 @@ describe('Slack Element widgets', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          ConversationsSelectInputElement('channel', 'Select a channel'),
+          ConversationsSelectInputElement(
+            'conversation',
+            'Select a conversation',
+          ),
         ).toMatchSnapshot();
       });
 
@@ -216,8 +219,8 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         expect(
           ConversationsSelectInputElement(
-            'channel',
-            'Select a channel',
+            'conversation',
+            'Select a conversation',
             'GRK5NTHV1',
           ),
         ).toMatchSnapshot();
@@ -227,8 +230,8 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         expect(
           ConversationsSelectInputElement(
-            'channel',
-            'Select a channel',
+            'conversation',
+            'Select a conversation',
             'GRK5NTHV1',
             {
               initial_conversation: 'GRK5NTHV2',

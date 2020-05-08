@@ -522,11 +522,11 @@ Object {
 
 exports[`Slack Element widgets select input conversation element renders a minimal example 1`] = `
 Object {
-  "action_id": "channel",
+  "action_id": "conversation",
   "initial_conversation": undefined,
   "placeholder": Object {
     "emoji": true,
-    "text": "Select a channel",
+    "text": "Select a conversation",
     "type": "plain_text",
   },
   "type": "conversations_select",
@@ -535,11 +535,11 @@ Object {
 
 exports[`Slack Element widgets select input conversation element renders with initial option 1`] = `
 Object {
-  "action_id": "channel",
+  "action_id": "conversation",
   "initial_conversation": "GRK5NTHV1",
   "placeholder": Object {
     "emoji": true,
-    "text": "Select a channel",
+    "text": "Select a conversation",
     "type": "plain_text",
   },
   "type": "conversations_select",
@@ -548,11 +548,11 @@ Object {
 
 exports[`Slack Element widgets select input conversation element renders with opts that override 1`] = `
 Object {
-  "action_id": "channel",
+  "action_id": "conversation",
   "initial_conversation": "GRK5NTHV2",
   "placeholder": Object {
     "emoji": true,
-    "text": "Select a channel",
+    "text": "Select a conversation",
     "type": "plain_text",
   },
   "type": "conversations_select",
