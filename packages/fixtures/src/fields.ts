@@ -13,12 +13,14 @@ class Fields {
 
   public user!: { name: string; id: string };
 
-  public channel!: { name: string; id: string };
+  public channel!: { name: string; id: string; type: string };
 
   public team!: {
     domain: string;
     id: string;
   };
+
+  public inviter!: { name: string; id: string };
 
   public ts!: string;
 
@@ -55,10 +57,15 @@ class Fields {
     this.channel = {
       id: 'CCHANNELID',
       name: 'channel',
+      type: 'C'
     };
     this.team = {
       id: 'TTEAMID',
       domain: 'team-domain',
+    };
+    this.inviter = {
+      id: 'IINVITERID',
+      name: 'INVITER',
     };
     this.ts = ts;
     this.event_time = 1234567890;
