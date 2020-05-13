@@ -57,7 +57,7 @@ class Fields {
     this.channel = {
       id: 'CCHANNELID',
       name: 'channel',
-      type: 'C'
+      type: 'C',
     };
     this.team = {
       id: 'TTEAMID',

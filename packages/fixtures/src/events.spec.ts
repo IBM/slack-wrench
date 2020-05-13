@@ -49,9 +49,9 @@ describe('Events fixtures', () => {
     expect.assertions(1);
 
     // Not including more in depth tests as typing should serve that purpose
-    expect(events.memberJoinedChannel(user_id, channel, channel_type, team).event).toEqual(
-      expect.objectContaining({ type: 'member_joined_channel' }),
-    );
+    expect(
+      events.memberJoinedChannel(user_id, channel, channel_type, team).event,
+    ).toEqual(expect.objectContaining({ type: 'member_joined_channel' }));
   });
 
   it('can override memberJoinedChannel fields', () => {
@@ -59,8 +59,9 @@ describe('Events fixtures', () => {
 
     const options = { user: 'NEW_USER' };
 
-    expect(events.memberJoinedChannel(user_id, channel, channel_type, team, options).event).toEqual(
-      expect.objectContaining(options),
-    );
+    expect(
+      events.memberJoinedChannel(user_id, channel, channel_type, team, options)
+        .event,
+    ).toEqual(expect.objectContaining(options));
   });
 });

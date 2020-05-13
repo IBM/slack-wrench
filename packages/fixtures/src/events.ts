@@ -1,7 +1,12 @@
 /**
  * For all events that arrive via event's api subscription
  */
-import { AppMentionEvent, BasicSlackEvent, MemberJoinedChannelEvent, MessageEvent } from '@slack/bolt';
+import {
+  AppMentionEvent,
+  BasicSlackEvent,
+  MemberJoinedChannelEvent,
+  MessageEvent,
+} from '@slack/bolt';
 
 import fields from './fields';
 
