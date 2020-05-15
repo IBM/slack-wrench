@@ -20,6 +20,8 @@ class Fields {
     id: string;
   };
 
+  public inviter!: { name: string; id: string };
+
   public ts!: string;
 
   public event_time!: number;
@@ -59,6 +61,10 @@ class Fields {
     this.team = {
       id: 'TTEAMID',
       domain: 'team-domain',
+    };
+    this.inviter = {
+      id: 'IINVITERID',
+      name: 'INVITER',
     };
     this.ts = ts;
     this.event_time = 1234567890;

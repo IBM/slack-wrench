@@ -1,7 +1,12 @@
 /**
  * For all events that arrive via event's api subscription
  */
-import { AppMentionEvent, BasicSlackEvent, MessageEvent } from '@slack/bolt';
+import {
+  AppMentionEvent,
+  BasicSlackEvent,
+  MemberJoinedChannelEvent,
+  MessageEvent,
+} from '@slack/bolt';
 
 import fields from './fields';
 
@@ -78,6 +83,31 @@ export const appMention = (
     event_ts: ts,
     channel: channel.id,
     user: user.id,
+    ...options,
+  });
+};
+
+export const memberJoinedChannel = (
+  options: Partial<MemberJoinedChannelEvent> = {},
+): EnvelopedEvent<MemberJoinedChannelEvent> => {
+  const {
+    channel: { id: channel },
+    inviter: { id: inviter },
+    team: { id: team },
+    user: { id: user },
+  } = fields;
+
+  const channel_type = options.channel
+    ? options.channel.charAt(0)
+    : channel.charAt(0);
+
+  return apiEvent({
+    type: 'member_joined_channel',
+    user,
+    channel,
+    channel_type,
+    team,
+    inviter,
     ...options,
   });
 };

@@ -16,6 +16,10 @@ Fields {
   },
   "event_id": "EVENT_ID",
   "event_time": 1234567890,
+  "inviter": Object {
+    "id": "IINVITERID",
+    "name": "INVITER",
+  },
   "response_url": "https://fake.slack/response_url",
   "team": Object {
     "domain": "team-domain",
