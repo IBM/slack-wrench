@@ -101,7 +101,7 @@ export const memberJoinedChannel = (
     ? options.channel.charAt(0)
     : channel.charAt(0);
 
-  return apiEvent<MemberJoinedChannelEvent>({
+  return apiEvent({
     type: 'member_joined_channel',
     user,
     channel,

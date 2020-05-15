@@ -45,9 +45,7 @@ describe('Events fixtures', () => {
   it('generates a memberJoinedChannel block', () => {
     expect.assertions(1);
 
-    expect(events.memberJoinedChannel().event).toEqual(
-      expect.objectContaining({ type: 'member_joined_channel' }),
-    );
+    expect(events.memberJoinedChannel()).toMatchSnapshot();
   });
 
   it('can override memberJoinedChannel fields', () => {
@@ -64,7 +62,7 @@ describe('Events fixtures', () => {
     );
   });
 
-  it('channel type is infered in memberJoinedChannel event', () => {
+  it('channel type is inferred in memberJoinedChannel event', () => {
     expect.assertions(1);
 
     const options = { channel: 'GNEW_CHANNEL' };

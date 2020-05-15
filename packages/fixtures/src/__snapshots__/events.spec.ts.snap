@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events fixtures generates a memberJoinedChannel block 1`] = `
+Object {
+  "api_app_id": "API_APP_ID",
+  "authed_users": Array [
+    "UUSERID",
+  ],
+  "event": Object {
+    "channel": "CCHANNELID",
+    "channel_type": "C",
+    "inviter": "IINVITERID",
+    "team": "TTEAMID",
+    "type": "member_joined_channel",
+    "user": "UUSERID",
+  },
+  "event_id": "EVENT_ID",
+  "event_time": 1234567890,
+  "team_id": "TTEAMID",
+  "token": "TOKEN",
+  "type": "event_callback",
+}
+`;
