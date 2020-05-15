@@ -13,7 +13,7 @@ class Fields {
 
   public user!: { name: string; id: string };
 
-  public channel!: { name: string; id: string; type: string };
+  public channel!: { name: string; id: string; };
 
   public team!: {
     domain: string;
@@ -57,7 +57,6 @@ class Fields {
     this.channel = {
       id: 'CCHANNELID',
       name: 'channel',
-      type: 'C',
     };
     this.team = {
       id: 'TTEAMID',

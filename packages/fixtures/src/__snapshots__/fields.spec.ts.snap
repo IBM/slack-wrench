@@ -13,7 +13,6 @@ Fields {
   "channel": Object {
     "id": "CCHANNELID",
     "name": "channel",
-    "type": "C",
   },
   "event_id": "EVENT_ID",
   "event_time": 1234567890,
