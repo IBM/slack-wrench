@@ -90,9 +90,16 @@ export const appMention = (
 export const memberJoinedChannel = (
   options: Partial<MemberJoinedChannelEvent> = {},
 ): EnvelopedEvent<MemberJoinedChannelEvent> => {
-  const { channel: {id: channel},  inviter: {id: inviter}, team: {id: team}, user: {id: user} } = fields;
- 
-  const channel_type = options.channel? options.channel.charAt(0) : channel.charAt(0);
+  const {
+    channel: { id: channel },
+    inviter: { id: inviter },
+    team: { id: team },
+    user: { id: user },
+  } = fields;
+
+  const channel_type = options.channel
+    ? options.channel.charAt(0)
+    : channel.charAt(0);
 
   return apiEvent<MemberJoinedChannelEvent>({
     type: 'member_joined_channel',

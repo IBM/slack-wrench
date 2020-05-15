@@ -13,7 +13,7 @@ class Fields {
 
   public user!: { name: string; id: string };
 
-  public channel!: { name: string; id: string; };
+  public channel!: { name: string; id: string };
 
   public team!: {
     domain: string;
