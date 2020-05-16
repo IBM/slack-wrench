@@ -13,3 +13,6 @@ lib/
 *.tsbuildinfo
 
 __diff_output__
+
+# ignore local vscode settings
+.vscode/settings.json
