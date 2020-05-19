@@ -16,10 +16,9 @@
   "author": "",
   "license": "Apache-2.0",
   "dependencies": {
-    "@slack/types": "^1.6.0"
-  },
-  "devDependencies": {
+    "@slack/types": "^1.6.0",
     "@types/ramda": "^0.26.38",
-    "ramda": "^0.27.0"
+    "ramda": "^0.27.0",
+    "ts-toolbelt": "^6.7.7"
   }
 }
