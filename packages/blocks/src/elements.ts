@@ -18,6 +18,16 @@ import {
   UsersSelect,
 } from '@slack/types';
 
+import {
+  disallow,
+  ellipsis,
+  truncate,
+  TruncateFunction,
+  TruncateOptions,
+  truncator,
+  applyTruncations,
+} from './lengthHelpers';
+
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
 
 // --- Text Objects ---  https://api.slack.com/reference/block-kit/composition-objects#text
@@ -34,17 +44,40 @@ export const PlainText = (text: string, emoji = true): PlainTextElement => ({
 
 // --- Confirmation Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
 
-// --- Option Object --- https://api.slack.com/reference/block-kit/composition-objects#option
+// --- Option Object ---
+// const optionTruncateOptions: TruncateOptions = {
+//   text: truncator<TextElement>(75, ellipsis), // plaintext in overflow, select, multi-select; radio and checkbox cn use mrkdwn
+//   value: truncator<string>(75, disallow), // assuming user needs this to be specific, fail if invalid
+//   description: truncator<PlainTextElement>(75, ellipsis),
+//   url: truncator<string>(3000, truncate),
+// };
+
 export const OptionObject = (
   // only works with PlainText at the moment https://github.com/slackapi/node-slack-sdk/issues/973
   text: string,
   value: string,
-  optionBlock?: Partial<Option>,
-): Option => ({
-  text: PlainText(text),
-  value,
-  ...optionBlock,
-});
+  optionBlock: Partial<Option> = {},
+  truncateOptions: Record<string, TruncateFunction> = {
+    text: ellipsis,
+    value: disallow,
+    description: ellipsis,
+    url: truncate,
+  },
+): Option =>
+  applyTruncations<Option>(
+    {
+      text: PlainText(text),
+      value,
+      ...optionBlock,
+    },
+    truncateOptions,
+    {
+      text: 75,
+      value: 75,
+      description: 75,
+      url: 3000,
+    },
+  );
 
 // --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
 

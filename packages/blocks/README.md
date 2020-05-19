@@ -4,6 +4,8 @@ Create messages with block kit more functionally and with less recall and repeti
 
 This package helps abstract away some of the specifics, and deduplicate some of the repetitive code needed to create blocks being sent to Slack.
 
+TODO: document updates to the way slack block limitations work for dynamic content
+
 ## Install
 
 ```bash

@@ -14,10 +14,12 @@ import R, {
   ifElse,
   lensProp,
   lt,
+  mapObjIndexed,
   over,
   pipe,
   prop,
   take,
+  when,
 } from 'ramda';
 import { F } from 'ts-toolbelt';
 
@@ -43,7 +45,7 @@ const ellipsisText = curry((limit: number) =>
  * resulting string will be a maximum of `limit` characters.
  * the last 3 characters of the string will be `...` if the string is longer than `limit`
  */
-export const ellipsis = curry((limit: number) =>
+export const ellipsis: TruncateFunction = curry((limit: number) =>
   ifElse(
     has('text'),
     over(lensProp('text'), ellipsisText(limit)),
@@ -54,39 +56,35 @@ export const ellipsis = curry((limit: number) =>
 // TODO: typescript-level check
 
 // error function - throws error immediately on function call if string is too long for block type
-export const disallow = curry(
-  (limit: number, item: string | Record<'text', string>) => {
-    throw Error(
-      `Invalid length for property, max ${limit}: ${item.text || item}`,
-    );
-  },
-);
-
-// const slackTruncate = (truncate = slackTruncate, text: string): string =>
-//   truncate(text);
-
-export const isTooLong = curry((limit: number): ((text: string) => boolean) =>
-  pipe(prop('length'), lt(limit)),
-);
+export const disallow: TruncateFunction = curry((limit, value) => {
+  throw Error(
+    `Invalid length for property, max ${limit}: ${value.text || value}`,
+  );
+});
 
 // identity function which just swallows the number, and won't truncate
-export const identity: TruncateInfo.truncateFunction = curry(
+export const identity: TruncateFunction = curry(
+  // communicating that we're ignoring the number
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   (limit: number) => R.identity,
 );
-export const truncate: TruncateInfo.truncateFunction = take;
+export const truncate: TruncateFunction = take;
 
-type ArrayTruncateFunction = <T>(items: T[]) => T;
-type StringTruncateFunction = (text: string) => string;
+// type ArrayTruncateFunction = <T>(items: T[]) => T;
+// type StringTruncateFunction = (text: string) => string;
 
 // TODO: need to handle 3 types - string, object (e.g. plain_text), array
-interface TruncateInfo {
+export interface TruncateInfo {
   max_length: number;
   truncateFunction?: <T>(value: T) => T;
   // for arrays of objects; different elements have specific requirements; the below runs the provided function on each object in the array and truncates
   truncateEach?: TruncateOptions; // need to: loop through each on this field and run this functions on what's provided
 }
 
-const truncator = <T>(
+// default: we call our own defined function depending on the type of property with both number and value
+// for user: call user-given function (map of string to function which takes a number and a string. we then pass to that function the maximum length for that string according to slack, and the original value, and you decide what to do)
+
+export const truncator = <T>(
   max_length: number,
   truncateFunction: F.Curry<(limit: number) => (value: T) => T>,
   truncateEach?: F.Curry<(limit: number) => (value: T) => T>,
@@ -95,6 +93,8 @@ const truncator = <T>(
   truncateFunction: truncateFunction(max_length),
   truncateEach,
 });
+
+export type TruncateFunction = F.Curry<<T>(limit: number) => (value: T) => T>;
 
 export type TruncateOptions = Record<string, TruncateInfo>;
 
@@ -283,17 +283,23 @@ const defaultTruncateOptions = new Map<string, TruncateOptions>([
   ],
 ]);
 
-// const isTooLongForBlock = pipe<KnownBlock, number, boolean>(
-//   prop('length'),
-//   isTooLong,
-// );
+// const slackTruncate = (truncate = slackTruncate, text: string): string =>
+//   truncate(text);
 
-// const truncateIfTooLong = (
-//   limit: number,
-//   truncate = ellipsis,
-//   text: string,
-// ): string =>
-//   when<string, string>(isTooLongForSlack, slackTruncate(truncate))(text);
+export const isTooLong = curry((limit: number): ((element: any) => boolean) =>
+  pipe(prop('length'), lt(limit)),
+);
+
+const isTooLongForBlock = pipe<KnownBlock, number, boolean>(
+  prop('length'),
+  isTooLong,
+);
+
+const truncateIfTooLong = <T>(
+  limit: number,
+  truncateFn = ellipsis,
+  value: T,
+): T => when<T, T>(isTooLongForBlock, truncateFn(limit))(value);
 
 // TODO: for the user, enable passing either
 // 1. object mapping of fields to truncate functions - just do this for now?
@@ -301,3 +307,38 @@ const defaultTruncateOptions = new Map<string, TruncateOptions>([
 // 3. provide string name of one of the default functions that does ^
 
 // TODO: define modal/ blocks length and
+
+/**
+ * for each key in `truncateOptions`, applies the function in truncateOptions associated
+ * with that key if that key exists in `obj` to the value associated with that key
+ * but only if the value is longer than the defined slack limit
+ */
+export const applyTruncations = curry(
+  <T>(
+    obj: T,
+    truncateOptions: Record<string, TruncateFunction>,
+    limits: Record<string, number>,
+  ): T => {
+    const truncateKeys = Object.keys(truncateOptions);
+
+    // for each key in object, apply the function in truncateOptions associated with that key if exists
+    return mapObjIndexed((value: any, key: string): any => {
+      if (key in truncateKeys) {
+        // return truncateOptions[key](value);
+        return truncateIfTooLong(limits[key], truncateOptions[key], value);
+      }
+
+      return value;
+    }, obj);
+  },
+);
+
+// question - 1. do we want to allow people to provide custom lengths?
+// question - 2. should we give the length to the function they call?
+// in truncate options, allow passing function which takes number and string, returns new string
+
+// default behavior:
+// NOTE: at the moment, this function is only called if the text is too long according to slack. we recommend calling a filter/truncation on the text before passing it to this function if you don't need to know the slack
+// otherwise, we will call your function with two values:
+// 1. the slack max length for the field
+// 2. the value resolved for that field based on the the way the function was called (considering things like option overrides)
