@@ -19,13 +19,13 @@ import {
 } from '@slack/types';
 
 import {
+  applyTruncations,
   disallow,
   ellipsis,
   truncate,
   TruncateFunction,
   TruncateOptions,
   truncator,
-  applyTruncations,
 } from './lengthHelpers';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
@@ -57,7 +57,7 @@ export const OptionObject = (
   text: string,
   value: string,
   optionBlock: Partial<Option> = {},
-  truncateOptions: Record<string, TruncateFunction> = {
+  truncateFunctions: Record<string, TruncateFunction> = {
     text: ellipsis,
     value: disallow,
     description: ellipsis,
@@ -69,8 +69,8 @@ export const OptionObject = (
       text: PlainText(text),
       value,
       ...optionBlock,
-    },
-    truncateOptions,
+    } as Option,
+    truncateFunctions,
     {
       text: 75,
       value: 75,
