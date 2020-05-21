@@ -5,6 +5,7 @@ import R, {
   has,
   ifElse,
   length,
+  lensIndex,
   lensProp,
   lt,
   mapObjIndexed,
@@ -13,6 +14,7 @@ import R, {
   prop,
   take,
   when,
+  view,
 } from 'ramda';
 import { F } from 'ts-toolbelt';
 
@@ -39,14 +41,12 @@ const ellipsisText = curry((limit: number, value: string): string =>
  * resulting string will be a maximum of `limit` characters.
  * the last 3 characters of the string will be `...` if the string is longer than `limit`
  */
-export const ellipsis = curry(
-  <T>(limit: number, value: T): T =>
-    ifElse(
-      has('text'),
-      over(lensProp('text'), ellipsisText(limit)),
-      ellipsisText(limit),
-    )(value),
-);
+export const ellipsis = <T>(limit: number, value: T): T =>
+  ifElse(
+    has('text'),
+    over(lensProp('text'), ellipsisText(limit)),
+    ellipsisText(limit),
+  )(value);
 
 // TODO: typescript-level check
 
@@ -312,19 +312,31 @@ const isTooLongForBlock = curry((limit: number, value: any): boolean =>
 // 3. provide string name of one of the default functions that does ^
 export type TruncateFunction = <T>(limit: number, value: T) => T;
 
+/**
+ * mapping of properties to limit number and truncate function
+ */
+export type TruncateOptions = Record<string, [number, TruncateFunction]>;
+
+export const truncLimits: (
+  options: TruncateOptions,
+) => Record<string, number> = mapObjIndexed(view(lensIndex(0)));
+export const truncators: (
+  options: TruncateOptions,
+) => Record<string, TruncateFunction> = mapObjIndexed(view(lensIndex(1)));
+
 // TODO: define modal/ blocks length and
 export const applyTruncations = <T extends Record<string, any>>(
   obj: T,
-  truncateFunctions: Record<string, TruncateFunction>,
+  functions: Record<string, TruncateFunction>,
   limits: Record<string, number>,
 ): T => {
-  const truncateKeys = Object.keys(truncateFunctions);
+  const truncateKeys = Object.keys(functions);
 
-  // for each key in object, apply the function in truncateFunctions associated with that key if exists
+  // for each key in object, apply the function in functions associated with that key if exists
   // @ts-ignore
   return mapObjIndexed(<J>(value: J, key: string): J => {
     if (truncateKeys.includes(key) && isTooLongForBlock(limits[key])(value)) {
-      return truncateFunctions[key](limits[key], value);
+      return functions[key](limits[key], value);
     }
 
     return value;
