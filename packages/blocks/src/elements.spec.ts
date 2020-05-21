@@ -54,7 +54,7 @@ describe('Slack Element widgets', () => {
       expect(OptionObject('Why best?', 'why-best-raven')).toMatchSnapshot();
     });
 
-    it.only('truncates ellipsis for text, description', () => {
+    it('truncates ellipsis for text, description', () => {
       expect.assertions(1);
       expect(
         OptionObject(dynamicText, 'why-best-raven', {
@@ -63,28 +63,28 @@ describe('Slack Element widgets', () => {
       ).toMatchSnapshot();
     });
 
-    // it('truncates url', () => {
-    //   expect.assertions(1);
-    //   expect(
-    //     OptionObject('Why best?', 'why-best-raven', {
-    //       url: dynamicText,
-    //     }),
-    //   ).toMatchSnapshot();
-    // });
+    it('truncates url', () => {
+      expect.assertions(1);
+      expect(
+        OptionObject('Why best?', 'why-best-raven', {
+          url: dynamicText,
+        }),
+      ).toMatchSnapshot();
+    });
 
-    // it('disallows too long value', () => {
-    //   expect.assertions(1);
-    //   expect(OptionObject('Why best?', dynamicText)).toThrow();
-    // });
+    it('disallows too long value', () => {
+      expect.assertions(1);
+      expect(OptionObject('Why best?', dynamicText)).toThrow();
+    });
 
-    // it('allows override truncateOptions for too long value', () => {
-    //   expect.assertions(1);
-    //   expect(
-    //     OptionObject('Why best?', dynamicText, undefined, {
-    //       value: truncate,
-    //     }),
-    //   ).toMatchSnapshot();
-    // });
+    it('allows override truncateOptions for too long value', () => {
+      expect.assertions(1);
+      expect(
+        OptionObject('Why best?', dynamicText, undefined, {
+          value: truncate,
+        }),
+      ).toMatchSnapshot();
+    });
   });
 
   it('renders a button element', () => {

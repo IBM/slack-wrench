@@ -9,6 +9,7 @@ import R, {
   lensProp,
   lt,
   mapObjIndexed,
+  tap,
   over,
   pipe,
   prop,
@@ -292,7 +293,7 @@ export const longerThan = curry((limit: number, value: any): boolean =>
 const isTooLongForBlock = curry((limit: number, value: any): boolean =>
   ifElse(
     has('text'),
-    over(lensProp('text'), longerThan(limit)),
+    pipe(prop('text'), longerThan(limit)),
     longerThan(limit),
   )(value),
 );
@@ -335,6 +336,7 @@ export const applyTruncations = <T extends Record<string, any>>(
   // for each key in object, apply the function in functions associated with that key if exists
   // @ts-ignore
   return mapObjIndexed(<J>(value: J, key: string): J => {
+    // console.log(key, value, limits[key], isTooLongForBlock(limits[key])(value));
     if (truncateKeys.includes(key) && isTooLongForBlock(limits[key])(value)) {
       return functions[key](limits[key], value);
     }
