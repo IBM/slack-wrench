@@ -36,6 +36,8 @@ import MySlackBlock from './MySlackBlock';
 
 expect.extend({ toMatchImageSnapshot });
 
+const imageCompareOptions = { customDiffConfig: { threshold: 0.1 } };
+
 describe('My Awesome App', () => {
   // We use the block kit builder, it can take a while
   jest.setTimeout(30000);
@@ -60,10 +62,12 @@ describe('My Awesome App', () => {
   it('Looks beautiful!', async () => {
     const blockImage = await blockKitRenderer.imageFromBlocks(MySlackBlock());
 
-    expect(blockImage).toMatchImageSnapshot();
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 });
 ```
+
+The function `toMatchImageSnapshot` takes in an optional configuration object `customDiffConfig` that customizes the snapshot comparison. To avoid test failures due to small differences in the image snapshot comparison, increase the threshold value that is used by jest-image-snapshot. With the default threshold value of 0.01, minor color differences in screenshots would trigger a test failure. For additional information about the configuration, visit the API documentation of [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot#%EF%B8%8F-api).
 
 ### `login`
 
