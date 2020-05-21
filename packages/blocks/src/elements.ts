@@ -5,48 +5,20 @@ import {
   ConversationsSelect,
   ImageElement,
   InputBlock,
-  MrkdwnElement,
   MultiChannelsSelect,
   MultiConversationsSelect,
   MultiUsersSelect,
   Option,
   Overflow,
-  PlainTextElement,
   PlainTextInput,
   RadioButtons,
   StaticSelect,
   UsersSelect,
 } from '@slack/types';
 
-// Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
+import { PlainText } from './compositionObjects';
 
-// --- Text Objects ---  https://api.slack.com/reference/block-kit/composition-objects#text
-export const Markdown = (text: string): MrkdwnElement => ({
-  type: 'mrkdwn',
-  text,
-});
-
-export const PlainText = (text: string, emoji = true): PlainTextElement => ({
-  type: 'plain_text',
-  text,
-  emoji,
-});
-
-// --- Confirmation Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
-
-// --- Option Object --- https://api.slack.com/reference/block-kit/composition-objects#option
-export const OptionObject = (
-  // only works with PlainText at the moment https://github.com/slackapi/node-slack-sdk/issues/973
-  text: string,
-  value: string,
-  optionBlock?: Partial<Option>,
-): Option => ({
-  text: PlainText(text),
-  value,
-  ...optionBlock,
-});
-
-// --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
+export * from './compositionObjects';
 
 // Block Element Helpers --- https://api.slack.com/reference/block-kit/block-elements
 const InputElement = <T extends InputBlock['element']>(type: T['type']) => (

@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Truncation helpers applyTruncations function applies truncation functions to object properties 1`] = `
+Object {
+  "description": Object {
+    "text": "a...",
+  },
+  "placeholder": "here",
+  "text": "abcde",
+  "value": "abcdef",
+}
+`;
