@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Element composition markdown object renders 1`] = `
+Object {
+  "text": "Ravenclaw is obviously the best house.",
+  "type": "mrkdwn",
+}
+`;
+
+exports[`Element composition option object renders 1`] = `
+Object {
+  "text": Object {
+    "emoji": true,
+    "text": "Why best?",
+    "type": "plain_text",
+  },
+  "value": "why-best-raven",
+}
+`;
+
+exports[`Element composition plaintext object renders 1`] = `
+Object {
+  "emoji": true,
+  "text": "Ravenclaw is obviously the best house.",
+  "type": "plain_text",
+}
+`;
+
+exports[`Element composition plaintext object renders without emoji 1`] = `
+Object {
+  "emoji": false,
+  "text": "Ravenclaw is obviously the best house.",
+  "type": "plain_text",
+}
+`;

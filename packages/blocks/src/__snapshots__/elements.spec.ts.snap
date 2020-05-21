@@ -414,38 +414,11 @@ Object {
 }
 `;
 
-exports[`Slack Element widgets renders a plaintext object 1`] = `
-Object {
-  "emoji": true,
-  "text": "Ravenclaw is obviously the best house.",
-  "type": "plain_text",
-}
-`;
-
-exports[`Slack Element widgets renders a plaintext object without emoji 1`] = `
-Object {
-  "emoji": false,
-  "text": "Ravenclaw is obviously the best house.",
-  "type": "plain_text",
-}
-`;
-
 exports[`Slack Element widgets renders an image element 1`] = `
 Object {
   "alt_text": "Ravenclaw is obviously the best house.",
   "image_url": "http://placekitten.com/700/500",
   "type": "image",
-}
-`;
-
-exports[`Slack Element widgets renders an option object 1`] = `
-Object {
-  "text": Object {
-    "emoji": true,
-    "text": "Why best?",
-    "type": "plain_text",
-  },
-  "value": "why-best-raven",
 }
 `;
 
@@ -471,13 +444,6 @@ Object {
     },
   ],
   "type": "overflow",
-}
-`;
-
-exports[`Slack Element widgets renders markdown object 1`] = `
-Object {
-  "text": "Ravenclaw is obviously the best house.",
-  "type": "mrkdwn",
 }
 `;
 
