@@ -24,9 +24,8 @@ import {
   ellipsis,
   truncate,
   TruncateFunction,
-  TruncateOptions,
-  truncator,
 } from './lengthHelpers';
+import { mergeLeft } from 'ramda';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
 
@@ -52,17 +51,20 @@ export const PlainText = (text: string, emoji = true): PlainTextElement => ({
 //   url: truncator<string>(3000, truncate),
 // };
 
+// TODO: handle merging of user-provided functions with defaults
+
+const optionTruncations = {
+  text: ellipsis,
+  value: disallow,
+  description: ellipsis,
+  url: truncate,
+};
 export const OptionObject = (
   // only works with PlainText at the moment https://github.com/slackapi/node-slack-sdk/issues/973
   text: string,
   value: string,
   optionBlock: Partial<Option> = {},
-  truncateFunctions: Record<string, TruncateFunction> = {
-    text: ellipsis,
-    value: disallow,
-    description: ellipsis,
-    url: truncate,
-  },
+  truncateFunctions: Record<string, TruncateFunction> = {},
 ): Option =>
   applyTruncations<Option>(
     {
@@ -70,7 +72,10 @@ export const OptionObject = (
       value,
       ...optionBlock,
     } as Option,
-    truncateFunctions,
+    mergeLeft(truncateFunctions, optionTruncations) as Record<
+      string,
+      TruncateFunction
+    >,
     {
       text: 75,
       value: 75,

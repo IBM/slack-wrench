@@ -27,8 +27,11 @@ const dot3 = '...';
  * examples:
  * ellipsisText('Hello World!', 8) => 'Hello...'
  */
-const ellipsisText = curry((limit: number) =>
-  pipe<string, string, string>(take(limit - dot3.length), flip(concat)(dot3)),
+const ellipsisText = curry((limit: number, value: string): string =>
+  pipe<string, string, string>(
+    take(limit - dot3.length),
+    flip(concat)(dot3),
+  )(value),
 );
 
 /**
@@ -36,30 +39,35 @@ const ellipsisText = curry((limit: number) =>
  * resulting string will be a maximum of `limit` characters.
  * the last 3 characters of the string will be `...` if the string is longer than `limit`
  */
-export const ellipsis: TruncateFunction = curry((limit: number) =>
-  ifElse(
-    has('text'),
-    over(lensProp('text'), ellipsisText(limit)),
-    ellipsisText(limit),
-  ),
+export const ellipsis = curry(
+  <T>(limit: number, value: T): T =>
+    ifElse(
+      has('text'),
+      over(lensProp('text'), ellipsisText(limit)),
+      ellipsisText(limit),
+    )(value),
 );
 
 // TODO: typescript-level check
 
 // error function - throws error immediately on function call if string is too long for block type
-export const disallow: TruncateFunction = curry((limit, value) => {
+export const disallow = curry((limit: number, value: any): never => {
   throw Error(
     `Invalid length for property, max ${limit}: ${value.text || value}`,
   );
 });
 
 // identity function which just swallows the number, and won't truncate
-export const identity: TruncateFunction = curry(
-  // communicating that we're ignoring the number
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  (limit: number) => R.identity,
+// communicating that we're ignoring the number
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const identity = curry(
+  <T>(limit: number, value: T): T => R.identity(value),
 );
-export const truncate: TruncateFunction = curry(take);
+
+export const truncate = curry(
+  // @ts-ignore
+  <T>(limit: number, value: T): T => take(limit)(value),
+);
 
 // type ArrayTruncateFunction = <T>(items: T[]) => T;
 // type StringTruncateFunction = (text: string) => string;
@@ -275,17 +283,19 @@ export const truncate: TruncateFunction = curry(take);
 // const slackTruncate = (truncate = slackTruncate, text: string): string =>
 //   truncate(text);
 
-export type TruncateFunction = F.Curry<<T>(limit: number, value: T) => T>;
+// export type TruncateFunction = F.Curry<<T>(limit: number, value: T) => T>;
 
-export const isTooLong = (limit: number): ((value: any) => boolean) =>
-  pipe<any, number, boolean>(prop('length'), lt(limit));
+export const longerThan = curry((limit: number, value: any): boolean =>
+  pipe<any, number, boolean>(prop('length'), lt(limit))(value),
+);
 
-// const isTooLongForBlock = (limit: number): ((value: any) => boolean) =>
-//   ifElse(
-//     has('text'),
-//     over(lensProp('text'), isTooLong(limit)),
-//     isTooLong(limit),
-//   );
+const isTooLongForBlock = curry((limit: number, value: any): boolean =>
+  ifElse(
+    has('text'),
+    over(lensProp('text'), longerThan(limit)),
+    longerThan(limit),
+  )(value),
+);
 
 // const truncateIfTooLong = <T>(
 //   limit: number,
@@ -300,6 +310,7 @@ export const isTooLong = (limit: number): ((value: any) => boolean) =>
 // 1. object mapping of fields to truncate functions - just do this for now?
 // 2. a single truncate function that gets applied to all limited fields (only those that aren't arrays?)
 // 3. provide string name of one of the default functions that does ^
+export type TruncateFunction = <T>(limit: number, value: T) => T;
 
 // TODO: define modal/ blocks length and
 export const applyTruncations = <T extends Record<string, any>>(
@@ -310,9 +321,9 @@ export const applyTruncations = <T extends Record<string, any>>(
   const truncateKeys = Object.keys(truncateFunctions);
 
   // for each key in object, apply the function in truncateFunctions associated with that key if exists
+  // @ts-ignore
   return mapObjIndexed(<J>(value: J, key: string): J => {
-    if (key in truncateKeys && isTooLong(limits[key])(value)) {
-      // return truncateFunctions[key](value);
+    if (truncateKeys.includes(key) && isTooLongForBlock(limits[key])(value)) {
       return truncateFunctions[key](limits[key], value);
     }
 

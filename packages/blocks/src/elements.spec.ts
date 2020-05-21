@@ -54,14 +54,14 @@ describe('Slack Element widgets', () => {
       expect(OptionObject('Why best?', 'why-best-raven')).toMatchSnapshot();
     });
 
-    // it('truncates ellipsis for text, description', () => {
-    //   expect.assertions(1);
-    //   expect(
-    //     OptionObject(dynamicText, 'why-best-raven', {
-    //       description: dynamicTextElement,
-    //     }),
-    //   ).toMatchSnapshot();
-    // });
+    it.only('truncates ellipsis for text, description', () => {
+      expect.assertions(1);
+      expect(
+        OptionObject(dynamicText, 'why-best-raven', {
+          description: dynamicTextElement,
+        }),
+      ).toMatchSnapshot();
+    });
 
     // it('truncates url', () => {
     //   expect.assertions(1);
