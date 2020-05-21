@@ -81,6 +81,8 @@ export default class BlockKitRenderer {
 
     const page = await this.browser.newPage();
 
+    await page.emulateTimezone('GMT');
+
     const query = querystring.stringify({
       mode,
       blocks: JSON.stringify(blocks),

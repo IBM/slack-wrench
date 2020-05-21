@@ -13,6 +13,8 @@ import BlockKitRenderer from './index';
 
 expect.extend({ toMatchImageSnapshot });
 
+const imageCompareOptions = { customDiffConfig: { threshold: 0.1 } };
+
 const Restaurant = (description: string, image: string) =>
   MdSection(description, {
     accessory: Image(image, 'alt text for image'),
@@ -68,7 +70,7 @@ describe('Block Images', () => {
       RestaurantBlocks(),
     );
 
-    expect(blockImage).toMatchImageSnapshot();
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
   it('can render long blocks', async () => {
@@ -78,7 +80,7 @@ describe('Block Images', () => {
       RestaurantBlocks(10),
     );
 
-    expect(blockImage).toMatchImageSnapshot();
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
   it('can render a block as a modal', async () => {
@@ -89,7 +91,7 @@ describe('Block Images', () => {
       'modal',
     );
 
-    expect(blockImage).toMatchImageSnapshot();
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
   it('can render a block as in App Home', async () => {
@@ -100,7 +102,7 @@ describe('Block Images', () => {
       'appHome',
     );
 
-    expect(blockImage).toMatchImageSnapshot();
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
   it('throws when rendering and not logging in', async () => {
