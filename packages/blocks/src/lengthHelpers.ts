@@ -4,7 +4,6 @@ import R, {
   flip,
   has,
   ifElse,
-  length,
   lensIndex,
   lensProp,
   lt,
@@ -15,7 +14,6 @@ import R, {
   take,
   view,
 } from 'ramda';
-import { F } from 'ts-toolbelt';
 
 const dot3 = '...';
 

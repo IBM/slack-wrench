@@ -5,82 +5,20 @@ import {
   ConversationsSelect,
   ImageElement,
   InputBlock,
-  MrkdwnElement,
   MultiChannelsSelect,
   MultiConversationsSelect,
   MultiUsersSelect,
   Option,
   Overflow,
-  PlainTextElement,
   PlainTextInput,
   RadioButtons,
   StaticSelect,
   UsersSelect,
 } from '@slack/types';
-import { mergeLeft } from 'ramda';
 
-import {
-  applyTruncations,
-  disallow,
-  ellipsis,
-  truncate,
-  TruncateFunction,
-  TruncateOptions,
-  truncators,
-  truncLimits,
-} from './lengthHelpers';
+import { PlainText } from './elements/compositionObjects.';
 
-export * from './elements/optionObject';
-
-// Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
-
-// --- Text Objects ---  https://api.slack.com/reference/block-kit/composition-objects#text
-export const Markdown = (text: string): MrkdwnElement => ({
-  type: 'mrkdwn',
-  text,
-});
-
-export const PlainText = (text: string, emoji = true): PlainTextElement => ({
-  type: 'plain_text',
-  text,
-  emoji,
-});
-
-// --- Confirmation Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
-
-// --- Option Object ---
-// const optionTruncateOptions: TruncateOptions = {
-//   text: truncator<TextElement>(75, ellipsis), // plaintext in overflow, select, multi-select; radio and checkbox cn use mrkdwn
-//   value: truncator<string>(75, disallow), // assuming user needs this to be specific, fail if invalid
-//   description: truncator<PlainTextElement>(75, ellipsis),
-//   url: truncator<string>(3000, truncate),
-// };
-
-// TODO: handle merging of user-provided functions with defaults
-
-const optionTruncates: TruncateOptions = {
-  text: [75, ellipsis],
-  value: [75, disallow],
-  description: [75, ellipsis],
-  url: [3000, truncate],
-};
-export const OptionObject = (
-  text: string,
-  value: string,
-  optionBlock: Partial<Option> = {},
-  truncateFunctions: Record<string, TruncateFunction> = {},
-): Option =>
-  applyTruncations<Option>(
-    {
-      text: PlainText(text),
-      value,
-      ...optionBlock,
-    } as Option,
-    mergeLeft(truncateFunctions, truncators(optionTruncates)),
-    truncLimits(optionTruncates),
-  );
-
-// --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
+export * from './elements/compositionObjects.';
 
 // Block Element Helpers --- https://api.slack.com/reference/block-kit/block-elements
 const InputElement = <T extends InputBlock['element']>(type: T['type']) => (
