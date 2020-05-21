@@ -9,12 +9,10 @@ import R, {
   lensProp,
   lt,
   mapObjIndexed,
-  tap,
   over,
   pipe,
   prop,
   take,
-  when,
   view,
 } from 'ramda';
 import { F } from 'ts-toolbelt';
@@ -52,23 +50,19 @@ export const ellipsis = <T>(limit: number, value: T): T =>
 // TODO: typescript-level check
 
 // error function - throws error immediately on function call if string is too long for block type
-export const disallow = curry((limit: number, value: any): never => {
+export const disallow = (limit: number, value: any): never => {
   throw Error(
     `Invalid length for property, max ${limit}: ${value.text || value}`,
   );
-});
+};
 
 // identity function which just swallows the number, and won't truncate
 // communicating that we're ignoring the number
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const identity = curry(
-  <T>(limit: number, value: T): T => R.identity(value),
-);
+export const identity = <T>(limit: number, value: T): T => R.identity(value);
 
-export const truncate = curry(
-  // @ts-ignore
-  <T>(limit: number, value: T): T => take(limit)(value),
-);
+// @ts-ignore
+export const truncate = <T>(limit: number, value: T): T => take(limit)(value);
 
 // type ArrayTruncateFunction = <T>(items: T[]) => T;
 // type StringTruncateFunction = (text: string) => string;

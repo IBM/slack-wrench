@@ -74,7 +74,9 @@ describe('Slack Element widgets', () => {
 
     it('disallows too long value', () => {
       expect.assertions(1);
-      expect(OptionObject('Why best?', dynamicText)).toThrow();
+      expect(() => {
+        OptionObject('Why best?', dynamicText);
+      }).toThrow();
     });
 
     it('allows override truncateOptions for too long value', () => {
