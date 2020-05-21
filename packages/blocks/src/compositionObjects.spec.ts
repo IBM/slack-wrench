@@ -38,21 +38,21 @@ describe('Element composition', () => {
     });
 
     it('truncates ellipsis for text, description', () => {
-      expect.assertions(1);
-      expect(
-        OptionObject(dynamicText, 'why-best-raven', {
-          description: dynamicTextElement,
-        }),
-      ).toMatchSnapshot();
+      expect.assertions(2);
+      const option = OptionObject(dynamicText, 'why-best-raven', {
+        description: dynamicTextElement,
+      });
+      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 72)}...`));
+      expect(option.description).toEqual({
+        ...dynamicTextElement,
+        text: `${dynamicTextElement.text.substr(0, 72)}...`,
+      });
     });
 
     it('truncates url', () => {
       expect.assertions(1);
-      expect(
-        OptionObject('Why best?', 'why-best-raven', {
-          url: dynamicText,
-        }),
-      ).toMatchSnapshot();
+      const option = OptionObject('text', 'value', { url: dynamicText });
+      expect(option.url).toHaveLength(3000);
     });
 
     it('disallows too long value', () => {
@@ -64,11 +64,10 @@ describe('Element composition', () => {
 
     it('allows override truncateOptions for too long value', () => {
       expect.assertions(1);
-      expect(
-        OptionObject('Why best?', dynamicText, undefined, {
-          value: truncate,
-        }),
-      ).toMatchSnapshot();
+      const option = OptionObject('Why best?', dynamicText, undefined, {
+        value: truncate,
+      });
+      expect(option.value).toHaveLength(75);
     });
   });
 });

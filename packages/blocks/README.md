@@ -157,14 +157,14 @@ const optionTruncates: TruncateOptions = {
 So, the `text` field has a maximum length of `75`. If the provided text in building the block is greater than 75, then the text field is 'truncated' with the `ellipsis` function.
 
 ```ts
-// { text: 'Why best?', value: 'value' }
+// { text: 'text', value: 'value' }
 OptionObject('text', 'value');
 
 // { text: '<first 72 characters>...', value: 'value' }
 OptionObject('<80 character text>', 'value');
 
 // Throws
-OptionObject('text', '<80 character value>');
+OptionObject('text', '<80 character id value>');
 ```
 
 ### Overriding
@@ -182,7 +182,7 @@ OptionObject(dynamicText, 'value', undefined, { value: truncate });
 
 In the same way that you can override, you can also provide your own custom functions (e.g. parsing URLs and removing query parameters, showing the last 10 instead of the first 10 in an array...).
 
-The truncate function is passed two values - the limit for the field in context and the string on which the check is done.
+The truncate function is passed two values - the limit for the field in context and the string or array on which the check is done.
 
 For example, to provide a function that just rendered an error string for text that is too long, you could do this:
 
