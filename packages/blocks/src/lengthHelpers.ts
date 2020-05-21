@@ -278,7 +278,7 @@ export const truncate = <T>(limit: number, value: T): T => take(limit)(value);
 
 // export type TruncateFunction = F.Curry<<T>(limit: number, value: T) => T>;
 
-export const longerThan = curry((limit: number, value: any): boolean =>
+const longerThan = curry((limit: number, value: any): boolean =>
   pipe<any, number, boolean>(prop('length'), lt(limit))(value),
 );
 
