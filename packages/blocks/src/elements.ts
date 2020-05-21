@@ -17,6 +17,7 @@ import {
   StaticSelect,
   UsersSelect,
 } from '@slack/types';
+import { mergeLeft } from 'ramda';
 
 import {
   applyTruncations,
@@ -28,7 +29,8 @@ import {
   truncators,
   truncLimits,
 } from './lengthHelpers';
-import { mergeLeft, prop, map, mapObjIndexed } from 'ramda';
+
+export * from './elements/optionObject';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
 
@@ -74,10 +76,7 @@ export const OptionObject = (
       value,
       ...optionBlock,
     } as Option,
-    mergeLeft(truncateFunctions, truncators(optionTruncates)) as Record<
-      string,
-      TruncateFunction
-    >,
+    mergeLeft(truncateFunctions, truncators(optionTruncates)),
     truncLimits(optionTruncates),
   );
 
