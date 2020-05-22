@@ -193,6 +193,6 @@ OptionObject(dynamicText, 'value', undefined, {
 });
 ```
 
-Transform function signature: `<T>(limit: number, value: T) => T`. Be sure to return an value that is the same type the `value` passed - text element, string, option object array, etc. depending on the field.
+Transform function signature: `<T>(limit: number, value: T) => T`. Be sure to retur an value that is the same type the `value` passed - text element, string, option object array, etc. depending on the field.
 
-Note that this function only gets called when the passed dynamicText is greater than the limit. Also, if you end up returning a string longer than `limit`, the block could break when the API call is made to Slack (since Slack will refuse the request).
+Note that this function only gets called when the passed dynamicText is greater than the limit. Also, if you end up returning a value under the `limit`, the block could break when the API call is made to Slack (since Slack will refuse the request).

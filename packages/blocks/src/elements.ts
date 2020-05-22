@@ -54,7 +54,6 @@ export const Button = (
       url: [3000, truncate],
       value: [2000, disallow],
       options: [10, truncate],
-      // TODO: what to do with confirm validation?
     },
     overrideTruncators,
   );
