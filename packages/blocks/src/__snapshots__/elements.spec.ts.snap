@@ -1,5 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Slack Element widgets button renders 1`] = `
+Object {
+  "action_id": "ravenAgree",
+  "text": Object {
+    "emoji": true,
+    "text": "Ravenclaw is obviously the best house.",
+    "type": "plain_text",
+  },
+  "type": "button",
+}
+`;
+
 exports[`Slack Element widgets checkbox input element renders a minimal example 1`] = `
 Object {
   "action_id": "title",
@@ -125,6 +137,14 @@ Object {
     },
   ],
   "type": "checkboxes",
+}
+`;
+
+exports[`Slack Element widgets image renders 1`] = `
+Object {
+  "alt_text": "Ravenclaw is obviously the best house.",
+  "image_url": "http://placekitten.com/700/500",
+  "type": "image",
 }
 `;
 
@@ -257,6 +277,60 @@ Object {
 }
 `;
 
+exports[`Slack Element widgets overflow menu renders 1`] = `
+Object {
+  "action_id": "house-actions",
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "Why best?",
+        "type": "plain_text",
+      },
+      "value": "why-best-raven",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "Ping JK",
+        "type": "plain_text",
+      },
+      "value": "notify-author",
+    },
+  ],
+  "type": "overflow",
+}
+`;
+
+exports[`Slack Element widgets plaintext input renders minimally 1`] = `
+Object {
+  "action_id": "title",
+  "initial_value": "and the Prisoner of Azkaban",
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Enter a title",
+    "type": "plain_text",
+  },
+  "type": "plain_text_input",
+}
+`;
+
+exports[`Slack Element widgets plaintext input renders with initial value, placeholder, and opts 1`] = `
+Object {
+  "action_id": "title",
+  "initial_value": "and the Prisoner of Azkaban",
+  "max_length": 200,
+  "min_length": 10,
+  "multiline": true,
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Enter a title",
+    "type": "plain_text",
+  },
+  "type": "plain_text_input",
+}
+`;
+
 exports[`Slack Element widgets radio input element renders a minimal example 1`] = `
 Object {
   "action_id": "title",
@@ -370,80 +444,6 @@ Object {
     },
   ],
   "type": "radio_buttons",
-}
-`;
-
-exports[`Slack Element widgets renders a button element 1`] = `
-Object {
-  "action_id": "ravenAgree",
-  "text": Object {
-    "emoji": true,
-    "text": "Ravenclaw is obviously the best house.",
-    "type": "plain_text",
-  },
-  "type": "button",
-}
-`;
-
-exports[`Slack Element widgets renders a minimal plain-text input element 1`] = `
-Object {
-  "action_id": "title",
-  "initial_value": "and the Prisoner of Azkaban",
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Enter a title",
-    "type": "plain_text",
-  },
-  "type": "plain_text_input",
-}
-`;
-
-exports[`Slack Element widgets renders a plain-text input element with initial value, placeholder, and opts 1`] = `
-Object {
-  "action_id": "title",
-  "initial_value": "and the Prisoner of Azkaban",
-  "max_length": 200,
-  "min_length": 10,
-  "multiline": true,
-  "placeholder": Object {
-    "emoji": true,
-    "text": "Enter a title",
-    "type": "plain_text",
-  },
-  "type": "plain_text_input",
-}
-`;
-
-exports[`Slack Element widgets renders an image element 1`] = `
-Object {
-  "alt_text": "Ravenclaw is obviously the best house.",
-  "image_url": "http://placekitten.com/700/500",
-  "type": "image",
-}
-`;
-
-exports[`Slack Element widgets renders an overflow menu element 1`] = `
-Object {
-  "action_id": "house-actions",
-  "options": Array [
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "Why best?",
-        "type": "plain_text",
-      },
-      "value": "why-best-raven",
-    },
-    Object {
-      "text": Object {
-        "emoji": true,
-        "text": "Ping JK",
-        "type": "plain_text",
-      },
-      "value": "notify-author",
-    },
-  ],
-  "type": "overflow",
 }
 `;
 
@@ -684,7 +684,7 @@ Object {
 
 exports[`Slack Element widgets select input user element renders with opts that override 1`] = `
 Object {
-  "action_id": "channel",
+  "action_id": "user",
   "initial_user": "DPBMEQCM8",
   "placeholder": Object {
     "emoji": true,

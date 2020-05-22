@@ -58,11 +58,12 @@ export const identity = <T>(limit: number, value: T): T => R.identity(value);
 
 /**
  * truncates by just taking the first `limit` elements of `value`
- * works for list or string
+ * works for list string, or object with text property
  */
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-export const truncate = <T>(limit: number, value: T): T => take(limit)(value);
+export const truncate = <T>(limit: number, value: T): T =>
+  ifElse(has('text'), over(lensProp('text'), take(limit)), take(limit))(value);
 
 const longerThan = curry((limit: number, value: any): boolean =>
   pipe<any, number, boolean>(prop('length'), lt(limit))(value),
