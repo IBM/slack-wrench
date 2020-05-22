@@ -48,6 +48,7 @@ const RestaurantBlocks = (restaurantTimes = 1) =>
 describe('Block Images', () => {
   jest.setTimeout(30000);
   let blockKitRenderer: BlockKitRenderer;
+  let connectedRenderer: BlockKitRenderer;
 
   beforeAll(async () => {
     blockKitRenderer = new BlockKitRenderer();
@@ -61,6 +62,7 @@ describe('Block Images', () => {
 
   afterAll(async () => {
     await blockKitRenderer.close();
+    await connectedRenderer.close();
   });
 
   it('can render a block as a message', async () => {
@@ -128,5 +130,24 @@ describe('Block Images', () => {
   it('exposes browser to enable better jest snapshot testing', () => {
     expect.assertions(1);
     expect(blockKitRenderer.browser).toBeDefined();
+  });
+
+  it('allows connecting to existing logged in browser', async () => {
+    expect.assertions(2);
+    jest.setTimeout(45 * 1000);
+
+    connectedRenderer = new BlockKitRenderer();
+
+    const loggedInEndpoint = blockKitRenderer.browser?.wsEndpoint();
+
+    await connectedRenderer.connect({ browserWSEndpoint: loggedInEndpoint });
+
+    expect(connectedRenderer.browser?.wsEndpoint()).toEqual(loggedInEndpoint);
+
+    const blockImage = await connectedRenderer.imageFromBlocks(
+      RestaurantBlocks(),
+    );
+
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 });
