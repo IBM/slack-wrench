@@ -9,8 +9,6 @@ import {
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import { times } from 'ramda';
 
-import puppeteer from 'puppeteer';
-
 import BlockKitRenderer from './index';
 
 expect.extend({ toMatchImageSnapshot });
