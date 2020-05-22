@@ -38,7 +38,7 @@ export interface BlockKitRendererOptions {
 }
 
 export default class BlockKitRenderer {
-  private browser?: Browser;
+  public browser?: Browser;
 
   private readonly puppeteerOptions?: LaunchOptions;
 

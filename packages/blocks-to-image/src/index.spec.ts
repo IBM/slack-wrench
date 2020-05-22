@@ -124,4 +124,9 @@ describe('Block Images', () => {
 
     expect(blockImage).toMatch(/=$/);
   });
+
+  it('exposes browser to enable better jest snapshot testing', () => {
+    expect.assertions(1);
+    expect(blockKitRenderer.browser).toBeDefined();
+  });
 });
