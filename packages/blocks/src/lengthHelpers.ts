@@ -8,6 +8,7 @@ import R, {
   lensProp,
   lt,
   mapObjIndexed,
+  mergeLeft,
   over,
   pipe,
   prop,
@@ -101,11 +102,8 @@ export const truncators: (
 
 /**
  * mostly internal function for building blocks - takes the element `obj` and
- * applies the truncation `functions` to each limited field iff that field's length is greater than its
- * respective limit for that block
- * @param obj
- * @param functions
- * @param limits
+ * applies the truncation `functions` to each limited field iff that field's
+ * length is greater than its respective limit for that block
  */
 export const applyTruncations = <T extends Record<string, any>>(
   obj: T,
@@ -125,3 +123,20 @@ export const applyTruncations = <T extends Record<string, any>>(
     return value;
   }, obj);
 };
+
+/**
+ * mostly internal function for building blocks - takes the element `obj` and
+ * any user provided overrides for the truncate functions and
+ * applies the truncation `functions` to each limited field iff that field's
+ * length is greater than its respective limit for that block
+ */
+export const applyTruncationsWithOverrides = <T extends Record<string, any>>(
+  obj: T,
+  defaultTruncateOptions: TruncateOptions,
+  overrides: Record<string, TruncateFunction>,
+): T =>
+  applyTruncations(
+    obj,
+    mergeLeft(overrides, truncators(defaultTruncateOptions)),
+    truncLimits(defaultTruncateOptions),
+  );
