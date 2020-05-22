@@ -93,6 +93,9 @@ export default class BlockKitRenderer {
 
     const page = await this.browser.newPage();
 
+    // Configure the navigation timeout - this can take more than default 30s depending on provided blocks
+    page.setDefaultNavigationTimeout(60 * 1000);
+
     await page.emulateTimezone('GMT');
 
     const query = querystring.stringify({
