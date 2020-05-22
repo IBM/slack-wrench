@@ -108,17 +108,17 @@ export const truncators: (
  */
 export const applyTruncations = <T extends Record<string, any>>(
   obj: T,
-  functions: Record<string, TruncateFunction>,
+  truncateFns: Record<string, TruncateFunction>,
   limits: Record<string, number>,
 ): T => {
-  const truncateKeys = Object.keys(functions);
+  const truncateKeys = Object.keys(truncateFns);
 
-  // for each key in object, apply the function in functions associated with that key if exists
+  // for each key in object, apply the function in truncateFns associated with that key if exists
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   return mapObjIndexed(<J>(value: J, key: string): J => {
     if (truncateKeys.includes(key) && isTooLongForBlock(limits[key])(value)) {
-      return functions[key](limits[key], value);
+      return truncateFns[key](limits[key], value);
     }
 
     return value;
@@ -127,17 +127,16 @@ export const applyTruncations = <T extends Record<string, any>>(
 
 /**
  * mostly internal function for building blocks - takes the element `obj` and
- * any user provided overrides for the truncate functions and
- * applies the truncation `functions` to each limited field iff that field's
- * length is greater than its respective limit for that block
+ * any user provided overrideFns and applies those truncation functions
+ * to each limited field iff that field's length is greater than the provided limit
  */
 export const applyTruncationsWithOverrides = <T extends Record<string, any>>(
   obj: T,
   defaultTruncateOptions: TruncateOptions,
-  overrides: Record<string, TruncateFunction>,
+  overrideFns: Record<string, TruncateFunction>,
 ): T =>
   applyTruncations(
     obj,
-    mergeLeft(overrides, truncators(defaultTruncateOptions)),
+    mergeLeft(overrideFns, truncators(defaultTruncateOptions)),
     truncLimits(defaultTruncateOptions),
   );
