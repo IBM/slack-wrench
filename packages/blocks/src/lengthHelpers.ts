@@ -8,6 +8,7 @@ import R, {
   lensProp,
   lt,
   mapObjIndexed,
+  mergeLeft,
   over,
   pipe,
   prop,
@@ -57,11 +58,12 @@ export const identity = <T>(limit: number, value: T): T => R.identity(value);
 
 /**
  * truncates by just taking the first `limit` elements of `value`
- * works for list or string
+ * works for list string, or object with text property
  */
 // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
 // @ts-ignore
-export const truncate = <T>(limit: number, value: T): T => take(limit)(value);
+export const truncate = <T>(limit: number, value: T): T =>
+  ifElse(has('text'), over(lensProp('text'), take(limit)), take(limit))(value);
 
 const longerThan = curry((limit: number, value: any): boolean =>
   pipe<any, number, boolean>(prop('length'), lt(limit))(value),
@@ -101,27 +103,40 @@ export const truncators: (
 
 /**
  * mostly internal function for building blocks - takes the element `obj` and
- * applies the truncation `functions` to each limited field iff that field's length is greater than its
- * respective limit for that block
- * @param obj
- * @param functions
- * @param limits
+ * applies the `truncateFns` to each limited field if and only if
+ * that field's length is greater than its respective limit for that block
  */
 export const applyTruncations = <T extends Record<string, any>>(
   obj: T,
-  functions: Record<string, TruncateFunction>,
+  truncateFns: Record<string, TruncateFunction>,
   limits: Record<string, number>,
 ): T => {
-  const truncateKeys = Object.keys(functions);
+  const truncateKeys = Object.keys(truncateFns);
 
-  // for each key in object, apply the function in functions associated with that key if exists
+  // for each key in object, apply the function in truncateFns associated with that key if exists
   // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
   // @ts-ignore
   return mapObjIndexed(<J>(value: J, key: string): J => {
     if (truncateKeys.includes(key) && isTooLongForBlock(limits[key])(value)) {
-      return functions[key](limits[key], value);
+      return truncateFns[key](limits[key], value);
     }
 
     return value;
   }, obj);
 };
+
+/**
+ * mostly internal function for building blocks - takes the element `obj` and
+ * any user provided `overrideFns` and applies those truncation functions
+ * to each limited field if and only if that field's length is greater than the provided limit
+ */
+export const applyTruncationsWithOverrides = <T extends Record<string, any>>(
+  obj: T,
+  defaultTruncateOptions: TruncateOptions,
+  overrideFns: Record<string, TruncateFunction>,
+): T =>
+  applyTruncations(
+    obj,
+    mergeLeft(overrideFns, truncators(defaultTruncateOptions)),
+    truncLimits(defaultTruncateOptions),
+  );

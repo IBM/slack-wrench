@@ -1,15 +1,11 @@
 import { MrkdwnElement, Option, PlainTextElement } from '@slack/types';
-import { mergeLeft } from 'ramda';
 
 import {
-  applyTruncations,
+  applyTruncationsWithOverrides,
   disallow,
   ellipsis,
   truncate,
   TruncateFunction,
-  TruncateOptions,
-  truncators,
-  truncLimits,
 } from './lengthHelpers';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
@@ -29,27 +25,25 @@ export const PlainText = (text: string, emoji = true): PlainTextElement => ({
 // --- Confirm Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
 
 // --- Option Object --- https://api.slack.com/reference/block-kit/composition-objects#option
-const optionTruncates: TruncateOptions = {
-  text: [75, ellipsis],
-  value: [75, disallow],
-  description: [75, ellipsis],
-  url: [3000, truncate],
-};
-
 export const OptionObject = (
   text: string,
   value: string,
   optionBlock: Partial<Option> = {},
-  truncateFunctions: Record<string, TruncateFunction> = {},
+  overrideTruncators: Record<string, TruncateFunction> = {},
 ): Option =>
-  applyTruncations<Option>(
+  applyTruncationsWithOverrides<Option>(
     {
       text: PlainText(text),
       value,
       ...optionBlock,
-    } as Option,
-    mergeLeft(truncateFunctions, truncators(optionTruncates)),
-    truncLimits(optionTruncates),
+    },
+    {
+      text: [75, ellipsis],
+      value: [75, disallow],
+      description: [75, ellipsis],
+      url: [3000, truncate],
+    },
+    overrideTruncators,
   );
 
 // --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
