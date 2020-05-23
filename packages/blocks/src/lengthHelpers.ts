@@ -103,8 +103,8 @@ export const truncators: (
 
 /**
  * mostly internal function for building blocks - takes the element `obj` and
- * applies the truncation `functions` to each limited field iff that field's
- * length is greater than its respective limit for that block
+ * applies the `truncateFns` to each limited field if and only if
+ * that field's length is greater than its respective limit for that block
  */
 export const applyTruncations = <T extends Record<string, any>>(
   obj: T,
@@ -127,8 +127,8 @@ export const applyTruncations = <T extends Record<string, any>>(
 
 /**
  * mostly internal function for building blocks - takes the element `obj` and
- * any user provided overrideFns and applies those truncation functions
- * to each limited field iff that field's length is greater than the provided limit
+ * any user provided `overrideFns` and applies those truncation functions
+ * to each limited field if and only if that field's length is greater than the provided limit
  */
 export const applyTruncationsWithOverrides = <T extends Record<string, any>>(
   obj: T,
