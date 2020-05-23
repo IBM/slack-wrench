@@ -48,7 +48,6 @@ const RestaurantBlocks = (restaurantTimes = 1) =>
 describe('Block Images', () => {
   jest.setTimeout(30000);
   let blockKitRenderer: BlockKitRenderer;
-  let connectedRenderer: BlockKitRenderer;
 
   beforeAll(async () => {
     blockKitRenderer = new BlockKitRenderer();
@@ -62,7 +61,6 @@ describe('Block Images', () => {
 
   afterAll(async () => {
     await blockKitRenderer.close();
-    await connectedRenderer.close();
   });
 
   it('can render a block as a message', async () => {
@@ -107,15 +105,6 @@ describe('Block Images', () => {
     expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
-  it('throws when rendering and not logging in', async () => {
-    expect.assertions(1);
-    const notLoggedInRenderer = new BlockKitRenderer();
-
-    await expect(
-      notLoggedInRenderer.imageFromBlocks(RestaurantBlocks()),
-    ).rejects.toThrowError();
-  });
-
   it('allows overriding snapshot options', async () => {
     expect.assertions(1);
     const blockImage = await blockKitRenderer.imageFromBlocks(
@@ -132,22 +121,43 @@ describe('Block Images', () => {
     expect(blockKitRenderer.browser).toBeDefined();
   });
 
-  it('allows connecting to existing logged in browser', async () => {
-    expect.assertions(2);
-    jest.setTimeout(45 * 1000);
+  describe('after creating a not logged-in renderer', () => {
+    let notLoggedInRenderer: BlockKitRenderer;
 
-    connectedRenderer = new BlockKitRenderer();
+    beforeAll(() => {
+      notLoggedInRenderer = new BlockKitRenderer();
+    });
 
-    const loggedInEndpoint = blockKitRenderer.browser?.wsEndpoint();
+    afterAll(async () => {
+      await notLoggedInRenderer.close();
+    });
 
-    await connectedRenderer.connect({ browserWSEndpoint: loggedInEndpoint });
+    it('throws when rendering before logging in', async () => {
+      expect.assertions(1);
 
-    expect(connectedRenderer.browser?.wsEndpoint()).toEqual(loggedInEndpoint);
+      await expect(
+        notLoggedInRenderer.imageFromBlocks(RestaurantBlocks()),
+      ).rejects.toThrowError();
+    });
 
-    const blockImage = await connectedRenderer.imageFromBlocks(
-      RestaurantBlocks(),
-    );
+    it('allows connecting to existing logged in browser', async () => {
+      expect.assertions(2);
 
-    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
+      const loggedInEndpoint = blockKitRenderer.browser?.wsEndpoint();
+
+      await notLoggedInRenderer.connect({
+        browserWSEndpoint: loggedInEndpoint,
+      });
+
+      expect(notLoggedInRenderer.browser?.wsEndpoint()).toEqual(
+        loggedInEndpoint,
+      );
+
+      const blockImage = await notLoggedInRenderer.imageFromBlocks(
+        RestaurantBlocks(),
+      );
+
+      expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
+    });
   });
 });
