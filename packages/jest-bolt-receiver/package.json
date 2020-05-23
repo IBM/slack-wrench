@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@slack-wrench/fixtures": "^2.0.1",
-    "@slack-wrench/jest-mock-web-client": "^1.1.1",
+    "@slack-wrench/jest-mock-web-client": "^1.2.0",
     "@slack-wrench/standards": "^1.1.0",
     "delay": "^4.3.0"
   },
