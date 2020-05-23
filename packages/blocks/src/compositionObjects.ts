@@ -1,12 +1,12 @@
 import { MrkdwnElement, Option, PlainTextElement } from '@slack/types';
 
 import {
-  applyTruncationsWithOverrides,
+  applyLimitersWithOverrides,
   disallow,
   ellipsis,
+  LimiterFuncs,
   truncate,
-  TruncateFunction,
-} from './lengthHelpers';
+} from './limitHelpers';
 
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
 
@@ -29,9 +29,9 @@ export const OptionObject = (
   text: string,
   value: string,
   optionBlock: Partial<Option> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): Option =>
-  applyTruncationsWithOverrides<Option>(
+  applyLimitersWithOverrides<Option>(
     {
       text: PlainText(text),
       value,
@@ -43,7 +43,7 @@ export const OptionObject = (
       description: [75, ellipsis],
       url: [3000, truncate],
     },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group

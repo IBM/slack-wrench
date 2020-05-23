@@ -1,7 +1,7 @@
 import { PlainTextElement } from '@slack/types';
 
 import { Markdown, OptionObject, PlainText } from './compositionObjects';
-import { truncate } from './lengthHelpers';
+import { truncate } from './limitHelpers';
 
 const dynamicText = '0123456789'.repeat(301); // 3010 characters long
 const dynamicTextElement: PlainTextElement = {
@@ -62,7 +62,7 @@ describe('Element composition', () => {
       }).toThrow();
     });
 
-    it('allows override truncateOptions for too long value', () => {
+    it('allows override LimitOpts for too long value', () => {
       expect.assertions(1);
       const option = OptionObject('Why best?', dynamicText, undefined, {
         value: truncate,

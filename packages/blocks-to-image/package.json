@@ -21,7 +21,7 @@
     "jest": ">=20 <=25"
   },
   "devDependencies": {
-    "@slack-wrench/blocks": "^1.6.2",
+    "@slack-wrench/blocks": "^2.0.0",
     "@slack-wrench/standards": "^1.1.0",
     "@types/jest-image-snapshot": "^2.11.2",
     "jest-image-snapshot": "^3.0.1",

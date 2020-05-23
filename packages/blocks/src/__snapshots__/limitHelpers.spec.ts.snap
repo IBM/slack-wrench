@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Truncation helpers applyTruncations function applies truncation functions to object properties 1`] = `
+exports[`Truncation helpers applyLimiters function applies truncation functions to object properties 1`] = `
 Object {
   "description": Object {
     "text": "a...",
