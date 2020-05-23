@@ -64,6 +64,11 @@ export class MockWebClient implements Partial<WebClient> {
         setName: mockApi(),
       },
     },
+    usergroups: {
+      addChannels: mockApi(),
+      listChannels: mockApi(),
+      removeChannels: mockApi(),
+    },
     users: {
       session: {
         reset: mockApi(),
