@@ -12,10 +12,13 @@ Block Kit Builder is authenticated, if you use this package and want to help mak
 
 ## Table of Contents
 
+- [Table of Contents](#table-of-contents)
 - [Install](#install)
 - [Usage](#usage)
+  - [`login`](#login)
   - [`imageFromBlocks`](#imagefromblocks)
   - [Advanced Configuration](#advanced-configuration)
+  - [jest globalSetup](#jest-globalsetup)
 
 ## Install
 
@@ -106,3 +109,9 @@ blockKitRenderer = new BlockKitRenderer({
   },
 });
 ```
+
+### jest globalSetup
+
+To save some time if you're running this in multiple test files with jest, you can with some additional setup use jest to login only once at the beginning of testing.
+
+Follow [the jest instructions for custom puppeteer hookup], providing `blockKitRenderer.browser` as the `browser` in the `setup.js` and doing the login as part of the `setup` in the `puppeteer_environment.js` file. This can speed things up pretty dramatically.

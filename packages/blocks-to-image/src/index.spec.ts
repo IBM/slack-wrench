@@ -105,15 +105,6 @@ describe('Block Images', () => {
     expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
-  it('throws when rendering and not logging in', async () => {
-    expect.assertions(1);
-    const notLoggedInRenderer = new BlockKitRenderer();
-
-    await expect(
-      notLoggedInRenderer.imageFromBlocks(RestaurantBlocks()),
-    ).rejects.toThrowError();
-  });
-
   it('allows overriding snapshot options', async () => {
     expect.assertions(1);
     const blockImage = await blockKitRenderer.imageFromBlocks(
@@ -123,5 +114,50 @@ describe('Block Images', () => {
     );
 
     expect(blockImage).toMatch(/=$/);
+  });
+
+  it('exposes browser to enable better jest snapshot testing', () => {
+    expect.assertions(1);
+    expect(blockKitRenderer.browser).toBeDefined();
+  });
+
+  describe('after creating a not logged-in renderer', () => {
+    let notLoggedInRenderer: BlockKitRenderer;
+
+    beforeAll(() => {
+      notLoggedInRenderer = new BlockKitRenderer();
+    });
+
+    afterAll(async () => {
+      await notLoggedInRenderer.close();
+    });
+
+    it('throws when rendering before logging in', async () => {
+      expect.assertions(1);
+
+      await expect(
+        notLoggedInRenderer.imageFromBlocks(RestaurantBlocks()),
+      ).rejects.toThrowError();
+    });
+
+    it('allows connecting to existing logged in browser', async () => {
+      expect.assertions(2);
+
+      const loggedInEndpoint = blockKitRenderer.browser?.wsEndpoint();
+
+      await notLoggedInRenderer.connect({
+        browserWSEndpoint: loggedInEndpoint,
+      });
+
+      expect(notLoggedInRenderer.browser?.wsEndpoint()).toEqual(
+        loggedInEndpoint,
+      );
+
+      const blockImage = await notLoggedInRenderer.imageFromBlocks(
+        RestaurantBlocks(),
+      );
+
+      expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
+    });
   });
 });

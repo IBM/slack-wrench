@@ -2,6 +2,7 @@ import { KnownBlock } from '@slack/types';
 import puppeteer, {
   BoxModel,
   Browser,
+  ConnectOptions,
   LaunchOptions,
   Page,
   ScreenshotOptions,
@@ -38,7 +39,7 @@ export interface BlockKitRendererOptions {
 }
 
 export default class BlockKitRenderer {
-  private browser?: Browser;
+  public browser?: Browser;
 
   private readonly puppeteerOptions?: LaunchOptions;
 
@@ -57,6 +58,7 @@ export default class BlockKitRenderer {
 
   async login(domain: string, email: string, password: string): Promise<void> {
     this.browser = await puppeteer.launch(this.puppeteerOptions);
+
     const page = await this.browser.newPage();
 
     await page.goto(`https://${domain}.slack.com`, { waitUntil: 'load' });
@@ -65,6 +67,16 @@ export default class BlockKitRenderer {
     await page.click('#signin_btn');
     await page.waitForNavigation();
     await page.close();
+  }
+
+  /**
+   * enables connecting to existing browser that is logged in
+   */
+  async connect(options: ConnectOptions): Promise<void> {
+    this.browser = await puppeteer.connect({
+      ...this.puppeteerOptions,
+      ...options,
+    });
   }
 
   async imageFromBlocks(
@@ -80,6 +92,9 @@ export default class BlockKitRenderer {
     const screenshotSelector = '.p-block_kit_builder_preview__container';
 
     const page = await this.browser.newPage();
+
+    // Configure the navigation timeout - this can take more than default 30s depending on provided blocks
+    page.setDefaultNavigationTimeout(60 * 1000);
 
     await page.emulateTimezone('GMT');
 
