@@ -4,14 +4,15 @@ Create messages with block kit more functionally and with less recall and repeti
 
 This package helps abstract away some of the specifics, and deduplicate some of the repetitive code needed to create blocks being sent to Slack.
 
-It also automatically handles various slack API limitations on content to ensure blocks built with dynamic content at least don't break when sent to Slack. Learn more about this in the [Truncation](#truncation) section.
+It also automatically handles various slack API limitations on content to ensure blocks built with dynamic content at least don't break when sent to Slack. Learn more about this in the [Limits](#Limits) section.
 
 - [Install](#install)
 - [Usage](#usage)
-- [Truncation](#truncation)
+- [Limits](#limits)
   - [Defaults](#defaults)
   - [Overriding](#overriding)
-  - [Custom Truncation Functions](#custom-truncation-functions)
+  - [Custom Limiter Functions](#custom-limiter-functions)
+  - [Nested Limits](#nested-limits)
 
 ## Install
 
@@ -124,11 +125,11 @@ app.message(':wave:', async ({ message, say }) => {
 });
 ```
 
-## Truncation
+## Limits
 
 The Slack API fails completely if all of the various fields don't meet the length requirements outlined in their documentation. This is a lot to keep track of, so this package makes an attempt at sane defaults for cutting off content so that your requests to the Slack APIs won't error, even if you have very long dynamic content.
 
-Depending on the field, different default behavior regarding truncation of content that is too long is applied.
+Depending on the type of the field being limited, different default limit behavior is applied.
 
 ### Defaults
 
@@ -146,7 +147,7 @@ There are three primary functions applied, depending on the field type: `truncat
 For example, on an [Option composition object](https://api.slack.com/reference/block-kit/composition-objects#option), here are the functions applied by default and the limits for the fields.
 
 ```ts
-const optionTruncates: TruncateOptions = {
+const optionLimits: LimitOpts = {
   text: [75, ellipsis],
   value: [75, disallow],
   description: [75, ellipsis],
@@ -154,13 +155,13 @@ const optionTruncates: TruncateOptions = {
 };
 ```
 
-So, the `text` field has a maximum length of `75`. If the provided text in building the block is greater than 75, then the text field is 'truncated' with the `ellipsis` function.
+So, the `text` field has a maximum length of `75`. If the provided text in building the block is greater than 75, then the text field is 'limited' via the `ellipsis` function.
 
 ```ts
 // { text: 'text', value: 'value' }
 OptionObject('text', 'value');
 
-// { text: '<first 72 characters>...', value: 'value' }
+// { text: '<first 73 characters> …', value: 'value' }
 OptionObject('<80 character text>', 'value');
 
 // Throws
@@ -169,30 +170,48 @@ OptionObject('text', '<80 character id value>');
 
 ### Overriding
 
-You can override the applied functions in most blocks by using the `truncateFunctions` argument. This involves passing an object mapping of fields (strings) to functions. Provided functions include `truncate`, `ellipsis`, `disallow`, and `identity`.
+You can override the applied functions in most blocks by using the `LimiterFuncs` argument. This involves passing an object mapping of fields (strings) to functions. Provided functions include `truncate`, `ellipsis`, `disallow`, and `identity`.
 
 For example, if you didn't want it to throw on a value being too long, you could truncate that field instead of disallowing:
 
 ```ts
 // map the `value` field to the truncate function instead of the default disallow
-OptionObject(dynamicText, 'value', undefined, { value: truncate });
+OptionObject('title', dynamicText, undefined, { value: truncate });
 ```
 
-### Custom Truncation Functions
+### Custom Limiter Functions
 
 In the same way that you can override, you can also provide your own custom functions (e.g. parsing URLs and removing query parameters, showing the last 10 instead of the first 10 in an array...).
 
-The truncate function is passed two values - the limit for the field in context and the string or array on which the check is done.
+The limiter function is passed two values - the limit (number) for the field in context and the string or array on which the check is done.
 
 For example, to provide a function that just rendered an error string for text that is too long, you could do this:
 
 ```ts
 OptionObject(dynamicText, 'value', undefined, {
   text: (limit, dynamicText) =>
-    `ERR: TOO LONG LONGER (${limit}): ${dynamicText.substring(0, 5)}...`,
+    `ERR: TOO LONG. LONGER than (${limit}): ${dynamicText.substring(0, 10)}...`,
 });
 ```
 
-Transform function signature: `<T>(limit: number, value: T) => T`. Be sure to return a value that is the same type as the `value` passed - text element, string, option object array, etc. depending on the field.
+Limiter function signature: `<T>(limit: number, value: T) => T`. Be sure to return a value that is the same type as the `value` passed - text element, string, option object array, etc. depending on the field.
 
 Note that this function only gets called when the passed dynamicText is greater than the limit. Also, if you end up returning a value under the `limit`, the block could break when the API call is made to Slack (since Slack will refuse the request).
+
+### Nested Limits
+
+For some blocks, rules are applied to nested blocks in specific fields. For example, the [Section block `fields` field](https://api.slack.com/reference/block-kit/blocks#section) requires that each text object in `fields` has a maximum text length of 2000.
+
+In cases such as this, you can override the default limiter function by providing a tuple instead of just a value limiter: `[valLimiter, eachLimiters]`, where `eachLimiters` is another mapping of `Limiters`. For example, to truncate at 2000 characters instead of ellipsis for fields on a section, you could do:
+
+```ts
+Section(
+  {
+    text: PlainText(text),
+    fields: [{ text: dynamicText }],
+  },
+  {
+    fields: [truncate, { text: truncate }],
+  },
+);
+```

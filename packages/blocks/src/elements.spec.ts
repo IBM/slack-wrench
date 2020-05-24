@@ -17,7 +17,7 @@ import {
   StaticSelectInputElement,
   UsersSelectInputElement,
 } from './elements';
-import { disallow, truncate } from './lengthHelpers';
+import { disallow, truncate } from './limitHelpers';
 
 const dynamicText = '0123456789'.repeat(301); // 3010 characters long
 
@@ -35,10 +35,10 @@ describe('Slack Element widgets', () => {
     it('truncates ellipsis for text', () => {
       expect.assertions(1);
       const option = Button(dynamicText, buttonId);
-      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 72)}...`));
+      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 73)} …`));
     });
 
-    it('allows override truncateOptions for too long value', () => {
+    it('allows override LimitOpts for too long value', () => {
       expect.assertions(1);
       const button = Button(
         text,
@@ -61,10 +61,10 @@ describe('Slack Element widgets', () => {
     it('truncates ellipsis for alt_text', () => {
       expect.assertions(1);
       const image = Image(url, dynamicText);
-      expect(image.alt_text).toEqual(`${dynamicText.substr(0, 1997)}...`);
+      expect(image.alt_text).toEqual(`${dynamicText.substr(0, 1998)} …`);
     });
 
-    it('allows override truncateOptions for too long url', () => {
+    it('allows override LimitOpts for too long url', () => {
       expect.assertions(1);
       expect(() => {
         return Image(dynamicText, text, {
@@ -98,7 +98,7 @@ describe('Slack Element widgets', () => {
       ).toHaveLength(5);
     });
 
-    it('allows override truncateOptions function for too long options', () => {
+    it('allows override LimitOpts function for too long options', () => {
       expect.assertions(1);
       const first3 = repeat(OptionObject('Why best?', 'why-best-raven'), 3);
       const middle2 = repeat(OptionObject('Watch movie', 'movie-watch'), 2);
@@ -147,13 +147,13 @@ describe('Slack Element widgets', () => {
 
     it('truncates placeholder and initial_value', () => {
       expect.assertions(2);
-      const truncatedString = `${dynamicText.substr(0, 147)}...`;
+      const truncatedString = `${dynamicText.substr(0, 148)} …`;
       const truncated = PlainTextInputElement('TBD', dynamicText, dynamicText);
       expect(truncated.initial_value).toEqual(truncatedString);
       expect(truncated.placeholder?.text).toEqual(truncatedString);
     });
 
-    it('allows override truncateOptions for too long initial_value', () => {
+    it('allows override LimitOpts for too long initial_value', () => {
       expect.assertions(1);
       expect(
         PlainTextInputElement('TBD', dynamicText, undefined, undefined, {
@@ -201,7 +201,7 @@ describe('Slack Element widgets', () => {
       expect(truncated.initial_options).toHaveLength(10);
     });
 
-    it('allows override truncateOptions for too long initial_options', () => {
+    it('allows override LimitOpts for too long initial_options', () => {
       expect.assertions(1);
       expect(() => {
         return CheckboxInputElement(
@@ -246,7 +246,7 @@ describe('Slack Element widgets', () => {
       expect(truncated.options).toHaveLength(10);
     });
 
-    it('allows override truncateOptions for too long options', () => {
+    it('allows override LimitOpts for too long options', () => {
       expect.assertions(1);
       expect(() => {
         return RadioInputElement(
@@ -309,7 +309,7 @@ describe('Slack Element widgets', () => {
         expect(truncated.options).toHaveLength(100);
       });
 
-      it('allows override truncateOptions for too long options', () => {
+      it('allows override LimitOpts for too long options', () => {
         expect.assertions(1);
         expect(() => {
           return StaticSelectInputElement(
@@ -352,13 +352,13 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           ChannelsSelectInputElement('channel', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
-      it('allows override truncateOptions for too long placeholder', () => {
+      it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
           ChannelsSelectInputElement(
@@ -412,14 +412,14 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           ConversationsSelectInputElement('conversation', dynamicText)
             .placeholder?.text,
         ).toEqual(truncatedString);
       });
 
-      it('allows override truncateOptions for too long placeholder', () => {
+      it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
           ConversationsSelectInputElement(
@@ -461,13 +461,13 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           UsersSelectInputElement('user', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
-      it('allows override truncateOptions for too long placeholder', () => {
+      it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
           UsersSelectInputElement('user', dynamicText, undefined, undefined, {
@@ -512,14 +512,14 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           MultiChannelsSelectInputElement('channels', dynamicText).placeholder
             ?.text,
         ).toEqual(truncatedString);
       });
 
-      it('allows override truncateOptions for too long placeholder', () => {
+      it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
           MultiChannelsSelectInputElement(
@@ -573,14 +573,14 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           MultiConversationsSelectInputElement('conversations', dynamicText)
             .placeholder?.text,
         ).toEqual(truncatedString);
       });
 
-      it('allows override truncateOptions for too long placeholder', () => {
+      it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
           MultiConversationsSelectInputElement(
@@ -622,13 +622,13 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           MultiUsersSelectInputElement('users', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
-      it('allows override truncateOptions for too long placeholder', () => {
+      it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
           MultiUsersSelectInputElement(

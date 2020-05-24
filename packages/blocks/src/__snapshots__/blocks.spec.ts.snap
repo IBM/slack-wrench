@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Slack Block widgets can compose blocks into bigger components 1`] = `
+exports[`Slack Block widgets Blocks helper can compose blocks into bigger components 1`] = `
 Array [
   Object {
     "accessory": Object {
@@ -19,6 +19,7 @@ Array [
     "type": "section",
   },
   Object {
+    "block_id": undefined,
     "type": "divider",
   },
   Object {
@@ -117,13 +118,7 @@ Last post: <!date^1575643433^{date_pretty}|1575643433>",
 ]
 `;
 
-exports[`Slack Block widgets renders a divider 1`] = `
-Object {
-  "type": "divider",
-}
-`;
-
-exports[`Slack Block widgets renders a fields section 1`] = `
+exports[`Slack Block widgets FieldsSection renders 1`] = `
 Object {
   "fields": Array [
     Object {
@@ -139,7 +134,7 @@ Object {
 }
 `;
 
-exports[`Slack Block widgets renders a markdown section 1`] = `
+exports[`Slack Block widgets MdSection renders 1`] = `
 Object {
   "text": Object {
     "text": "Ravenclaw is obviously the best house.",
@@ -149,7 +144,77 @@ Object {
 }
 `;
 
-exports[`Slack Block widgets renders a minimal input 1`] = `
+exports[`Slack Block widgets actions renders 1`] = `
+Object {
+  "elements": Array [
+    Object {
+      "action_id": "ravenAgree",
+      "text": Object {
+        "emoji": true,
+        "text": "Ravenclaw is obviously the best house.",
+        "type": "plain_text",
+      },
+      "type": "button",
+    },
+    Object {
+      "action_id": "ravenAgree-2",
+      "text": Object {
+        "emoji": true,
+        "text": "Ravenclaw is obviously the best house.",
+        "type": "plain_text",
+      },
+      "type": "button",
+    },
+  ],
+  "type": "actions",
+}
+`;
+
+exports[`Slack Block widgets context renders 1`] = `
+Object {
+  "elements": Array [
+    Object {
+      "emoji": true,
+      "text": "Ravenclaw is obviously the best house.",
+      "type": "plain_text",
+    },
+  ],
+  "type": "context",
+}
+`;
+
+exports[`Slack Block widgets divider renders 1`] = `
+Object {
+  "block_id": undefined,
+  "type": "divider",
+}
+`;
+
+exports[`Slack Block widgets input renders with block_id, hint, and as optional 1`] = `
+Object {
+  "block_id": "title",
+  "element": Object {
+    "action_id": "title",
+    "initial_value": undefined,
+    "placeholder": undefined,
+    "type": "plain_text_input",
+  },
+  "hint": Object {
+    "emoji": true,
+    "text": "keep it to the true 7",
+    "type": "plain_text",
+  },
+  "label": Object {
+    "emoji": true,
+    "text": "Title",
+    "type": "plain_text",
+  },
+  "optional": true,
+  "type": "input",
+}
+`;
+
+exports[`Slack Block widgets input renders with minimal information 1`] = `
 Object {
   "block_id": undefined,
   "element": Object {
@@ -169,7 +234,7 @@ Object {
 }
 `;
 
-exports[`Slack Block widgets renders a section 1`] = `
+exports[`Slack Block widgets section renders 1`] = `
 Object {
   "accessory": Object {
     "action_id": "ravenAgree",
@@ -197,68 +262,5 @@ Object {
     "type": "plain_text",
   },
   "type": "section",
-}
-`;
-
-exports[`Slack Block widgets renders an actions 1`] = `
-Object {
-  "elements": Array [
-    Object {
-      "action_id": "ravenAgree",
-      "text": Object {
-        "emoji": true,
-        "text": "Ravenclaw is obviously the best house.",
-        "type": "plain_text",
-      },
-      "type": "button",
-    },
-    Object {
-      "action_id": "ravenAgree-2",
-      "text": Object {
-        "emoji": true,
-        "text": "Ravenclaw is obviously the best house.",
-        "type": "plain_text",
-      },
-      "type": "button",
-    },
-  ],
-  "type": "actions",
-}
-`;
-
-exports[`Slack Block widgets renders an input with block_id, hint, and as optional 1`] = `
-Object {
-  "block_id": "title",
-  "element": Object {
-    "action_id": "title",
-    "initial_value": undefined,
-    "placeholder": undefined,
-    "type": "plain_text_input",
-  },
-  "hint": Object {
-    "emoji": true,
-    "text": "keep it to the true 7",
-    "type": "plain_text",
-  },
-  "label": Object {
-    "emoji": true,
-    "text": "Title",
-    "type": "plain_text",
-  },
-  "optional": true,
-  "type": "input",
-}
-`;
-
-exports[`Slack Block widgets renders context 1`] = `
-Object {
-  "elements": Array [
-    Object {
-      "emoji": true,
-      "text": "Ravenclaw is obviously the best house.",
-      "type": "plain_text",
-    },
-  ],
-  "type": "context",
 }
 `;

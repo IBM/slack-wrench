@@ -18,13 +18,13 @@ import {
 
 import { PlainText } from './compositionObjects';
 import {
-  applyTruncationsWithOverrides,
+  applyLimitersWithOverrides,
   disallow,
   ellipsis,
+  LimiterFuncs,
+  LimitOpts,
   truncate,
-  TruncateFunction,
-  TruncateOptions,
-} from './lengthHelpers';
+} from './limitHelpers';
 
 export * from './compositionObjects';
 
@@ -39,9 +39,9 @@ export const Button = (
   text: string,
   action_id: string,
   buttonBlock?: Partial<TButton>,
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): TButton =>
-  applyTruncationsWithOverrides<TButton>(
+  applyLimitersWithOverrides<TButton>(
     {
       type: 'button',
       text: PlainText(text),
@@ -55,7 +55,7 @@ export const Button = (
       value: [2000, disallow],
       options: [10, truncate],
     },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Checkbox Group --- https://api.slack.com/reference/block-kit/block-elements#checkboxes
@@ -64,9 +64,9 @@ export const CheckboxInputElement = (
   options: Checkboxes['options'],
   initial_options?: Checkboxes['initial_options'],
   opts: Partial<Checkboxes> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): Checkboxes =>
-  applyTruncationsWithOverrides<Checkboxes>(
+  applyLimitersWithOverrides<Checkboxes>(
     InputElement<Checkboxes>('checkboxes')(action_id, {
       options,
       initial_options,
@@ -78,7 +78,7 @@ export const CheckboxInputElement = (
       options: [10, truncate],
       initial_options: [10, truncate],
     },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Date Picker Element --- https://api.slack.com/reference/block-kit/block-elements#datepicker
@@ -87,21 +87,21 @@ export const CheckboxInputElement = (
 export const Image = (
   image_url: string,
   alt_text: string,
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): ImageElement =>
-  applyTruncationsWithOverrides<ImageElement>(
+  applyLimitersWithOverrides<ImageElement>(
     {
       type: 'image',
       image_url,
       alt_text,
     },
     { image_url: [3000, truncate], alt_text: [2000, ellipsis] },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
 
-const multiSelectTruncateOptions: TruncateOptions = {
+const multiSelectLimitOpts: LimitOpts = {
   action_id: [255, disallow],
   placeholder: [150, ellipsis],
   options: [100, truncate],
@@ -117,16 +117,16 @@ export const MultiChannelsSelectInputElement = (
   placeholder: string,
   initial_channels?: MultiChannelsSelect['initial_channels'],
   opts: Partial<MultiChannelsSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): MultiChannelsSelect =>
-  applyTruncationsWithOverrides<MultiChannelsSelect>(
+  applyLimitersWithOverrides<MultiChannelsSelect>(
     InputElement<MultiChannelsSelect>('multi_channels_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_channels,
       ...opts,
     }),
-    multiSelectTruncateOptions,
-    overrideTruncators,
+    multiSelectLimitOpts,
+    limiterOverrides,
   );
 
 // https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select
@@ -135,9 +135,9 @@ export const MultiConversationsSelectInputElement = (
   placeholder: string,
   initial_conversations?: MultiConversationsSelect['initial_conversations'],
   opts: Partial<MultiConversationsSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): MultiConversationsSelect =>
-  applyTruncationsWithOverrides<MultiConversationsSelect>(
+  applyLimitersWithOverrides<MultiConversationsSelect>(
     InputElement<MultiConversationsSelect>('multi_conversations_select')(
       action_id,
       {
@@ -146,8 +146,8 @@ export const MultiConversationsSelectInputElement = (
         ...opts,
       },
     ),
-    multiSelectTruncateOptions,
-    overrideTruncators,
+    multiSelectLimitOpts,
+    limiterOverrides,
   );
 
 // https://api.slack.com/reference/block-kit/block-elements#users_multi_select
@@ -156,16 +156,16 @@ export const MultiUsersSelectInputElement = (
   placeholder: string,
   initial_users?: MultiUsersSelect['initial_users'],
   opts: Partial<MultiUsersSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): MultiUsersSelect =>
-  applyTruncationsWithOverrides<MultiUsersSelect>(
+  applyLimitersWithOverrides<MultiUsersSelect>(
     InputElement<MultiUsersSelect>('multi_users_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_users,
       ...opts,
     }),
-    multiSelectTruncateOptions,
-    overrideTruncators,
+    multiSelectLimitOpts,
+    limiterOverrides,
   );
 
 // --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow
@@ -173,9 +173,9 @@ export const OverflowMenu = (
   options: Option[],
   action_id: string,
   menuBlock?: Partial<Overflow>,
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): Overflow =>
-  applyTruncationsWithOverrides<Overflow>(
+  applyLimitersWithOverrides<Overflow>(
     {
       type: 'overflow',
       options,
@@ -186,7 +186,7 @@ export const OverflowMenu = (
       action_id: [255, disallow],
       options: [5, truncate],
     },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Plain-text Input Element --- https://api.slack.com/reference/block-kit/block-elements#input
@@ -195,9 +195,9 @@ export const PlainTextInputElement = (
   initial_value?: PlainTextInput['initial_value'],
   placeholder?: string,
   opts: Partial<PlainTextInput> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): PlainTextInput =>
-  applyTruncationsWithOverrides<PlainTextInput>(
+  applyLimitersWithOverrides<PlainTextInput>(
     InputElement<PlainTextInput>('plain_text_input')(action_id, {
       initial_value,
       placeholder: placeholder ? PlainText(placeholder) : undefined,
@@ -209,7 +209,7 @@ export const PlainTextInputElement = (
       // note, initial_value not documented, but max 150 based on testing
       initial_value: [150, ellipsis],
     },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Radio Button Group Element --- https://api.slack.com/reference/block-kit/block-elements#radio
@@ -218,9 +218,9 @@ export const RadioInputElement = (
   options: RadioButtons['options'],
   initial_option?: RadioButtons['initial_option'],
   opts: Partial<RadioButtons> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): RadioButtons =>
-  applyTruncationsWithOverrides<RadioButtons>(
+  applyLimitersWithOverrides<RadioButtons>(
     InputElement<RadioButtons>('radio_buttons')(action_id, {
       options,
       initial_option,
@@ -231,12 +231,12 @@ export const RadioInputElement = (
       // not in docs, but tested and validated that this breaks after 10
       options: [10, truncate],
     },
-    overrideTruncators,
+    limiterOverrides,
   );
 
 // --- Select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#select
 
-const selectTruncateOptions: TruncateOptions = {
+const selectLimitOpts: LimitOpts = {
   placeholder: [150, ellipsis],
   action_id: [255, disallow],
   options: [100, truncate],
@@ -249,17 +249,17 @@ export const StaticSelectInputElement = (
   options: StaticSelect['options'],
   initial_option?: StaticSelect['initial_option'],
   opts: Partial<StaticSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): StaticSelect =>
-  applyTruncationsWithOverrides<StaticSelect>(
+  applyLimitersWithOverrides<StaticSelect>(
     InputElement<StaticSelect>('static_select')(action_id, {
       placeholder: PlainText(placeholder),
       options,
       initial_option,
       ...opts,
     }),
-    selectTruncateOptions,
-    overrideTruncators,
+    selectLimitOpts,
+    limiterOverrides,
   );
 
 // https://api.slack.com/reference/block-kit/block-elements#channel_select
@@ -268,16 +268,16 @@ export const ChannelsSelectInputElement = (
   placeholder: string,
   initial_channel?: ChannelsSelect['initial_channel'],
   opts: Partial<ChannelsSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): ChannelsSelect =>
-  applyTruncationsWithOverrides<ChannelsSelect>(
+  applyLimitersWithOverrides<ChannelsSelect>(
     InputElement<ChannelsSelect>('channels_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_channel,
       ...opts,
     }),
-    selectTruncateOptions,
-    overrideTruncators,
+    selectLimitOpts,
+    limiterOverrides,
   );
 
 // https://api.slack.com/reference/block-kit/block-elements#conversation_select
@@ -286,16 +286,16 @@ export const ConversationsSelectInputElement = (
   placeholder: string,
   initial_conversation?: ConversationsSelect['initial_conversation'],
   opts: Partial<ConversationsSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): ConversationsSelect =>
-  applyTruncationsWithOverrides<ConversationsSelect>(
+  applyLimitersWithOverrides<ConversationsSelect>(
     InputElement<ConversationsSelect>('conversations_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_conversation,
       ...opts,
     }),
-    selectTruncateOptions,
-    overrideTruncators,
+    selectLimitOpts,
+    limiterOverrides,
   );
 
 // https://api.slack.com/reference/block-kit/block-elements#users_select
@@ -304,14 +304,14 @@ export const UsersSelectInputElement = (
   placeholder: string,
   initial_user?: UsersSelect['initial_user'],
   opts: Partial<UsersSelect> = {},
-  overrideTruncators: Record<string, TruncateFunction> = {},
+  limiterOverrides?: LimiterFuncs,
 ): UsersSelect =>
-  applyTruncationsWithOverrides<UsersSelect>(
+  applyLimitersWithOverrides<UsersSelect>(
     InputElement<UsersSelect>('users_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_user,
       ...opts,
     }),
-    selectTruncateOptions,
-    overrideTruncators,
+    selectLimitOpts,
+    limiterOverrides,
   );
