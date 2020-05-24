@@ -24,7 +24,7 @@ import R, {
 const ellipsisChars = ' …';
 
 /**
- * given a limit and a string, returns a string with at most `limit` characters with '...' appended to the end
+ * given a limit and a string, returns a string with at most `limit` characters with ' …' appended to the end
  * example:
  * ellipsisText('Hello World!', 9) => 'Hello W …'
  */
@@ -38,7 +38,7 @@ const ellipsisText = curry((limit: number, value: string): string =>
 /**
  * takes string or { text: '...', ...}, and limits either the string itself or the text property on the object
  * resulting string will be a maximum of `limit` characters.
- * the last 3 characters of the string will be `...` if the string is longer than `limit`
+ * the last 2 characters of the string will be ` …` if the string is longer than `limit`
  */
 export const ellipsis = <T>(limit: number, value: T): T =>
   ifElse(
