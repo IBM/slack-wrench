@@ -22,12 +22,12 @@ describe('Truncation helpers', () => {
 
   it(`ellipsis function adds ellipsis to text and stays under max`, () => {
     expect.assertions(1);
-    expect(ellipsis(5, 'abcdef')).toEqual('ab...');
+    expect(ellipsis(5, 'abcdef')).toEqual('abc …');
   });
 
   it(`ellipsis function applies to text prop if given object`, () => {
     expect.assertions(1);
-    expect(ellipsis(5, { text: 'abcdef' })).toEqual({ text: 'ab...' });
+    expect(ellipsis(5, { text: 'abcdef' })).toEqual({ text: 'abc …' });
   });
 
   it(`identity function returns whatever is passed even if over max`, () => {
@@ -107,7 +107,7 @@ describe('Truncation helpers', () => {
       );
 
       expect(applied.fields).toHaveLength(2);
-      expect(applied.fields[1].text).toEqual('78...');
+      expect(applied.fields[1].text).toEqual('789 …');
     });
 
     it(`WithOverrides function applies user overridden truncation functions to lists`, () => {
@@ -132,8 +132,6 @@ describe('Truncation helpers', () => {
           fields: [identity, { text: truncate }],
         },
       );
-
-      // console.log(fieldsDefaultTruncators, fieldsDefaultLimits, applied);
 
       expect(applied.fields).toHaveLength(3);
       expect(applied.fields[1].text).toEqual('78901');

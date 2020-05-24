@@ -161,7 +161,7 @@ So, the `text` field has a maximum length of `75`. If the provided text in build
 // { text: 'text', value: 'value' }
 OptionObject('text', 'value');
 
-// { text: '<first 72 characters>...', value: 'value' }
+// { text: '<first 73 characters> …', value: 'value' }
 OptionObject('<80 character text>', 'value');
 
 // Throws

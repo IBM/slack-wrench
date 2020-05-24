@@ -3,7 +3,7 @@
 exports[`Truncation helpers applyLimiters function applies truncation functions to object properties 1`] = `
 Object {
   "description": Object {
-    "text": "a...",
+    "text": "ab …",
   },
   "placeholder": "here",
   "text": "abcde",

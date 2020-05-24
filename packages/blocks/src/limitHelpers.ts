@@ -20,17 +20,18 @@ import R, {
   view,
 } from 'ramda';
 
-const dot3 = '...';
+// space + smart ellipsis
+const ellipsisChars = ' …';
 
 /**
  * given a limit and a string, returns a string with at most `limit` characters with '...' appended to the end
  * example:
- * ellipsisText('Hello World!', 8) => 'Hello...'
+ * ellipsisText('Hello World!', 9) => 'Hello W …'
  */
 const ellipsisText = curry((limit: number, value: string): string =>
   pipe<string, string, string>(
-    take(limit - dot3.length),
-    flip(concat)(dot3),
+    take(limit - ellipsisChars.length),
+    flip(concat)(ellipsisChars),
   )(value),
 );
 

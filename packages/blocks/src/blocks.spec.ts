@@ -95,7 +95,7 @@ describe('Slack Block widgets', () => {
       expect.assertions(1);
       const input = Input(dynamicText, PlainTextInputElement('title'));
       expect(input.label).toEqual(
-        PlainText(`${dynamicText.substr(0, 1997)}...`),
+        PlainText(`${dynamicText.substr(0, 1998)} …`),
       );
     });
 

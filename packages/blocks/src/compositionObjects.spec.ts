@@ -42,10 +42,10 @@ describe('Element composition', () => {
       const option = OptionObject(dynamicText, 'why-best-raven', {
         description: dynamicTextElement,
       });
-      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 72)}...`));
+      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 73)} …`));
       expect(option.description).toEqual({
         ...dynamicTextElement,
-        text: `${dynamicTextElement.text.substr(0, 72)}...`,
+        text: `${dynamicTextElement.text.substr(0, 73)} …`,
       });
     });
 

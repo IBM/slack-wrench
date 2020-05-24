@@ -35,7 +35,7 @@ describe('Slack Element widgets', () => {
     it('truncates ellipsis for text', () => {
       expect.assertions(1);
       const option = Button(dynamicText, buttonId);
-      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 72)}...`));
+      expect(option.text).toEqual(PlainText(`${dynamicText.substr(0, 73)} …`));
     });
 
     it('allows override LimitOpts for too long value', () => {
@@ -61,7 +61,7 @@ describe('Slack Element widgets', () => {
     it('truncates ellipsis for alt_text', () => {
       expect.assertions(1);
       const image = Image(url, dynamicText);
-      expect(image.alt_text).toEqual(`${dynamicText.substr(0, 1997)}...`);
+      expect(image.alt_text).toEqual(`${dynamicText.substr(0, 1998)} …`);
     });
 
     it('allows override LimitOpts for too long url', () => {
@@ -147,7 +147,7 @@ describe('Slack Element widgets', () => {
 
     it('truncates placeholder and initial_value', () => {
       expect.assertions(2);
-      const truncatedString = `${dynamicText.substr(0, 147)}...`;
+      const truncatedString = `${dynamicText.substr(0, 148)} …`;
       const truncated = PlainTextInputElement('TBD', dynamicText, dynamicText);
       expect(truncated.initial_value).toEqual(truncatedString);
       expect(truncated.placeholder?.text).toEqual(truncatedString);
@@ -352,7 +352,7 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           ChannelsSelectInputElement('channel', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
@@ -412,7 +412,7 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           ConversationsSelectInputElement('conversation', dynamicText)
             .placeholder?.text,
@@ -461,7 +461,7 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           UsersSelectInputElement('user', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
@@ -512,7 +512,7 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           MultiChannelsSelectInputElement('channels', dynamicText).placeholder
             ?.text,
@@ -573,7 +573,7 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           MultiConversationsSelectInputElement('conversations', dynamicText)
             .placeholder?.text,
@@ -622,7 +622,7 @@ describe('Slack Element widgets', () => {
 
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
-        const truncatedString = `${dynamicText.substr(0, 147)}...`;
+        const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
           MultiUsersSelectInputElement('users', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
