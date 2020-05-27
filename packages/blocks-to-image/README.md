@@ -94,11 +94,11 @@ blockKitRenderer.imageFromBlocks(
 ) => Promise<Screenshot>
 ```
 
-For details on additional options, see [Puppeteer docs](https://github.com/puppeteer/puppeteer/blob/v2.1.1/docs/api.md#pagescreenshotoptions)
+For details on additional options, see [Puppeteer docs](https://github.com/puppeteer/puppeteer/blob/v3.1.0/docs/api.md#pagescreenshotoptions)
 
 ### Advanced Configuration
 
-`blocks-to-image` uses [Puppeteer](https://github.com/GoogleChrome/puppeteer) to generate images. If you need to pass [additional configuration](https://github.com/puppeteer/puppeteer/blob/v2.1.1/docs/api.md#puppeteerlaunchoptions) to Puppeteer, like maybe a custom chrome executable, you can do so in the constructor:
+`blocks-to-image` uses [Puppeteer](https://github.com/GoogleChrome/puppeteer) to generate images. If you need to pass [additional configuration](https://github.com/puppeteer/puppeteer/blob/v3.1.0/docs/api.md#puppeteerlaunchoptions) to Puppeteer, like maybe a custom chrome executable, you can do so in the constructor:
 
 ```typescript
 blockKitRenderer = new BlockKitRenderer({
@@ -109,6 +109,16 @@ blockKitRenderer = new BlockKitRenderer({
   },
 });
 ```
+
+#### Use an existing browser
+
+If you're looking to connect to an existing browser instance, (for example, to [speed up jest](#jest-globalsetup)), you can do so with `connect`, passing [additional configuration](https://github.com/puppeteer/puppeteer/blob/v3.1.0/docs/api.md#puppeteerconnectoptions).
+
+```typescript
+async connect(options: ConnectOptions) => Promise<void>
+```
+
+You can do this before or after logging in depending on your use case.
 
 ### jest globalSetup
 
