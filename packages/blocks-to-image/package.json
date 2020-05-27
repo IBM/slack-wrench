@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/blocks-to-image",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Render Slack Block Kit json as images",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

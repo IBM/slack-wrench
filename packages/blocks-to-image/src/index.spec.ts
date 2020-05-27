@@ -7,6 +7,7 @@ import {
   MdSection,
 } from '@slack-wrench/blocks';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
+import puppeteer, { Browser } from 'puppeteer';
 import { times } from 'ramda';
 
 import BlockKitRenderer from './index';
@@ -154,6 +155,41 @@ describe('Block Images', () => {
       );
 
       const blockImage = await notLoggedInRenderer.imageFromBlocks(
+        RestaurantBlocks(),
+      );
+
+      expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
+    });
+  });
+
+  describe('after starting a browser', () => {
+    let browser: Browser;
+    let noBrowserRenderer: BlockKitRenderer;
+
+    beforeAll(async () => {
+      browser = await puppeteer.launch();
+      noBrowserRenderer = new BlockKitRenderer();
+    });
+
+    afterAll(async () => {
+      await noBrowserRenderer.close();
+    });
+
+    it('allows rendering into an existing browser', async () => {
+      expect.assertions(1);
+      const loggedInEndpoint = browser.wsEndpoint();
+
+      await noBrowserRenderer.connect({
+        browserWSEndpoint: loggedInEndpoint,
+      });
+
+      await noBrowserRenderer.login(
+        process.env.SLACK_DOMAIN || '',
+        process.env.SLACK_EMAIL || '',
+        process.env.SLACK_PASSWORD || '',
+      );
+
+      const blockImage = await noBrowserRenderer.imageFromBlocks(
         RestaurantBlocks(),
       );
 

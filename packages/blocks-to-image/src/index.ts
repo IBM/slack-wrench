@@ -57,7 +57,9 @@ export default class BlockKitRenderer {
   }
 
   async login(domain: string, email: string, password: string): Promise<void> {
-    this.browser = await puppeteer.launch(this.puppeteerOptions);
+    if (!this.browser) {
+      this.browser = await puppeteer.launch(this.puppeteerOptions);
+    }
 
     const page = await this.browser.newPage();
 
@@ -70,7 +72,7 @@ export default class BlockKitRenderer {
   }
 
   /**
-   * enables connecting to existing browser that is logged in
+   * enables connecting to existing browser
    */
   async connect(options: ConnectOptions): Promise<void> {
     this.browser = await puppeteer.connect({
