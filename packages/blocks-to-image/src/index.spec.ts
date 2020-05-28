@@ -5,6 +5,7 @@ import {
   Divider,
   Image,
   MdSection,
+  PlainText,
 } from '@slack-wrench/blocks';
 import { toMatchImageSnapshot } from 'jest-image-snapshot';
 import puppeteer, { Browser } from 'puppeteer';
@@ -24,7 +25,7 @@ const Restaurant = (description: string, image: string) =>
 const RestaurantBlocks = (restaurantTimes = 1) =>
   Blocks([
     MdSection(
-      'Hello, Assistant to the Regional Manager Dwight! ' +
+      'Hello, `Assistant` to the Regional Manager Dwight! ' +
         "*Michael Scott* wants to know where you'd like to take the Paper Company investors to dinner tonight.\n\n" +
         '*Please select a restaurant:*',
     ),
@@ -40,13 +41,10 @@ const RestaurantBlocks = (restaurantTimes = 1) =>
       restaurantTimes,
     ),
     Divider(),
-    Actions([
-      Button('Farmhouse', 'click_me_1'),
-      Button('Kin Khao', 'click_me_2'),
-    ]),
+    Actions([Button("Al's Burger Shack", 'click_me_1')]),
   ]);
 
-describe('Block Images', () => {
+describe('Image rendering', () => {
   jest.setTimeout(30000);
   let blockKitRenderer: BlockKitRenderer;
 
@@ -74,6 +72,16 @@ describe('Block Images', () => {
     expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
+  it('allows overriding block snapshot options', async () => {
+    expect.assertions(1);
+    const blockImage = await blockKitRenderer.imageFromBlocks(
+      RestaurantBlocks(),
+      { encoding: 'base64' },
+    );
+
+    expect(typeof blockImage).toBe('string');
+  });
+
   it('can render long blocks', async () => {
     expect.assertions(1);
 
@@ -84,37 +92,84 @@ describe('Block Images', () => {
     expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
-  it('can render a block as a modal', async () => {
+  it('can render a modal', async () => {
     expect.assertions(1);
 
-    const blockImage = await blockKitRenderer.imageFromBlocks(
-      RestaurantBlocks(),
-      'modal',
-    );
+    const blockImage = await blockKitRenderer.imageFromView({
+      type: 'modal',
+      title: PlainText('Restaurant'),
+      submit: PlainText('Submit'),
+      close: PlainText('Cancel'),
+      blocks: RestaurantBlocks(),
+    });
 
     expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
-  it('can render a block as in App Home', async () => {
+  it('can render a long modal', async () => {
     expect.assertions(1);
 
-    const blockImage = await blockKitRenderer.imageFromBlocks(
-      RestaurantBlocks(),
-      'appHome',
-    );
+    const blockImage = await blockKitRenderer.imageFromView({
+      type: 'modal',
+      title: PlainText('Lots of Restaurants'),
+      submit: PlainText('Submit'),
+      close: PlainText('Cancel'),
+      blocks: RestaurantBlocks(10),
+    });
 
     expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
   });
 
-  it('allows overriding snapshot options', async () => {
+  it('can render attachments', async () => {
     expect.assertions(1);
-    const blockImage = await blockKitRenderer.imageFromBlocks(
-      RestaurantBlocks(),
-      'appHome',
+
+    const blockImage = await blockKitRenderer.imageFromAttachments([
+      {
+        color: '#4b9cd3',
+        blocks: RestaurantBlocks(),
+      },
+    ]);
+
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
+  });
+
+  it('allows overriding attachment snapshot options', async () => {
+    expect.assertions(1);
+    const blockImage = await blockKitRenderer.imageFromAttachments(
+      [
+        {
+          color: '#4b9cd3',
+          blocks: RestaurantBlocks(),
+        },
+      ],
       { encoding: 'base64' },
     );
 
-    expect(blockImage).toMatch(/=$/);
+    expect(typeof blockImage).toBe('string');
+  });
+
+  it('can render an app home', async () => {
+    expect.assertions(1);
+
+    const blockImage = await blockKitRenderer.imageFromView({
+      type: 'home',
+      blocks: RestaurantBlocks(),
+    });
+
+    expect(blockImage).toMatchImageSnapshot(imageCompareOptions);
+  });
+
+  it('allows overriding home snapshot options', async () => {
+    expect.assertions(1);
+    const blockImage = await blockKitRenderer.imageFromView(
+      {
+        type: 'home',
+        blocks: RestaurantBlocks(),
+      },
+      { encoding: 'base64' },
+    );
+
+    expect(typeof blockImage).toBe('string');
   });
 
   it('exposes browser to enable better jest snapshot testing', () => {

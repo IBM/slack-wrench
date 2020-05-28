@@ -88,8 +88,29 @@ This package uses Slack's [Block Kit Builder](https://api.slack.com/tools/block-
 
 ```typescript
 blockKitRenderer.imageFromBlocks(
-    blocks: KnownBlock[], // JSON that you want to render
-    mode: BlockSurfaceModes = 'message', // Surface that you want to render on ('message', 'modal', or 'appHome')
+    blocks: KnownBlock[], // Blocks that you want to render
+    options: ScreenshotOptions = {}, // Screenshot Options
+) => Promise<Screenshot>
+```
+
+For details on additional options, see [Puppeteer docs](https://github.com/puppeteer/puppeteer/blob/v3.1.0/docs/api.md#pagescreenshotoptions)
+
+### `imageFromView`
+
+```typescript
+blockKitRenderer.imageFromView(
+    view: View, // Modal or App Home that you want to render
+    options: ScreenshotOptions = {}, // Screenshot Options
+) => Promise<Screenshot>
+```
+
+For details on additional options, see [Puppeteer docs](https://github.com/puppeteer/puppeteer/blob/v3.1.0/docs/api.md#pagescreenshotoptions)
+
+### `imageFromAttachments`
+
+```typescript
+blockKitRenderer.imageFromAttachments(
+    attachments: MessageAttachment[], // Attachments that you want to render
     options: ScreenshotOptions = {}, // Screenshot Options
 ) => Promise<Screenshot>
 ```
@@ -115,7 +136,7 @@ blockKitRenderer = new BlockKitRenderer({
 If you're looking to connect to an existing browser instance, (for example, to [speed up jest](#jest-globalsetup)), you can do so with `connect`, passing [additional configuration](https://github.com/puppeteer/puppeteer/blob/v3.1.0/docs/api.md#puppeteerconnectoptions).
 
 ```typescript
-async connect(options: ConnectOptions) => Promise<void>
+blockKitRenderer.connect(options: ConnectOptions) => Promise<void>
 ```
 
 You can do this before or after logging in depending on your use case.
