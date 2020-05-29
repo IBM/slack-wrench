@@ -203,6 +203,7 @@ export default class BlockKitRenderer {
     await this.emulateSelectAll();
     await page.waitForSelector(textAreaSelector);
     const payload = JSON.stringify(code)
+      .replace(/\\"/g, '\\\\"')
       .replace(/`/g, '\\`')
       .replace(/\\n/g, '\\\\n');
 

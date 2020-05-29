@@ -35,7 +35,7 @@ const RestaurantBlocks = (restaurantTimes = 1) =>
         Restaurant(
           "*Al's Burger Shack*\n" +
             ':star::star::star::star::star: 567 reviews\n' +
-            "Al's Burger Shack is a great place to enjoy a juicy burger with delicious, crisp rosemary-dusted crinkle fries.",
+            `Al's Burger Shack is a "great" place to enjoy a juicy burger with delicious, crisp rosemary-dusted crinkle fries.`,
           'https://s3-media0.fl.yelpcdn.com/bphoto/ggIUPo985Y2Lc0sjjMqYsg/258s.jpg',
         ),
       restaurantTimes,
