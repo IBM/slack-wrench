@@ -11,6 +11,7 @@ describe('Actions fixtures', () => {
 
   Object.entries({
     button: actions.blockButtonAction,
+    static_select: actions.blockStaticSelectAction,
     overflow: actions.blockOverflowAction,
   }).forEach(([name, action]) => {
     it(`generates block ${name} actions`, () => {
