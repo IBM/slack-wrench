@@ -5,8 +5,10 @@ import {
   BlockButtonAction,
   BlockElementAction,
   BlockOverflowAction,
+  BlockStaticSelectAction,
   ButtonAction,
   OverflowAction,
+  StaticSelectAction,
 } from '@slack/bolt';
 
 import fields from './fields';
@@ -55,6 +57,28 @@ export function blockButtonAction(
       action_id,
       block_id,
       value,
+      ...action,
+    },
+    options,
+  );
+}
+
+export function blockStaticSelectAction(
+  action?: Partial<StaticSelectAction>,
+  options?: Partial<BlockStaticSelectAction>,
+): BlockStaticSelectAction {
+  const { action_ts, text, action_id, block_id, value } = fields;
+
+  return blockAction<StaticSelectAction>(
+    {
+      type: 'static_select',
+      action_ts,
+      action_id,
+      block_id,
+      selected_option: {
+        text: PlainText(text),
+        value,
+      },
       ...action,
     },
     options,
