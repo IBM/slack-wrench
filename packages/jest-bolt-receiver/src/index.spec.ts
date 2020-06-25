@@ -1,6 +1,5 @@
 import { actions, events, slashCommand } from '@slack-wrench/fixtures';
 import { App } from '@slack/bolt';
-import delay from 'delay';
 
 import JestReceiver from './index';
 
@@ -20,8 +19,7 @@ describe('Jest Bolt receiver', () => {
     const listener = jest.fn();
 
     app.command(command, listener);
-    receiver.send(slashCommand(command));
-    await delay(0);
+    await receiver.send(slashCommand(command));
 
     expect(listener).toHaveBeenCalledTimes(1);
   });
@@ -33,26 +31,9 @@ describe('Jest Bolt receiver', () => {
     const listener = jest.fn();
 
     app.action(action_id, listener);
-    receiver.send(actions.blockButtonAction({ action_id }));
-    await delay(0);
+    await receiver.send(actions.blockButtonAction({ action_id }));
 
     expect(listener).toHaveBeenCalledTimes(1);
-  });
-
-  it('sets a `respond` function for interactive messages', async () => {
-    expect.assertions(2);
-
-    const action_id = 'button-id';
-
-    app.action(action_id, ({ respond }) => {
-      expect(jest.isMockFunction(respond)).toEqual(true);
-      respond('You Clicked it!');
-    });
-
-    const { respond } = receiver.send(actions.blockButtonAction({ action_id }));
-    await delay(0);
-
-    expect(respond).toHaveBeenCalledTimes(1);
   });
 
   it('can send a message event', async () => {
@@ -62,8 +43,7 @@ describe('Jest Bolt receiver', () => {
     const listener = jest.fn();
 
     app.message(message, listener);
-    receiver.send(events.message(message));
-    await delay(0);
+    await receiver.send(events.message(message));
 
     expect(listener).toHaveBeenCalledTimes(1);
   });

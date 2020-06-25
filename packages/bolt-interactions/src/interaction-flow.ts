@@ -155,14 +155,22 @@ export class InteractionFlow<FlowState = unknown> {
   }
 
   private contextMiddleware: Middleware<AnyMiddlewareArgs> = async args => {
-    const { context, next } = args;
+    const { context } = args;
+    // Ignoring istanbul became hard.
+    // `next` will never be undefined. It's only that way if it's the last middleware
+    // in the chain, this middleware is always added at the front so it's impossible to
+    // get it undefined in tests
+    const next =
+      args.next ||
+      /* istanbul ignore next */ ((): Promise<void> => Promise.resolve());
+
     const { store, getFlowId } = InteractionFlow;
     const flowId = getFlowId(args);
     const state = await store.get(flowId);
 
     Object.assign(context, this.contextExtensions(flowId, state));
 
-    next();
+    await next();
   };
 
   private injectListeners(

@@ -25,7 +25,7 @@
     "koa-compose": "^4.0.0"
   },
   "devDependencies": {
-    "@slack/bolt": "^1.6.0",
+    "@slack/bolt": "^2.1.1",
     "@slack-wrench/fixtures": "^2.0.1",
     "koa": "^2.11.0",
     "koa-compose": "^4.1.0",

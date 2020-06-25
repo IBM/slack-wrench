@@ -15,7 +15,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@slack/bolt": "^1.5.0",
+    "@slack/bolt": "^2.1.1",
     "@types/encoding-down": "^5.0.0",
     "@types/leveldown": "^4.0.2",
     "@types/levelup": "^4.3.0",

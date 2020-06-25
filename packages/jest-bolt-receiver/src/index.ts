@@ -1,29 +1,34 @@
-import { Receiver, ReceiverEvent } from '@slack/bolt';
-import { EventEmitter } from 'events';
+import { App, Receiver, ReceiverEvent } from '@slack/bolt';
 
-export default class JestReceiver extends EventEmitter implements Receiver {
-  public send(body: Record<string, any>): ReceiverEvent {
+export default class JestReceiver implements Receiver {
+  private app: App | undefined;
+
+  public init(app: App): void {
+    this.app = app;
+  }
+
+  public async send(body: Record<string, any>): Promise<ReceiverEvent> {
     const event: ReceiverEvent = {
       body,
       ack: jest.fn(),
     };
 
-    if (body.response_url) {
-      event.respond = jest.fn();
-    }
-
-    this.emit('message', event);
+    // Is called, `app` will never be undefined
+    /* istanbul ignore next */
+    await this.app?.processEvent(event);
 
     return event;
   }
 
   // For compatibility with Receiver, does nothing
+  /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
   start(): Promise<unknown> {
     return Promise.resolve();
   }
 
   // For compatibility with Receiver, does nothing
+  /* istanbul ignore next */
   // eslint-disable-next-line class-methods-use-this
   stop(): Promise<unknown> {
     return Promise.resolve();
