@@ -1,7 +1,6 @@
 import { actions, slashCommand, view } from '@slack-wrench/fixtures';
 import JestReceiver from '@slack-wrench/jest-bolt-receiver';
 import { App, ConversationStore, MemoryStore } from '@slack/bolt';
-import delay from 'delay';
 
 import { InteractionFlow, interactionFlow } from './index';
 
@@ -54,14 +53,12 @@ describe('Bolt interaction flows', () => {
 
     interactionFlow(flowName, flow => {
       app.command(command, async ({ ack }) => {
-        ack();
+        await ack();
         await flow.start(state, instanceId);
       });
     })(app);
 
-    const { ack } = receiver.send(slashCommand(command));
-
-    await delay(0);
+    const { ack } = await receiver.send(slashCommand(command));
 
     expect(ack).toBeCalled();
     expect(await store.get(customFlowId)).toEqual(state);
@@ -74,14 +71,12 @@ describe('Bolt interaction flows', () => {
 
     interactionFlow(flowName, flow => {
       app.command(command, async ({ ack }) => {
-        ack();
+        await ack();
         await flow.start(state);
       });
     })(app);
 
-    const { ack } = receiver.send(slashCommand(command));
-
-    await delay(0);
+    const { ack } = await receiver.send(slashCommand(command));
 
     expect(ack).toBeCalled();
     expect(await store.get(flowId)).toEqual(state);
@@ -117,19 +112,18 @@ describe('Bolt interaction flows', () => {
       expect.assertions(2);
 
       interactionFlow(flowName, flow => {
-        flow.action(buttonId, ({ context, ack }) => {
+        flow.action(buttonId, async ({ context, ack }) => {
           expect(context.state).toEqual(state);
-          ack();
+          await ack();
         });
       })(app);
 
-      const { ack } = receiver.send(
+      const { ack } = await receiver.send(
         actions.blockButtonAction({
           action_id,
         }),
       );
 
-      await delay(0);
       expect(ack).toBeCalled();
     });
 
@@ -140,19 +134,18 @@ describe('Bolt interaction flows', () => {
       const callback_id = InteractionFlow.createInteractionId(flowId, id);
 
       interactionFlow(flowName, flow => {
-        flow.view(id, ({ context, ack }) => {
+        flow.view(id, async ({ context, ack }) => {
           expect(context.state).toEqual(state);
-          ack();
+          await ack();
         });
       })(app);
 
-      const { ack } = receiver.send(
+      const { ack } = await receiver.send(
         view.viewSubmitAction({
           callback_id,
         }),
       );
 
-      await delay(0);
       expect(ack).toBeCalled();
     });
 
@@ -161,19 +154,21 @@ describe('Bolt interaction flows', () => {
       const block_id = 'BLOCK';
 
       interactionFlow(flowName, flow => {
-        flow.action({ action_id: buttonId, block_id }, ({ context }) => {
-          expect(context.state).toEqual(state);
-        });
+        flow.action(
+          { action_id: buttonId, block_id },
+          async ({ context, ack }) => {
+            await ack();
+            expect(context.state).toEqual(state);
+          },
+        );
       })(app);
 
-      receiver.send(
+      await receiver.send(
         actions.blockButtonAction({
           action_id,
           block_id,
         }),
       );
-
-      await delay(0);
     });
 
     it('allows actions to set state', async () => {
@@ -190,13 +185,11 @@ describe('Bolt interaction flows', () => {
         });
       })(app);
 
-      receiver.send(
+      await receiver.send(
         actions.blockButtonAction({
           action_id,
         }),
       );
-
-      await delay(0);
 
       expect(await store.get(flowId)).toEqual(newState);
     });
@@ -210,13 +203,12 @@ describe('Bolt interaction flows', () => {
         });
       })(app);
 
-      receiver.send(
+      await receiver.send(
         actions.blockButtonAction({
           action_id,
         }),
       );
 
-      await delay(0);
       await expect(store.get(flowId)).rejects.toThrow('Conversation expired');
     });
 

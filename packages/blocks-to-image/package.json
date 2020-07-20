@@ -28,7 +28,7 @@
     "ramda": "^0.27.0"
   },
   "dependencies": {
-    "@slack/bolt": "^2.0.0",
+    "@slack/bolt": "^2.1.1",
     "@slack/types": "^1.6.0",
     "@types/async-retry": "^1.4.2",
     "@types/puppeteer": "^3.0.0",

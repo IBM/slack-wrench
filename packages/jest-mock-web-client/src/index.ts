@@ -107,6 +107,19 @@ export class MockWebClient implements Partial<WebClient> {
   };
 
   /**
+   * calls method family
+   */
+  public readonly calls = {
+    add: mockApi(),
+    end: mockApi(),
+    info: mockApi(),
+    update: mockApi(),
+    participants: {
+      add: mockApi(),
+    },
+  };
+
+  /**
    * channels method family
    */
   public readonly channels = {

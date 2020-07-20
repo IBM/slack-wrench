@@ -1,6 +1,6 @@
 {
   "name": "@slack-wrench/bolt-interactions",
-  "version": "1.3.2",
+  "version": "2.0.0",
   "description": "Easily create interaction patterns in bolt.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -20,10 +20,9 @@
   },
   "devDependencies": {
     "@slack-wrench/fixtures": "^2.2.1",
-    "@slack-wrench/jest-bolt-receiver": "^2.0.1",
+    "@slack-wrench/jest-bolt-receiver": "^3.0.0",
     "@slack-wrench/jest-mock-web-client": "^1.2.0",
-    "@slack/bolt": "^1.4.1",
-    "delay": "^4.3.0"
+    "@slack/bolt": "^2.1.1"
   },
   "publishConfig": {
     "access": "public"
