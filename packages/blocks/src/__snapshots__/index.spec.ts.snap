@@ -18,6 +18,7 @@ Array [
   "Button",
   "CheckboxInputElement",
   "Image",
+  "DatePicker",
   "MultiChannelsSelectInputElement",
   "MultiConversationsSelectInputElement",
   "MultiUsersSelectInputElement",

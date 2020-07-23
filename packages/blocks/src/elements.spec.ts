@@ -5,6 +5,7 @@ import {
   ChannelsSelectInputElement,
   CheckboxInputElement,
   ConversationsSelectInputElement,
+  DatePicker,
   Image,
   MultiChannelsSelectInputElement,
   MultiConversationsSelectInputElement,
@@ -49,6 +50,49 @@ describe('Slack Element widgets', () => {
         },
       );
       expect(button.value).toHaveLength(2000);
+    });
+  });
+
+  describe('datepicker', () => {
+    it('renders', () => {
+      expect.assertions(1);
+      expect(DatePicker('datepicker')).toMatchSnapshot();
+    });
+
+    it('truncates ellipsis for placeholder', () => {
+      expect.assertions(1);
+      const datepicker = DatePicker('datepicker', dynamicText);
+      expect(datepicker.placeholder?.text).toEqual(
+        `${dynamicText.substr(0, 148)} …`,
+      );
+    });
+
+    it('renders with valid initial_date', () => {
+      expect.assertions(1);
+      expect(
+        DatePicker('datepicker', undefined, '2015-10-21'),
+      ).toMatchSnapshot();
+    });
+
+    it('throws for invalidly formatted date', () => {
+      expect.assertions(1);
+      expect(() => {
+        return DatePicker('datepicker', undefined, 'Tomorrow');
+      }).toThrow();
+    });
+
+    it('allows override LimitOpts for too long value', () => {
+      expect.assertions(1);
+      const datepicker = DatePicker(
+        'datepicker',
+        dynamicText,
+        undefined,
+        undefined,
+        {
+          placeholder: truncate,
+        },
+      );
+      expect(datepicker.placeholder?.text).toEqual(dynamicText.substr(0, 150));
     });
   });
 

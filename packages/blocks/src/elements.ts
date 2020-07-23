@@ -3,6 +3,7 @@ import {
   ChannelsSelect,
   Checkboxes,
   ConversationsSelect,
+  Datepicker,
   ImageElement,
   InputBlock,
   MultiChannelsSelect,
@@ -81,7 +82,44 @@ export const CheckboxInputElement = (
     limiterOverrides,
   );
 
+// Helpers for date picker
+const YYYYMMDD = /\d{4}-\d{2}-\d{2}/;
+
+/**
+ * throws if `value` doesn't match 'YYYY-MM-DD', otherwise returns `value`
+ */
+const validateDate = <T>(limit: number, value: T): T => {
+  if (typeof value !== 'string' || !YYYYMMDD.exec(value)) {
+    throw Error(`Date should be string in format 'YYYY-MM-DD`);
+  }
+
+  return value;
+};
+
 // --- Date Picker Element --- https://api.slack.com/reference/block-kit/block-elements#datepicker
+export const DatePicker = (
+  action_id: string,
+  placeholder?: string,
+  initial_date?: string,
+  datePicker?: Partial<Datepicker>,
+  limiterOverrides?: LimiterFuncs,
+): Datepicker =>
+  applyLimitersWithOverrides<Datepicker>(
+    {
+      type: 'datepicker',
+      action_id,
+      placeholder: placeholder ? PlainText(placeholder) : undefined,
+      initial_date,
+      ...datePicker,
+    },
+    {
+      action_id: [255, disallow],
+      options: [5, truncate],
+      placeholder: [150, ellipsis],
+      initial_date: [0, validateDate],
+    },
+    limiterOverrides,
+  );
 
 // --- Image Element --- https://api.slack.com/reference/block-kit/block-elements#image
 export const Image = (
