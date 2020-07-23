@@ -543,6 +543,157 @@ Object {
 }
 `;
 
+exports[`Slack Element widgets select input multi static element renders a minimal example 1`] = `
+Object {
+  "action_id": "title",
+  "initial_options": undefined,
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "multi_static_select",
+}
+`;
+
+exports[`Slack Element widgets select input multi static element renders with initial option 1`] = `
+Object {
+  "action_id": "title",
+  "initial_options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+  ],
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "multi_static_select",
+}
+`;
+
+exports[`Slack Element widgets select input multi static element renders with opts that override 1`] = `
+Object {
+  "action_id": "title",
+  "initial_options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
+  "placeholder": Object {
+    "emoji": true,
+    "text": "Select a book",
+    "type": "plain_text",
+  },
+  "type": "multi_static_select",
+}
+`;
+
 exports[`Slack Element widgets select input static element renders a minimal example 1`] = `
 Object {
   "action_id": "title",

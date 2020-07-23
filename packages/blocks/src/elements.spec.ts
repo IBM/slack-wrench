@@ -1,4 +1,4 @@
-import { flatten, repeat, takeLast } from 'ramda';
+import { flatten, init, repeat, tail, takeLast } from 'ramda';
 
 import {
   Button,
@@ -17,6 +17,7 @@ import {
   RadioInputElement,
   StaticSelectInputElement,
   UsersSelectInputElement,
+  MultiStaticSelectInputElement,
 } from './elements';
 import { disallow, truncate } from './limitHelpers';
 
@@ -357,6 +358,68 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         expect(() => {
           return StaticSelectInputElement(
+            'title',
+            'Select a book',
+            tooLongOptions,
+            undefined,
+            undefined,
+            {
+              options: disallow,
+            },
+          );
+        }).toThrow();
+      });
+    });
+
+    describe('multi static element', () => {
+      it('renders a minimal example', () => {
+        expect.assertions(1);
+        expect(
+          MultiStaticSelectInputElement('title', 'Select a book', options),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with initial option', () => {
+        expect.assertions(1);
+        expect(
+          MultiStaticSelectInputElement(
+            'title',
+            'Select a book',
+            options,
+            init(options),
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it('renders with opts that override', () => {
+        expect.assertions(1);
+        expect(
+          MultiStaticSelectInputElement(
+            'title',
+            'Select a book',
+            options,
+            init(options),
+            {
+              initial_options: tail(options),
+            },
+          ),
+        ).toMatchSnapshot();
+      });
+
+      it('truncates options', () => {
+        expect.assertions(1);
+        const truncated = MultiStaticSelectInputElement(
+          'title',
+          'Select a book',
+          tooLongOptions,
+        );
+        expect(truncated.options).toHaveLength(100);
+      });
+
+      it('allows override LimitOpts for too long options', () => {
+        expect.assertions(1);
+        expect(() => {
+          return MultiStaticSelectInputElement(
             'title',
             'Select a book',
             tooLongOptions,

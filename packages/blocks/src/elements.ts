@@ -15,6 +15,7 @@ import {
   RadioButtons,
   StaticSelect,
   UsersSelect,
+  MultiStaticSelect,
 } from '@slack/types';
 
 import { PlainText } from './compositionObjects';
@@ -138,7 +139,6 @@ export const Image = (
   );
 
 // --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
-
 const multiSelectLimitOpts: LimitOpts = {
   action_id: [255, disallow],
   placeholder: [150, ellipsis],
@@ -148,6 +148,24 @@ const multiSelectLimitOpts: LimitOpts = {
 };
 
 // https://api.slack.com/reference/block-kit/block-elements#static_multi_select
+export const MultiStaticSelectInputElement = (
+  action_id: MultiStaticSelect['action_id'],
+  placeholder: string,
+  options: MultiStaticSelect['options'],
+  initial_options?: MultiStaticSelect['initial_options'],
+  opts: Partial<MultiStaticSelect> = {},
+  limiterOverrides?: LimiterFuncs,
+): MultiStaticSelect =>
+  applyLimitersWithOverrides<MultiStaticSelect>(
+    InputElement<MultiStaticSelect>('multi_static_select')(action_id, {
+      placeholder: PlainText(placeholder),
+      options,
+      initial_options,
+      ...opts,
+    }),
+    selectLimitOpts,
+    limiterOverrides,
+  );
 
 // https://api.slack.com/reference/block-kit/block-elements#channel_multi_select
 export const MultiChannelsSelectInputElement = (
