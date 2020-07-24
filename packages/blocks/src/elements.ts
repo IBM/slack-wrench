@@ -36,7 +36,12 @@ const InputElement = <T extends InputBlock['element']>(type: T['type']) => (
   opts: Partial<T>,
 ): T => ({ type, action_id, ...opts } as T);
 
-// --- Button Element --- https://api.slack.com/reference/block-kit/block-elements#button
+/** Button Element - An interactive component that inserts a button. The button can be a trigger for anything from opening a simple link to starting a complex workflow.
+ *
+ * Works with block types: `Section`, `Actions`
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#button
+ */
 export const Button = (
   text: string,
   action_id: string,
@@ -60,7 +65,13 @@ export const Button = (
     limiterOverrides,
   );
 
-// --- Checkbox Group --- https://api.slack.com/reference/block-kit/block-elements#checkboxes
+/**
+ * Checkbox Group - A checkbox group that allows a user to choose multiple items from a list of possible options.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`. Only works in surfaces `Home tabs` and `Modals`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#checkboxes
+ */
 export const CheckboxInputElement = (
   action_id: Checkboxes['action_id'],
   options: Checkboxes['options'],
@@ -97,7 +108,13 @@ const validateDate = <T>(limit: number, value: T): T => {
   return value;
 };
 
-// --- Date Picker Element --- https://api.slack.com/reference/block-kit/block-elements#datepicker
+/**
+ * Date Picker Element - An element which lets users easily select a date from a calendar style UI.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#datepicker
+ */
 export const DatePicker = (
   action_id: string,
   placeholder?: string,
@@ -122,7 +139,13 @@ export const DatePicker = (
     limiterOverrides,
   );
 
-// --- Image Element --- https://api.slack.com/reference/block-kit/block-elements#image
+/**
+ * Image Element - An element to insert an image as part of a larger block of content. If you want a block with only an image in it, you're looking for `ImageBl` ([image block](https://api.slack.com/reference/block-kit/blocks#image)).
+ *
+ * Works with block types: `Section`, `Context`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#image
+ */
 export const Image = (
   image_url: string,
   alt_text: string,
@@ -138,7 +161,13 @@ export const Image = (
     limiterOverrides,
   );
 
-// --- Multi-select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#multi_select
+/**
+ * Limits consistent across all Multi-select Menu Element
+ *
+ * A multi-select menu allows a user to select multiple items from a list of options. Just like regular select menus, multi-select menus also include type-ahead functionality, where a user can type a part or all of an option string to filter the list.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#multi_select
+ */
 const multiSelectLimitOpts: LimitOpts = {
   action_id: [255, disallow],
   placeholder: [150, ellipsis],
@@ -147,7 +176,13 @@ const multiSelectLimitOpts: LimitOpts = {
   initial_options: [100, truncate],
 };
 
-// https://api.slack.com/reference/block-kit/block-elements#static_multi_select
+/**
+ * Multi-select menu with static options - This is the simplest form of select menu, with a static list of options passed in when defining the element.
+ *
+ * Works with block types: `Section`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#static_multi_select
+ */
 export const MultiStaticSelectInputElement = (
   action_id: MultiStaticSelect['action_id'],
   placeholder: string,
@@ -167,7 +202,13 @@ export const MultiStaticSelectInputElement = (
     limiterOverrides,
   );
 
-// https://api.slack.com/reference/block-kit/block-elements#channel_multi_select
+/**
+ * Multi-select menu with channels list - This multi-select menu will populate its options with a list of public channels visible to the current user in the active workspace.
+ *
+ * Works with block types: `Section`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#channel_multi_select
+ */
 export const MultiChannelsSelectInputElement = (
   action_id: MultiChannelsSelect['action_id'],
   placeholder: string,
@@ -185,7 +226,13 @@ export const MultiChannelsSelectInputElement = (
     limiterOverrides,
   );
 
-// https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select
+/**
+ * Multi-select menu with conversations list - This multi-select menu will populate its options with a list of public and private channels, DMs, and MPIMs visible to the current user in the active workspace.
+ *
+ * Works with block types: `Section`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select
+ */
 export const MultiConversationsSelectInputElement = (
   action_id: MultiConversationsSelect['action_id'],
   placeholder: string,
@@ -206,7 +253,13 @@ export const MultiConversationsSelectInputElement = (
     limiterOverrides,
   );
 
-// https://api.slack.com/reference/block-kit/block-elements#users_multi_select
+/**
+ * Multi-select menu with user list - This multi-select menu will populate its options with a list of Slack users visible to the current user in the active workspace.
+ *
+ * Works with block types: `Section`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#users_multi_select
+ */
 export const MultiUsersSelectInputElement = (
   action_id: MultiUsersSelect['action_id'],
   placeholder: string,
@@ -224,7 +277,15 @@ export const MultiUsersSelectInputElement = (
     limiterOverrides,
   );
 
-// --- Overflow Menu Element --- https://api.slack.com/reference/block-kit/block-elements#overflow
+/**
+ * Overflow menu element - This is like a cross between a button and a select menu - when a user clicks on this overflow button, they will be presented with a list of options to choose from. Unlike the select menu, there is no typeahead field, and the button always appears with an ellipsis ("…") rather than customizable text.
+ *
+ * As such, it is usually used if you want a more compact layout than a select menu, or to supply a list of less visually important actions after a row of buttons. You can also specify simple URL links as overflow menu options, instead of actions.
+ *
+ * Works with block types: `Section`, `Actions`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#overflow
+ */
 export const OverflowMenu = (
   options: Option[],
   action_id: string,
@@ -245,7 +306,13 @@ export const OverflowMenu = (
     limiterOverrides,
   );
 
-// --- Plain-text Input Element --- https://api.slack.com/reference/block-kit/block-elements#input
+/**
+ * Plain-text input element - A plain-text input, similar to the HTML `<input>` tag, creates a field where a user can enter freeform data. It can appear as a single-line field or a larger textarea using the `multiline` flag.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`. Only works in `Modals` surface.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#input
+ */
 export const PlainTextInputElement = (
   action_id: PlainTextInput['action_id'],
   initial_value?: PlainTextInput['initial_value'],
@@ -268,7 +335,13 @@ export const PlainTextInputElement = (
     limiterOverrides,
   );
 
-// --- Radio Button Group Element --- https://api.slack.com/reference/block-kit/block-elements#radio
+/**
+ * Radio button group element - A radio button group that allows a user to choose one item from a list of possible options.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`. Only works in surfaces `Home tabs` and `Modals`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#radio
+ */
 export const RadioInputElement = (
   action_id: RadioButtons['action_id'],
   options: RadioButtons['options'],
@@ -290,8 +363,13 @@ export const RadioInputElement = (
     limiterOverrides,
   );
 
-// --- Select Menu Element --- https://api.slack.com/reference/block-kit/block-elements#select
-
+/**
+ * Limits consistent across all select menu elements
+ *
+ * A select menu element just as with a standard HTML `<select>` tag, creates a drop down menu with a list of options for a user to choose. The select menu also includes type-ahead functionality, where a user can type a part or all of an option string to filter the list.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#select
+ */
 const selectLimitOpts: LimitOpts = {
   placeholder: [150, ellipsis],
   action_id: [255, disallow],
@@ -299,6 +377,13 @@ const selectLimitOpts: LimitOpts = {
   option_groups: [100, truncate],
 };
 
+/**
+ * Select menu with static options - This is the simplest form of select menu, with a static list of options passed in when defining the element.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#static_select
+ */
 export const StaticSelectInputElement = (
   action_id: StaticSelect['action_id'],
   placeholder: string,
@@ -318,7 +403,13 @@ export const StaticSelectInputElement = (
     limiterOverrides,
   );
 
-// https://api.slack.com/reference/block-kit/block-elements#channel_select
+/**
+ * Select menu with channels list - This select menu will populate its options with a list of public channels visible to the current user in the active workspace.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#channel_select
+ */
 export const ChannelsSelectInputElement = (
   action_id: ChannelsSelect['action_id'],
   placeholder: string,
@@ -336,7 +427,13 @@ export const ChannelsSelectInputElement = (
     limiterOverrides,
   );
 
-// https://api.slack.com/reference/block-kit/block-elements#conversation_select
+/**
+ * Select menu with conversations list - This select menu will populate its options with a list of public and private channels, DMs, and MPIMs visible to the current user in the active workspace.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#conversation_select
+ */
 export const ConversationsSelectInputElement = (
   action_id: ConversationsSelect['action_id'],
   placeholder: string,
@@ -354,7 +451,13 @@ export const ConversationsSelectInputElement = (
     limiterOverrides,
   );
 
-// https://api.slack.com/reference/block-kit/block-elements#users_select
+/**
+ * Select menu with user list - This select menu will populate its options with a list of Slack users visible to the current user in the active workspace.
+ *
+ * Works with block types: `Section`, `Actions`, `Input`.
+ *
+ * https://api.slack.com/reference/block-kit/block-elements#users_select
+ */
 export const UsersSelectInputElement = (
   action_id: UsersSelect['action_id'],
   placeholder: string,
