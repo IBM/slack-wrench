@@ -7,9 +7,9 @@ import {
   Context,
   Divider,
   FieldsSection,
-  FileRemote,
+  File,
   HomeBlocks,
-  ImageBlock,
+  Image,
   Input,
   MdSection,
   MessageBlocks,
@@ -75,13 +75,13 @@ describe('Slack Block widgets', () => {
   describe('file', () => {
     it('renders', () => {
       expect.assertions(1);
-      expect(FileRemote('ABCD1')).toMatchSnapshot();
+      expect(File('ABCD1')).toMatchSnapshot();
     });
 
     it('allows providing limit overrides', () => {
       expect.assertions(1);
       expect(
-        FileRemote('ABCD1', dynamicText, { block_id: truncate }).block_id,
+        File('ABCD1', dynamicText, { block_id: truncate }).block_id,
       ).toHaveLength(255);
     });
   });
@@ -92,7 +92,7 @@ describe('Slack Block widgets', () => {
     it('renders', () => {
       expect.assertions(1);
       expect(
-        ImageBlock(
+        Image(
           url,
           'An incredibly cute kitten.',
           'Please enjoy this photo of a kitten',
@@ -102,13 +102,13 @@ describe('Slack Block widgets', () => {
 
     it('renders without title', () => {
       expect.assertions(1);
-      expect(ImageBlock(url, 'An incredibly cute kitten.')).toMatchSnapshot();
+      expect(Image(url, 'An incredibly cute kitten.')).toMatchSnapshot();
     });
 
     it('allows providing limit overrides', () => {
       expect.assertions(1);
       expect(
-        ImageBlock(
+        Image(
           url,
           'An incredibly cute kitten.',
           'Please enjoy this photo of a kitten',

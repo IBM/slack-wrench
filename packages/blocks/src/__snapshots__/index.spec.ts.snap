@@ -2,12 +2,19 @@
 
 exports[`The index exports everything 1`] = `
 Array [
+  "ActionsBlock",
   "Actions",
+  "ContextBlock",
   "Context",
+  "DividerBlock",
   "Divider",
-  "FileRemote",
+  "FileBlock",
+  "File",
   "ImageBlock",
+  "Image",
+  "InputBlock",
   "Input",
+  "SectionBlock",
   "Section",
   "MdSection",
   "FieldsSection",
@@ -18,7 +25,6 @@ Array [
   "Button",
   "CheckboxInputElement",
   "DatePicker",
-  "Image",
   "MultiStaticSelectInputElement",
   "MultiChannelsSelectInputElement",
   "MultiConversationsSelectInputElement",

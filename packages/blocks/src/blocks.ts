@@ -1,13 +1,4 @@
-import {
-  ActionsBlock,
-  ContextBlock,
-  DividerBlock,
-  FileBlock,
-  ImageBlock as TImageBlock,
-  InputBlock,
-  KnownBlock,
-  SectionBlock,
-} from '@slack/types';
+import S from '@slack/types';
 
 import { Markdown, PlainText } from './elements';
 import {
@@ -28,11 +19,11 @@ import {
  *
  * https://api.slack.com/reference/block-kit/blocks#actions
  */
-export const Actions = (
-  elements: ActionsBlock['elements'],
+export const ActionsBlock = (
+  elements: S.ActionsBlock['elements'],
   limiterOverrides?: LimiterFuncs,
-): ActionsBlock =>
-  applyLimitersWithOverrides<ActionsBlock>(
+): S.ActionsBlock =>
+  applyLimitersWithOverrides<S.ActionsBlock>(
     {
       type: 'actions',
       elements,
@@ -44,16 +35,18 @@ export const Actions = (
     limiterOverrides,
   );
 
+export const Actions = ActionsBlock;
+
 /**
  * Context block - Displays message context, which can include both images and text.
  *
  * https://api.slack.com/reference/block-kit/blocks#context
  */
-export const Context = (
-  elements: ContextBlock['elements'],
+export const ContextBlock = (
+  elements: S.ContextBlock['elements'],
   limiterOverrides?: LimiterFuncs,
-): ContextBlock =>
-  applyLimitersWithOverrides<ContextBlock>(
+): S.ContextBlock =>
+  applyLimitersWithOverrides<S.ContextBlock>(
     {
       type: 'context',
       elements,
@@ -65,16 +58,18 @@ export const Context = (
     limiterOverrides,
   );
 
+export const Context = ContextBlock;
+
 /**
  * Divider block - A content divider, like an `<hr>`, to split up different blocks inside of a message.
  *
  * https://api.slack.com/reference/block-kit/blocks#divider
  */
-export const Divider = (
+export const DividerBlock = (
   block_id?: string,
   limiterOverrides?: LimiterFuncs,
-): DividerBlock =>
-  applyLimitersWithOverrides<DividerBlock>(
+): S.DividerBlock =>
+  applyLimitersWithOverrides<S.DividerBlock>(
     {
       type: 'divider',
       block_id,
@@ -83,6 +78,8 @@ export const Divider = (
     limiterOverrides,
   );
 
+export const Divider = DividerBlock;
+
 /**
  * Displays a [remote file](https://api.slack.com/messaging/files/remote).
  *
@@ -90,12 +87,12 @@ export const Divider = (
  *
  * https://api.slack.com/reference/block-kit/blocks#file
  */
-export const FileRemote = (
+export const FileBlock = (
   external_id: string,
   block_id?: string,
   limiterOverrides?: LimiterFuncs,
-): FileBlock =>
-  applyLimitersWithOverrides<FileBlock>(
+): S.FileBlock =>
+  applyLimitersWithOverrides<S.FileBlock>(
     {
       type: 'file',
       source: 'remote',
@@ -105,6 +102,8 @@ export const FileRemote = (
     { block_id: [255, disallow] },
     limiterOverrides,
   );
+
+export const File = FileBlock;
 
 /**
  * Image: A simple image block, designed to make those cat photos really pop.
@@ -117,8 +116,8 @@ export const ImageBlock = (
   title = '',
   block_id?: string,
   limiterOverrides?: LimiterFuncs,
-): TImageBlock =>
-  applyLimitersWithOverrides<TImageBlock>(
+): S.ImageBlock =>
+  applyLimitersWithOverrides<S.ImageBlock>(
     {
       type: 'image',
       image_url,
@@ -135,6 +134,8 @@ export const ImageBlock = (
     limiterOverrides,
   );
 
+export const Image = ImageBlock;
+
 /**
  * Input block - A block that collects information from users - it can hold a plain-text input element, a select menu element, a multi-select menu element, or a datepicker.
  *
@@ -142,15 +143,15 @@ export const ImageBlock = (
  *
  * https://api.slack.com/reference/block-kit/blocks#input
  */
-export const Input = (
+export const InputBlock = (
   label: string,
-  element: InputBlock['element'],
-  block_id?: InputBlock['block_id'],
-  hint?: InputBlock['hint'],
-  optional?: InputBlock['optional'],
+  element: S.InputBlock['element'],
+  block_id?: S.InputBlock['block_id'],
+  hint?: S.InputBlock['hint'],
+  optional?: S.InputBlock['optional'],
   limiterOverrides?: LimiterFuncs,
-): InputBlock =>
-  applyLimitersWithOverrides<InputBlock>(
+): S.InputBlock =>
+  applyLimitersWithOverrides<S.InputBlock>(
     {
       type: 'input',
       label: PlainText(label),
@@ -167,16 +168,18 @@ export const Input = (
     limiterOverrides,
   );
 
+export const Input = InputBlock;
+
 /**
  * Section Block - A section is one of the most flexible blocks available - it can be used as a simple text block, in combination with text fields, or side-by-side with any of the available block elements.
  *
  * https://api.slack.com/reference/block-kit/blocks#section
  */
-export const Section = (
-  sectionBlock: Partial<SectionBlock>,
+export const SectionBlock = (
+  sectionBlock: Partial<S.SectionBlock>,
   limiterOverrides?: LimiterFuncs,
-): SectionBlock =>
-  applyLimitersWithOverrides<SectionBlock>(
+): S.SectionBlock =>
+  applyLimitersWithOverrides<S.SectionBlock>(
     {
       ...sectionBlock,
       type: 'section',
@@ -195,12 +198,14 @@ export const Section = (
     limiterOverrides,
   );
 
+export const Section = SectionBlock;
+
 export const MdSection = (
   text: string,
-  sectionBlock?: Partial<SectionBlock>,
+  sectionBlock?: Partial<S.SectionBlock>,
   limiterOverrides?: LimiterFuncs,
-): SectionBlock =>
-  Section(
+): S.SectionBlock =>
+  SectionBlock(
     {
       ...sectionBlock,
       text: Markdown(text),
@@ -214,10 +219,10 @@ export const MdSection = (
  */
 export const FieldsSection = (
   fields: string[],
-  sectionBlock?: Partial<SectionBlock>,
+  sectionBlock?: Partial<S.SectionBlock>,
   limiterOverrides?: LimiterFuncs,
-): SectionBlock =>
-  Section(
+): S.SectionBlock =>
+  SectionBlock(
     {
       ...sectionBlock,
       fields: fields.map(Markdown),
@@ -231,11 +236,11 @@ export const FieldsSection = (
  * Current limits: You can include up to 50 blocks in each message, and 100 blocks in modals or home tabs.
  */
 export const Blocks = (
-  blocks: (KnownBlock | null)[],
+  blocks: (S.KnownBlock | null)[],
   type?: 'message' | 'modal' | 'home',
   limitFn: Limiter = truncate,
-): KnownBlock[] => {
-  const filteredBlocks = blocks.filter(block => block) as KnownBlock[];
+): S.KnownBlock[] => {
+  const filteredBlocks = blocks.filter(block => block) as S.KnownBlock[];
 
   if (type) {
     return limitFn(type === 'message' ? 50 : 100, filteredBlocks);
@@ -248,22 +253,22 @@ export const Blocks = (
  * Top-level blocks helper for building a message. defaults to truncating at 50 blocks after filtering out null
  */
 export const MessageBlocks = (
-  blocks: (KnownBlock | null)[],
+  blocks: (S.KnownBlock | null)[],
   limitFn?: Limiter,
-): KnownBlock[] => Blocks(blocks, 'message', limitFn);
+): S.KnownBlock[] => Blocks(blocks, 'message', limitFn);
 
 /**
  * Top-level blocks helper for building a home tab. defaults to truncating at 100 blocks after filtering out null
  */
 export const HomeBlocks = (
-  blocks: (KnownBlock | null)[],
+  blocks: (S.KnownBlock | null)[],
   limitFn?: Limiter,
-): KnownBlock[] => Blocks(blocks, 'home', limitFn);
+): S.KnownBlock[] => Blocks(blocks, 'home', limitFn);
 
 /**
  * Top-level blocks helper for building a modal view. defaults to truncating at 100 blocks after filtering out null
  */
 export const ModalBlocks = (
-  blocks: (KnownBlock | null)[],
+  blocks: (S.KnownBlock | null)[],
   limitFn?: Limiter,
-): KnownBlock[] => Blocks(blocks, 'modal', limitFn);
+): S.KnownBlock[] => Blocks(blocks, 'modal', limitFn);
