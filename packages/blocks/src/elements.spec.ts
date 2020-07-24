@@ -2,22 +2,22 @@ import { flatten, init, repeat, tail, takeLast } from 'ramda';
 
 import {
   Button,
-  ChannelsSelectInputElement,
-  CheckboxInputElement,
-  ConversationsSelectInputElement,
-  DatePicker,
-  Image,
-  MultiChannelsSelectInputElement,
-  MultiConversationsSelectInputElement,
-  MultiUsersSelectInputElement,
+  ChannelsSelect,
+  Checkboxes,
+  ConversationsSelect,
+  Datepicker,
+  ImageElement,
+  MultiChannelsSelect,
+  MultiConversationsSelect,
+  MultiUsersSelect,
   OptionObject,
-  OverflowMenu,
+  Overflow,
   PlainText,
-  PlainTextInputElement,
-  RadioInputElement,
-  StaticSelectInputElement,
-  UsersSelectInputElement,
-  MultiStaticSelectInputElement,
+  PlainTextInput,
+  RadioButtons,
+  StaticSelect,
+  UsersSelect,
+  MultiStaticSelect,
 } from './elements';
 import { disallow, truncate } from './limitHelpers';
 
@@ -57,12 +57,12 @@ describe('Slack Element widgets', () => {
   describe('datepicker', () => {
     it('renders', () => {
       expect.assertions(1);
-      expect(DatePicker('datepicker')).toMatchSnapshot();
+      expect(Datepicker('datepicker')).toMatchSnapshot();
     });
 
     it('truncates ellipsis for placeholder', () => {
       expect.assertions(1);
-      const datepicker = DatePicker('datepicker', dynamicText);
+      const datepicker = Datepicker('datepicker', dynamicText);
       expect(datepicker.placeholder?.text).toEqual(
         `${dynamicText.substr(0, 148)} …`,
       );
@@ -71,20 +71,20 @@ describe('Slack Element widgets', () => {
     it('renders with valid initial_date', () => {
       expect.assertions(1);
       expect(
-        DatePicker('datepicker', undefined, '2015-10-21'),
+        Datepicker('datepicker', undefined, '2015-10-21'),
       ).toMatchSnapshot();
     });
 
     it('throws for invalidly formatted date', () => {
       expect.assertions(1);
       expect(() => {
-        return DatePicker('datepicker', undefined, 'Tomorrow');
+        return Datepicker('datepicker', undefined, 'Tomorrow');
       }).toThrow();
     });
 
     it('allows override LimitOpts for too long value', () => {
       expect.assertions(1);
-      const datepicker = DatePicker(
+      const datepicker = Datepicker(
         'datepicker',
         dynamicText,
         undefined,
@@ -100,19 +100,19 @@ describe('Slack Element widgets', () => {
   describe('image', () => {
     it('renders', () => {
       expect.assertions(1);
-      expect(Image(url, text)).toMatchSnapshot();
+      expect(ImageElement(url, text)).toMatchSnapshot();
     });
 
     it('truncates ellipsis for alt_text', () => {
       expect.assertions(1);
-      const image = Image(url, dynamicText);
+      const image = ImageElement(url, dynamicText);
       expect(image.alt_text).toEqual(`${dynamicText.substr(0, 1998)} …`);
     });
 
     it('allows override LimitOpts for too long url', () => {
       expect.assertions(1);
       expect(() => {
-        return Image(dynamicText, text, {
+        return ImageElement(dynamicText, text, {
           image_url: disallow,
         });
       }).toThrow();
@@ -123,7 +123,7 @@ describe('Slack Element widgets', () => {
     it('renders', () => {
       expect.assertions(1);
       expect(
-        OverflowMenu(
+        Overflow(
           [
             OptionObject('Why best?', 'why-best-raven'),
             OptionObject('Ping JK', 'notify-author'),
@@ -136,7 +136,7 @@ describe('Slack Element widgets', () => {
     it('truncates options', () => {
       expect.assertions(1);
       expect(
-        OverflowMenu(
+        Overflow(
           repeat(OptionObject('Why best?', 'why-best-raven'), 10),
           'house-actions',
         ).options,
@@ -150,7 +150,7 @@ describe('Slack Element widgets', () => {
       const last3 = repeat(OptionObject('Ping JK', 'notify-author'), 3);
 
       expect(
-        OverflowMenu(
+        Overflow(
           [...first3, ...middle2, ...last3],
           'house-actions',
           undefined,
@@ -166,18 +166,14 @@ describe('Slack Element widgets', () => {
     it('renders minimally', () => {
       expect.assertions(1);
       expect(
-        PlainTextInputElement(
-          'title',
-          'and the Prisoner of Azkaban',
-          'Enter a title',
-        ),
+        PlainTextInput('title', 'and the Prisoner of Azkaban', 'Enter a title'),
       ).toMatchSnapshot();
     });
 
     it('renders with initial value, placeholder, and opts', () => {
       expect.assertions(1);
       expect(
-        PlainTextInputElement(
+        PlainTextInput(
           'title',
           'and the Prisoner of Azkaban',
           'Enter a title',
@@ -193,7 +189,7 @@ describe('Slack Element widgets', () => {
     it('truncates placeholder and initial_value', () => {
       expect.assertions(2);
       const truncatedString = `${dynamicText.substr(0, 148)} …`;
-      const truncated = PlainTextInputElement('TBD', dynamicText, dynamicText);
+      const truncated = PlainTextInput('TBD', dynamicText, dynamicText);
       expect(truncated.initial_value).toEqual(truncatedString);
       expect(truncated.placeholder?.text).toEqual(truncatedString);
     });
@@ -201,7 +197,7 @@ describe('Slack Element widgets', () => {
     it('allows override LimitOpts for too long initial_value', () => {
       expect.assertions(1);
       expect(
-        PlainTextInputElement('TBD', dynamicText, undefined, undefined, {
+        PlainTextInput('TBD', dynamicText, undefined, undefined, {
           initial_value: truncate,
         }).initial_value,
       ).toHaveLength(150);
@@ -219,20 +215,20 @@ describe('Slack Element widgets', () => {
 
     it('renders a minimal example', () => {
       expect.assertions(1);
-      expect(CheckboxInputElement('title', options)).toMatchSnapshot();
+      expect(Checkboxes('title', options)).toMatchSnapshot();
     });
 
     it('renders with initial options', () => {
       expect.assertions(1);
       expect(
-        CheckboxInputElement('title', options, [options[0], options[1]]),
+        Checkboxes('title', options, [options[0], options[1]]),
       ).toMatchSnapshot();
     });
 
     it('renders with opts that override', () => {
       expect.assertions(1);
       expect(
-        CheckboxInputElement('title', options, [options[0]], {
+        Checkboxes('title', options, [options[0]], {
           initial_options: [options[1]],
         }),
       ).toMatchSnapshot();
@@ -241,7 +237,7 @@ describe('Slack Element widgets', () => {
     it('truncates options', () => {
       expect.assertions(2);
       const manyOptions = tooLongOptions;
-      const truncated = CheckboxInputElement('title', manyOptions, manyOptions);
+      const truncated = Checkboxes('title', manyOptions, manyOptions);
       expect(truncated.options).toHaveLength(10);
       expect(truncated.initial_options).toHaveLength(10);
     });
@@ -249,15 +245,9 @@ describe('Slack Element widgets', () => {
     it('allows override LimitOpts for too long initial_options', () => {
       expect.assertions(1);
       expect(() => {
-        return CheckboxInputElement(
-          'title',
-          options,
-          tooLongOptions,
-          undefined,
-          {
-            initial_options: disallow,
-          },
-        );
+        return Checkboxes('title', options, tooLongOptions, undefined, {
+          initial_options: disallow,
+        });
       }).toThrow();
     });
   });
@@ -267,18 +257,18 @@ describe('Slack Element widgets', () => {
 
     it('renders a minimal example', () => {
       expect.assertions(1);
-      expect(RadioInputElement('title', options)).toMatchSnapshot();
+      expect(RadioButtons('title', options)).toMatchSnapshot();
     });
 
     it('renders with initial option', () => {
       expect.assertions(1);
-      expect(RadioInputElement('title', options, options[0])).toMatchSnapshot();
+      expect(RadioButtons('title', options, options[0])).toMatchSnapshot();
     });
 
     it('renders with opts that override', () => {
       expect.assertions(1);
       expect(
-        RadioInputElement('title', options, options[0], {
+        RadioButtons('title', options, options[0], {
           initial_option: options[1],
         }),
       ).toMatchSnapshot();
@@ -287,22 +277,16 @@ describe('Slack Element widgets', () => {
     it('truncates options', () => {
       expect.assertions(1);
       const manyOptions = tooLongOptions;
-      const truncated = RadioInputElement('title', manyOptions);
+      const truncated = RadioButtons('title', manyOptions);
       expect(truncated.options).toHaveLength(10);
     });
 
     it('allows override LimitOpts for too long options', () => {
       expect.assertions(1);
       expect(() => {
-        return RadioInputElement(
-          'title',
-          tooLongOptions,
-          undefined,
-          undefined,
-          {
-            options: disallow,
-          },
-        );
+        return RadioButtons('title', tooLongOptions, undefined, undefined, {
+          options: disallow,
+        });
       }).toThrow();
     });
   });
@@ -313,40 +297,29 @@ describe('Slack Element widgets', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          StaticSelectInputElement('title', 'Select a book', options),
+          StaticSelect('title', 'Select a book', options),
         ).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          StaticSelectInputElement(
-            'title',
-            'Select a book',
-            options,
-            options[0],
-          ),
+          StaticSelect('title', 'Select a book', options, options[0]),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          StaticSelectInputElement(
-            'title',
-            'Select a book',
-            options,
-            options[0],
-            {
-              initial_option: options[1],
-            },
-          ),
+          StaticSelect('title', 'Select a book', options, options[0], {
+            initial_option: options[1],
+          }),
         ).toMatchSnapshot();
       });
 
       it('truncates options', () => {
         expect.assertions(1);
-        const truncated = StaticSelectInputElement(
+        const truncated = StaticSelect(
           'title',
           'Select a book',
           tooLongOptions,
@@ -357,7 +330,7 @@ describe('Slack Element widgets', () => {
       it('allows override LimitOpts for too long options', () => {
         expect.assertions(1);
         expect(() => {
-          return StaticSelectInputElement(
+          return StaticSelect(
             'title',
             'Select a book',
             tooLongOptions,
@@ -375,40 +348,29 @@ describe('Slack Element widgets', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          MultiStaticSelectInputElement('title', 'Select a book', options),
+          MultiStaticSelect('title', 'Select a book', options),
         ).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          MultiStaticSelectInputElement(
-            'title',
-            'Select a book',
-            options,
-            init(options),
-          ),
+          MultiStaticSelect('title', 'Select a book', options, init(options)),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          MultiStaticSelectInputElement(
-            'title',
-            'Select a book',
-            options,
-            init(options),
-            {
-              initial_options: tail(options),
-            },
-          ),
+          MultiStaticSelect('title', 'Select a book', options, init(options), {
+            initial_options: tail(options),
+          }),
         ).toMatchSnapshot();
       });
 
       it('truncates options', () => {
         expect.assertions(1);
-        const truncated = MultiStaticSelectInputElement(
+        const truncated = MultiStaticSelect(
           'title',
           'Select a book',
           tooLongOptions,
@@ -419,7 +381,7 @@ describe('Slack Element widgets', () => {
       it('allows override LimitOpts for too long options', () => {
         expect.assertions(1);
         expect(() => {
-          return MultiStaticSelectInputElement(
+          return MultiStaticSelect(
             'title',
             'Select a book',
             tooLongOptions,
@@ -436,22 +398,20 @@ describe('Slack Element widgets', () => {
     describe('channels element', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
-        expect(
-          ChannelsSelectInputElement('channel', 'Select channel'),
-        ).toMatchSnapshot();
+        expect(ChannelsSelect('channel', 'Select channel')).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          ChannelsSelectInputElement('channel', 'Select channel', 'GRK5NTHV1'),
+          ChannelsSelect('channel', 'Select channel', 'GRK5NTHV1'),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          ChannelsSelectInputElement('channel', 'Select channel', 'GRK5NTHV1', {
+          ChannelsSelect('channel', 'Select channel', 'GRK5NTHV1', {
             initial_channel: 'GRK5NTHV2',
           }),
         ).toMatchSnapshot();
@@ -461,22 +421,16 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
-          ChannelsSelectInputElement('channel', dynamicText).placeholder?.text,
+          ChannelsSelect('channel', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
       it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
-          ChannelsSelectInputElement(
-            'channel',
-            dynamicText,
-            undefined,
-            undefined,
-            {
-              placeholder: truncate,
-            },
-          ).placeholder?.text,
+          ChannelsSelect('channel', dynamicText, undefined, undefined, {
+            placeholder: truncate,
+          }).placeholder?.text,
         ).toHaveLength(150);
       });
     });
@@ -485,17 +439,14 @@ describe('Slack Element widgets', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          ConversationsSelectInputElement(
-            'conversation',
-            'Select a conversation',
-          ),
+          ConversationsSelect('conversation', 'Select a conversation'),
         ).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          ConversationsSelectInputElement(
+          ConversationsSelect(
             'conversation',
             'Select a conversation',
             'GRK5NTHV1',
@@ -506,7 +457,7 @@ describe('Slack Element widgets', () => {
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          ConversationsSelectInputElement(
+          ConversationsSelect(
             'conversation',
             'Select a conversation',
             'GRK5NTHV1',
@@ -521,15 +472,14 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
-          ConversationsSelectInputElement('conversation', dynamicText)
-            .placeholder?.text,
+          ConversationsSelect('conversation', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
       it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
-          ConversationsSelectInputElement(
+          ConversationsSelect(
             'conversation',
             dynamicText,
             undefined,
@@ -545,22 +495,20 @@ describe('Slack Element widgets', () => {
     describe('user element', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
-        expect(
-          UsersSelectInputElement('user', 'Select a user'),
-        ).toMatchSnapshot();
+        expect(UsersSelect('user', 'Select a user')).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          UsersSelectInputElement('user', 'Select a user', 'DPJ215Q65'),
+          UsersSelect('user', 'Select a user', 'DPJ215Q65'),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          UsersSelectInputElement('user', 'Select a user', 'DPJ215Q65', {
+          UsersSelect('user', 'Select a user', 'DPJ215Q65', {
             initial_user: 'DPBMEQCM8',
           }),
         ).toMatchSnapshot();
@@ -569,15 +517,15 @@ describe('Slack Element widgets', () => {
       it('truncates placeholder with ellipsis', () => {
         expect.assertions(1);
         const truncatedString = `${dynamicText.substr(0, 148)} …`;
-        expect(
-          UsersSelectInputElement('user', dynamicText).placeholder?.text,
-        ).toEqual(truncatedString);
+        expect(UsersSelect('user', dynamicText).placeholder?.text).toEqual(
+          truncatedString,
+        );
       });
 
       it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
-          UsersSelectInputElement('user', dynamicText, undefined, undefined, {
+          UsersSelect('user', dynamicText, undefined, undefined, {
             placeholder: truncate,
           }).placeholder?.text,
         ).toHaveLength(150);
@@ -590,30 +538,23 @@ describe('Slack Element widgets', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          MultiChannelsSelectInputElement('channels', 'Select channels'),
+          MultiChannelsSelect('channels', 'Select channels'),
         ).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          MultiChannelsSelectInputElement('channels', 'Select channels', [
-            'GRK5NTHV1',
-          ]),
+          MultiChannelsSelect('channels', 'Select channels', ['GRK5NTHV1']),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          MultiChannelsSelectInputElement(
-            'channels',
-            'Select channels',
-            ['GRK5NTHV1'],
-            {
-              initial_channels: ['GRK5NTHV2'],
-            },
-          ),
+          MultiChannelsSelect('channels', 'Select channels', ['GRK5NTHV1'], {
+            initial_channels: ['GRK5NTHV2'],
+          }),
         ).toMatchSnapshot();
       });
 
@@ -621,23 +562,16 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
-          MultiChannelsSelectInputElement('channels', dynamicText).placeholder
-            ?.text,
+          MultiChannelsSelect('channels', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
       it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
-          MultiChannelsSelectInputElement(
-            'channel',
-            dynamicText,
-            undefined,
-            undefined,
-            {
-              placeholder: truncate,
-            },
-          ).placeholder?.text,
+          MultiChannelsSelect('channel', dynamicText, undefined, undefined, {
+            placeholder: truncate,
+          }).placeholder?.text,
         ).toHaveLength(150);
       });
     });
@@ -646,28 +580,23 @@ describe('Slack Element widgets', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement(
-            'conversations',
-            'Select conversations',
-          ),
+          MultiConversationsSelect('conversations', 'Select conversations'),
         ).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement(
-            'conversations',
-            'Select conversations',
-            ['GRK5NTHV1'],
-          ),
+          MultiConversationsSelect('conversations', 'Select conversations', [
+            'GRK5NTHV1',
+          ]),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement(
+          MultiConversationsSelect(
             'conversations',
             'Select conversations',
             ['GRK5NTHV1'],
@@ -682,15 +611,15 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
-          MultiConversationsSelectInputElement('conversations', dynamicText)
-            .placeholder?.text,
+          MultiConversationsSelect('conversations', dynamicText).placeholder
+            ?.text,
         ).toEqual(truncatedString);
       });
 
       it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
-          MultiConversationsSelectInputElement(
+          MultiConversationsSelect(
             'conversations',
             dynamicText,
             undefined,
@@ -706,22 +635,20 @@ describe('Slack Element widgets', () => {
     describe('users element', () => {
       it('renders a minimal example', () => {
         expect.assertions(1);
-        expect(
-          MultiUsersSelectInputElement('users', 'Select users'),
-        ).toMatchSnapshot();
+        expect(MultiUsersSelect('users', 'Select users')).toMatchSnapshot();
       });
 
       it('renders with initial option', () => {
         expect.assertions(1);
         expect(
-          MultiUsersSelectInputElement('users', 'Select users', ['DPJ215Q65']),
+          MultiUsersSelect('users', 'Select users', ['DPJ215Q65']),
         ).toMatchSnapshot();
       });
 
       it('renders with opts that override', () => {
         expect.assertions(1);
         expect(
-          MultiUsersSelectInputElement('users', 'Select users', ['DPJ215Q65'], {
+          MultiUsersSelect('users', 'Select users', ['DPJ215Q65'], {
             initial_users: ['DPBMEQCM8'],
           }),
         ).toMatchSnapshot();
@@ -731,22 +658,16 @@ describe('Slack Element widgets', () => {
         expect.assertions(1);
         const truncatedString = `${dynamicText.substr(0, 148)} …`;
         expect(
-          MultiUsersSelectInputElement('users', dynamicText).placeholder?.text,
+          MultiUsersSelect('users', dynamicText).placeholder?.text,
         ).toEqual(truncatedString);
       });
 
       it('allows override LimitOpts for too long placeholder', () => {
         expect.assertions(1);
         expect(
-          MultiUsersSelectInputElement(
-            'users',
-            dynamicText,
-            undefined,
-            undefined,
-            {
-              placeholder: truncate,
-            },
-          ).placeholder?.text,
+          MultiUsersSelect('users', dynamicText, undefined, undefined, {
+            placeholder: truncate,
+          }).placeholder?.text,
         ).toHaveLength(150);
       });
     });

@@ -1,22 +1,4 @@
-import {
-  Button as TButton,
-  ChannelsSelect,
-  Checkboxes,
-  ConversationsSelect,
-  Datepicker,
-  ImageElement,
-  InputBlock,
-  MultiChannelsSelect,
-  MultiConversationsSelect,
-  MultiUsersSelect,
-  Option,
-  Overflow,
-  PlainTextInput,
-  RadioButtons,
-  StaticSelect,
-  UsersSelect,
-  MultiStaticSelect,
-} from '@slack/types';
+import S from '@slack/types';
 
 import { PlainText } from './compositionObjects';
 import {
@@ -31,7 +13,7 @@ import {
 export * from './compositionObjects';
 
 // Block Element Helpers --- https://api.slack.com/reference/block-kit/block-elements
-const InputElement = <T extends InputBlock['element']>(type: T['type']) => (
+const InputElement = <T extends S.InputBlock['element']>(type: T['type']) => (
   action_id: T['action_id'],
   opts: Partial<T>,
 ): T => ({ type, action_id, ...opts } as T);
@@ -45,10 +27,10 @@ const InputElement = <T extends InputBlock['element']>(type: T['type']) => (
 export const Button = (
   text: string,
   action_id: string,
-  buttonBlock?: Partial<TButton>,
+  buttonBlock?: Partial<S.Button>,
   limiterOverrides?: LimiterFuncs,
-): TButton =>
-  applyLimitersWithOverrides<TButton>(
+): S.Button =>
+  applyLimitersWithOverrides<S.Button>(
     {
       type: 'button',
       text: PlainText(text),
@@ -72,15 +54,15 @@ export const Button = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#checkboxes
  */
-export const CheckboxInputElement = (
-  action_id: Checkboxes['action_id'],
-  options: Checkboxes['options'],
-  initial_options?: Checkboxes['initial_options'],
-  opts: Partial<Checkboxes> = {},
+export const Checkboxes = (
+  action_id: S.Checkboxes['action_id'],
+  options: S.Checkboxes['options'],
+  initial_options?: S.Checkboxes['initial_options'],
+  opts: Partial<S.Checkboxes> = {},
   limiterOverrides?: LimiterFuncs,
-): Checkboxes =>
-  applyLimitersWithOverrides<Checkboxes>(
-    InputElement<Checkboxes>('checkboxes')(action_id, {
+): S.Checkboxes =>
+  applyLimitersWithOverrides<S.Checkboxes>(
+    InputElement<S.Checkboxes>('checkboxes')(action_id, {
       options,
       initial_options,
       ...opts,
@@ -115,14 +97,14 @@ const validateDate = <T>(limit: number, value: T): T => {
  *
  * https://api.slack.com/reference/block-kit/block-elements#datepicker
  */
-export const DatePicker = (
+export const Datepicker = (
   action_id: string,
   placeholder?: string,
   initial_date?: string,
-  datePicker?: Partial<Datepicker>,
+  datePicker?: Partial<S.Datepicker>,
   limiterOverrides?: LimiterFuncs,
-): Datepicker =>
-  applyLimitersWithOverrides<Datepicker>(
+): S.Datepicker =>
+  applyLimitersWithOverrides<S.Datepicker>(
     {
       type: 'datepicker',
       action_id,
@@ -146,12 +128,12 @@ export const DatePicker = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#image
  */
-export const Image = (
+export const ImageElement = (
   image_url: string,
   alt_text: string,
   limiterOverrides?: LimiterFuncs,
-): ImageElement =>
-  applyLimitersWithOverrides<ImageElement>(
+): S.ImageElement =>
+  applyLimitersWithOverrides<S.ImageElement>(
     {
       type: 'image',
       image_url,
@@ -183,16 +165,16 @@ const multiSelectLimitOpts: LimitOpts = {
  *
  * https://api.slack.com/reference/block-kit/block-elements#static_multi_select
  */
-export const MultiStaticSelectInputElement = (
-  action_id: MultiStaticSelect['action_id'],
+export const MultiStaticSelect = (
+  action_id: S.MultiStaticSelect['action_id'],
   placeholder: string,
-  options: MultiStaticSelect['options'],
-  initial_options?: MultiStaticSelect['initial_options'],
-  opts: Partial<MultiStaticSelect> = {},
+  options: S.MultiStaticSelect['options'],
+  initial_options?: S.MultiStaticSelect['initial_options'],
+  opts: Partial<S.MultiStaticSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): MultiStaticSelect =>
-  applyLimitersWithOverrides<MultiStaticSelect>(
-    InputElement<MultiStaticSelect>('multi_static_select')(action_id, {
+): S.MultiStaticSelect =>
+  applyLimitersWithOverrides<S.MultiStaticSelect>(
+    InputElement<S.MultiStaticSelect>('multi_static_select')(action_id, {
       placeholder: PlainText(placeholder),
       options,
       initial_options,
@@ -209,15 +191,15 @@ export const MultiStaticSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#channel_multi_select
  */
-export const MultiChannelsSelectInputElement = (
-  action_id: MultiChannelsSelect['action_id'],
+export const MultiChannelsSelect = (
+  action_id: S.MultiChannelsSelect['action_id'],
   placeholder: string,
-  initial_channels?: MultiChannelsSelect['initial_channels'],
-  opts: Partial<MultiChannelsSelect> = {},
+  initial_channels?: S.MultiChannelsSelect['initial_channels'],
+  opts: Partial<S.MultiChannelsSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): MultiChannelsSelect =>
-  applyLimitersWithOverrides<MultiChannelsSelect>(
-    InputElement<MultiChannelsSelect>('multi_channels_select')(action_id, {
+): S.MultiChannelsSelect =>
+  applyLimitersWithOverrides<S.MultiChannelsSelect>(
+    InputElement<S.MultiChannelsSelect>('multi_channels_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_channels,
       ...opts,
@@ -233,15 +215,15 @@ export const MultiChannelsSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#conversation_multi_select
  */
-export const MultiConversationsSelectInputElement = (
-  action_id: MultiConversationsSelect['action_id'],
+export const MultiConversationsSelect = (
+  action_id: S.MultiConversationsSelect['action_id'],
   placeholder: string,
-  initial_conversations?: MultiConversationsSelect['initial_conversations'],
-  opts: Partial<MultiConversationsSelect> = {},
+  initial_conversations?: S.MultiConversationsSelect['initial_conversations'],
+  opts: Partial<S.MultiConversationsSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): MultiConversationsSelect =>
-  applyLimitersWithOverrides<MultiConversationsSelect>(
-    InputElement<MultiConversationsSelect>('multi_conversations_select')(
+): S.MultiConversationsSelect =>
+  applyLimitersWithOverrides<S.MultiConversationsSelect>(
+    InputElement<S.MultiConversationsSelect>('multi_conversations_select')(
       action_id,
       {
         placeholder: PlainText(placeholder),
@@ -260,15 +242,15 @@ export const MultiConversationsSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#users_multi_select
  */
-export const MultiUsersSelectInputElement = (
-  action_id: MultiUsersSelect['action_id'],
+export const MultiUsersSelect = (
+  action_id: S.MultiUsersSelect['action_id'],
   placeholder: string,
-  initial_users?: MultiUsersSelect['initial_users'],
-  opts: Partial<MultiUsersSelect> = {},
+  initial_users?: S.MultiUsersSelect['initial_users'],
+  opts: Partial<S.MultiUsersSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): MultiUsersSelect =>
-  applyLimitersWithOverrides<MultiUsersSelect>(
-    InputElement<MultiUsersSelect>('multi_users_select')(action_id, {
+): S.MultiUsersSelect =>
+  applyLimitersWithOverrides<S.MultiUsersSelect>(
+    InputElement<S.MultiUsersSelect>('multi_users_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_users,
       ...opts,
@@ -286,13 +268,13 @@ export const MultiUsersSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#overflow
  */
-export const OverflowMenu = (
-  options: Option[],
+export const Overflow = (
+  options: S.Option[],
   action_id: string,
-  menuBlock?: Partial<Overflow>,
+  menuBlock?: Partial<S.Overflow>,
   limiterOverrides?: LimiterFuncs,
-): Overflow =>
-  applyLimitersWithOverrides<Overflow>(
+): S.Overflow =>
+  applyLimitersWithOverrides<S.Overflow>(
     {
       type: 'overflow',
       options,
@@ -313,15 +295,15 @@ export const OverflowMenu = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#input
  */
-export const PlainTextInputElement = (
-  action_id: PlainTextInput['action_id'],
-  initial_value?: PlainTextInput['initial_value'],
+export const PlainTextInput = (
+  action_id: S.PlainTextInput['action_id'],
+  initial_value?: S.PlainTextInput['initial_value'],
   placeholder?: string,
-  opts: Partial<PlainTextInput> = {},
+  opts: Partial<S.PlainTextInput> = {},
   limiterOverrides?: LimiterFuncs,
-): PlainTextInput =>
-  applyLimitersWithOverrides<PlainTextInput>(
-    InputElement<PlainTextInput>('plain_text_input')(action_id, {
+): S.PlainTextInput =>
+  applyLimitersWithOverrides<S.PlainTextInput>(
+    InputElement<S.PlainTextInput>('plain_text_input')(action_id, {
       initial_value,
       placeholder: placeholder ? PlainText(placeholder) : undefined,
       ...opts,
@@ -342,15 +324,15 @@ export const PlainTextInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#radio
  */
-export const RadioInputElement = (
-  action_id: RadioButtons['action_id'],
-  options: RadioButtons['options'],
-  initial_option?: RadioButtons['initial_option'],
-  opts: Partial<RadioButtons> = {},
+export const RadioButtons = (
+  action_id: S.RadioButtons['action_id'],
+  options: S.RadioButtons['options'],
+  initial_option?: S.RadioButtons['initial_option'],
+  opts: Partial<S.RadioButtons> = {},
   limiterOverrides?: LimiterFuncs,
-): RadioButtons =>
-  applyLimitersWithOverrides<RadioButtons>(
-    InputElement<RadioButtons>('radio_buttons')(action_id, {
+): S.RadioButtons =>
+  applyLimitersWithOverrides<S.RadioButtons>(
+    InputElement<S.RadioButtons>('radio_buttons')(action_id, {
       options,
       initial_option,
       ...opts,
@@ -384,16 +366,16 @@ const selectLimitOpts: LimitOpts = {
  *
  * https://api.slack.com/reference/block-kit/block-elements#static_select
  */
-export const StaticSelectInputElement = (
-  action_id: StaticSelect['action_id'],
+export const StaticSelect = (
+  action_id: S.StaticSelect['action_id'],
   placeholder: string,
-  options: StaticSelect['options'],
-  initial_option?: StaticSelect['initial_option'],
-  opts: Partial<StaticSelect> = {},
+  options: S.StaticSelect['options'],
+  initial_option?: S.StaticSelect['initial_option'],
+  opts: Partial<S.StaticSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): StaticSelect =>
-  applyLimitersWithOverrides<StaticSelect>(
-    InputElement<StaticSelect>('static_select')(action_id, {
+): S.StaticSelect =>
+  applyLimitersWithOverrides<S.StaticSelect>(
+    InputElement<S.StaticSelect>('static_select')(action_id, {
       placeholder: PlainText(placeholder),
       options,
       initial_option,
@@ -410,15 +392,15 @@ export const StaticSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#channel_select
  */
-export const ChannelsSelectInputElement = (
-  action_id: ChannelsSelect['action_id'],
+export const ChannelsSelect = (
+  action_id: S.ChannelsSelect['action_id'],
   placeholder: string,
-  initial_channel?: ChannelsSelect['initial_channel'],
-  opts: Partial<ChannelsSelect> = {},
+  initial_channel?: S.ChannelsSelect['initial_channel'],
+  opts: Partial<S.ChannelsSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): ChannelsSelect =>
-  applyLimitersWithOverrides<ChannelsSelect>(
-    InputElement<ChannelsSelect>('channels_select')(action_id, {
+): S.ChannelsSelect =>
+  applyLimitersWithOverrides<S.ChannelsSelect>(
+    InputElement<S.ChannelsSelect>('channels_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_channel,
       ...opts,
@@ -434,15 +416,15 @@ export const ChannelsSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#conversation_select
  */
-export const ConversationsSelectInputElement = (
-  action_id: ConversationsSelect['action_id'],
+export const ConversationsSelect = (
+  action_id: S.ConversationsSelect['action_id'],
   placeholder: string,
-  initial_conversation?: ConversationsSelect['initial_conversation'],
-  opts: Partial<ConversationsSelect> = {},
+  initial_conversation?: S.ConversationsSelect['initial_conversation'],
+  opts: Partial<S.ConversationsSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): ConversationsSelect =>
-  applyLimitersWithOverrides<ConversationsSelect>(
-    InputElement<ConversationsSelect>('conversations_select')(action_id, {
+): S.ConversationsSelect =>
+  applyLimitersWithOverrides<S.ConversationsSelect>(
+    InputElement<S.ConversationsSelect>('conversations_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_conversation,
       ...opts,
@@ -458,15 +440,15 @@ export const ConversationsSelectInputElement = (
  *
  * https://api.slack.com/reference/block-kit/block-elements#users_select
  */
-export const UsersSelectInputElement = (
-  action_id: UsersSelect['action_id'],
+export const UsersSelect = (
+  action_id: S.UsersSelect['action_id'],
   placeholder: string,
-  initial_user?: UsersSelect['initial_user'],
-  opts: Partial<UsersSelect> = {},
+  initial_user?: S.UsersSelect['initial_user'],
+  opts: Partial<S.UsersSelect> = {},
   limiterOverrides?: LimiterFuncs,
-): UsersSelect =>
-  applyLimitersWithOverrides<UsersSelect>(
-    InputElement<UsersSelect>('users_select')(action_id, {
+): S.UsersSelect =>
+  applyLimitersWithOverrides<S.UsersSelect>(
+    InputElement<S.UsersSelect>('users_select')(action_id, {
       placeholder: PlainText(placeholder),
       initial_user,
       ...opts,

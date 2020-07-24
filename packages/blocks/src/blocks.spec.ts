@@ -16,7 +16,7 @@ import {
   ModalBlocks,
   Section,
 } from './blocks';
-import { Button, Markdown, PlainText, PlainTextInputElement } from './elements';
+import { Button, Markdown, PlainText, PlainTextInput } from './elements';
 import { DateString } from './formatting';
 import { disallow, truncate } from './limitHelpers';
 
@@ -123,7 +123,7 @@ describe('Slack Block widgets', () => {
     it('renders with minimal information', () => {
       expect.assertions(1);
 
-      expect(Input('Title', PlainTextInputElement('title'))).toMatchSnapshot();
+      expect(Input('Title', PlainTextInput('title'))).toMatchSnapshot();
     });
 
     it('renders with block_id, hint, and as optional', () => {
@@ -132,7 +132,7 @@ describe('Slack Block widgets', () => {
       expect(
         Input(
           'Title',
-          PlainTextInputElement('title'),
+          PlainTextInput('title'),
           'title',
           PlainText('keep it to the true 7'),
           true,
@@ -142,7 +142,7 @@ describe('Slack Block widgets', () => {
 
     it('truncates ellipsis for label', () => {
       expect.assertions(1);
-      const input = Input(dynamicText, PlainTextInputElement('title'));
+      const input = Input(dynamicText, PlainTextInput('title'));
       expect(input.label).toEqual(
         PlainText(`${dynamicText.substr(0, 1998)} …`),
       );
@@ -152,7 +152,7 @@ describe('Slack Block widgets', () => {
       expect.assertions(1);
       const input = Input(
         'Title',
-        PlainTextInputElement('title'),
+        PlainTextInput('title'),
         undefined,
         PlainText(dynamicText),
         undefined,
