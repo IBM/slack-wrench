@@ -84,7 +84,7 @@ export const CheckboxInputElement = (
 // --- Date Picker Element --- https://api.slack.com/reference/block-kit/block-elements#datepicker
 
 // --- Image Element --- https://api.slack.com/reference/block-kit/block-elements#image
-export const ImageEl = (
+export const Image = (
   image_url: string,
   alt_text: string,
   limiterOverrides?: LimiterFuncs,

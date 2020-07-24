@@ -3,7 +3,7 @@ import {
   Blocks,
   Button,
   Divider,
-  ImageEl,
+  Image,
   MdSection,
   PlainText,
 } from '@slack-wrench/blocks';
@@ -19,7 +19,7 @@ const imageCompareOptions = { customDiffConfig: { threshold: 0.1 } };
 
 const Restaurant = (description: string, image: string) =>
   MdSection(description, {
-    accessory: ImageEl(image, 'alt text for image'),
+    accessory: Image(image, 'alt text for image'),
   });
 
 const RestaurantBlocks = (restaurantTimes = 1) =>

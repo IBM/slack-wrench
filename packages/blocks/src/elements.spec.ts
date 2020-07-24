@@ -5,7 +5,7 @@ import {
   ChannelsSelectInputElement,
   CheckboxInputElement,
   ConversationsSelectInputElement,
-  ImageEl,
+  Image,
   MultiChannelsSelectInputElement,
   MultiConversationsSelectInputElement,
   MultiUsersSelectInputElement,
@@ -55,19 +55,19 @@ describe('Slack Element widgets', () => {
   describe('image', () => {
     it('renders', () => {
       expect.assertions(1);
-      expect(ImageEl(url, text)).toMatchSnapshot();
+      expect(Image(url, text)).toMatchSnapshot();
     });
 
     it('truncates ellipsis for alt_text', () => {
       expect.assertions(1);
-      const image = ImageEl(url, dynamicText);
+      const image = Image(url, dynamicText);
       expect(image.alt_text).toEqual(`${dynamicText.substr(0, 1998)} …`);
     });
 
     it('allows override LimitOpts for too long url', () => {
       expect.assertions(1);
       expect(() => {
-        return ImageEl(dynamicText, text, {
+        return Image(dynamicText, text, {
           image_url: disallow,
         });
       }).toThrow();

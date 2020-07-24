@@ -9,7 +9,7 @@ import {
   FieldsSection,
   FileRemote,
   HomeBlocks,
-  ImageBl,
+  ImageBlock,
   Input,
   MdSection,
   MessageBlocks,
@@ -92,7 +92,7 @@ describe('Slack Block widgets', () => {
     it('renders', () => {
       expect.assertions(1);
       expect(
-        ImageBl(
+        ImageBlock(
           url,
           'An incredibly cute kitten.',
           'Please enjoy this photo of a kitten',
@@ -102,13 +102,13 @@ describe('Slack Block widgets', () => {
 
     it('renders without title', () => {
       expect.assertions(1);
-      expect(ImageBl(url, 'An incredibly cute kitten.')).toMatchSnapshot();
+      expect(ImageBlock(url, 'An incredibly cute kitten.')).toMatchSnapshot();
     });
 
     it('allows providing limit overrides', () => {
       expect.assertions(1);
       expect(
-        ImageBl(
+        ImageBlock(
           url,
           'An incredibly cute kitten.',
           'Please enjoy this photo of a kitten',

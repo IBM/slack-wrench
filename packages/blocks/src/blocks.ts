@@ -3,7 +3,7 @@ import {
   ContextBlock,
   DividerBlock,
   FileBlock,
-  ImageBlock,
+  ImageBlock as TImageBlock,
   InputBlock,
   KnownBlock,
   SectionBlock,
@@ -111,14 +111,14 @@ export const FileRemote = (
  *
  * https://api.slack.com/reference/block-kit/blocks#image
  */
-export const ImageBl = (
+export const ImageBlock = (
   image_url: string,
   alt_text: string,
   title = '',
   block_id?: string,
   limiterOverrides?: LimiterFuncs,
-): ImageBlock =>
-  applyLimitersWithOverrides<ImageBlock>(
+): TImageBlock =>
+  applyLimitersWithOverrides<TImageBlock>(
     {
       type: 'image',
       image_url,
