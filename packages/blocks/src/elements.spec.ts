@@ -9,6 +9,7 @@ import {
   ImageElement,
   MultiChannelsSelect,
   MultiConversationsSelect,
+  MultiStaticSelect,
   MultiUsersSelect,
   OptionObject,
   Overflow,
@@ -17,7 +18,6 @@ import {
   RadioButtons,
   StaticSelect,
   UsersSelect,
-  MultiStaticSelect,
 } from './elements';
 import { disallow, truncate } from './limitHelpers';
 

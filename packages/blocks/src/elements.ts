@@ -180,7 +180,7 @@ export const MultiStaticSelect = (
       initial_options,
       ...opts,
     }),
-    selectLimitOpts,
+    multiSelectLimitOpts,
     limiterOverrides,
   );
 
