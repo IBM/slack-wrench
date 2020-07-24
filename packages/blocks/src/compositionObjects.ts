@@ -1,4 +1,4 @@
-import { MrkdwnElement, Option, PlainTextElement } from '@slack/types';
+import S from '@slack/types';
 
 import {
   applyLimitersWithOverrides,
@@ -11,27 +11,36 @@ import {
 // Composition Object Helpers --- https://api.slack.com/reference/block-kit/composition-objects
 
 // --- Text Object ---  https://api.slack.com/reference/block-kit/composition-objects#text
-export const Markdown = (text: string): MrkdwnElement => ({
+export const MrkdwnElement = (text: string): S.MrkdwnElement => ({
   type: 'mrkdwn',
   text,
 });
 
-export const PlainText = (text: string, emoji = true): PlainTextElement => ({
+export const Mrkdwn = MrkdwnElement;
+// note that this isn't real markdown; alias is for ease of use / backwards compatibility
+export const Markdown = MrkdwnElement;
+
+export const PlainTextElement = (
+  text: string,
+  emoji = true,
+): S.PlainTextElement => ({
   type: 'plain_text',
   text,
   emoji,
 });
 
+export const PlainText = PlainTextElement;
+
 // --- Confirm Object --- https://api.slack.com/reference/block-kit/composition-objects#confirm
 
 // --- Option Object --- https://api.slack.com/reference/block-kit/composition-objects#option
-export const OptionObject = (
+export const Option = (
   text: string,
   value: string,
-  optionBlock: Partial<Option> = {},
+  optionBlock: Partial<S.Option> = {},
   limiterOverrides?: LimiterFuncs,
-): Option =>
-  applyLimitersWithOverrides<Option>(
+): S.Option =>
+  applyLimitersWithOverrides<S.Option>(
     {
       text: PlainText(text),
       value,
@@ -45,6 +54,8 @@ export const OptionObject = (
     },
     limiterOverrides,
   );
+
+export const OptionObject = Option;
 
 // --- Option Group Object --- https://api.slack.com/reference/block-kit/composition-objects#option_group
 

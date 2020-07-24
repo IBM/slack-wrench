@@ -159,13 +159,13 @@ So, the `text` field has a maximum length of `75`. If the provided text in build
 
 ```ts
 // { text: 'text', value: 'value' }
-OptionObject('text', 'value');
+Option('text', 'value');
 
 // { text: '<first 73 characters> …', value: 'value' }
-OptionObject('<80 character text>', 'value');
+Option('<80 character text>', 'value');
 
 // Throws
-OptionObject('text', '<80 character id value>');
+Option('text', '<80 character id value>');
 ```
 
 ### Overriding
@@ -176,7 +176,7 @@ For example, if you didn't want it to throw on a value being too long, you could
 
 ```ts
 // map the `value` field to the truncate function instead of the default disallow
-OptionObject('title', dynamicText, undefined, { value: truncate });
+Option('title', dynamicText, undefined, { value: truncate });
 ```
 
 ### Custom Limiter Functions
@@ -188,7 +188,7 @@ The limiter function is passed two values - the limit (number) for the field in 
 For example, to provide a function that just rendered an error string for text that is too long, you could do this:
 
 ```ts
-OptionObject(dynamicText, 'value', undefined, {
+Option(dynamicText, 'value', undefined, {
   text: (limit, dynamicText) =>
     `ERR: TOO LONG. LONGER than (${limit}): ${dynamicText.substring(0, 10)}...`,
 });
