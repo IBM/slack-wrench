@@ -2,6 +2,8 @@ import {
   ActionsBlock,
   ContextBlock,
   DividerBlock,
+  FileBlock,
+  ImageBlock as TImageBlock,
   InputBlock,
   KnownBlock,
   SectionBlock,
@@ -19,8 +21,13 @@ import {
 
 // This file provides abstractions for layout blocks, sub-block objects, and related common patterns
 // https://api.slack.com/reference/block-kit/blocks
+// Unless otherwise noted, these blocks support Modals, Messages, and Home tabs as surfaces
 
-// --- Actions --- https://api.slack.com/reference/block-kit/blocks#actions
+/**
+ * Actions block - A block that is used to hold interactive [elements](https://api.slack.com/reference/messaging/block-elements).
+ *
+ * https://api.slack.com/reference/block-kit/blocks#actions
+ */
 export const Actions = (
   elements: ActionsBlock['elements'],
   limiterOverrides?: LimiterFuncs,
@@ -37,7 +44,11 @@ export const Actions = (
     limiterOverrides,
   );
 
-// --- Context --- https://api.slack.com/reference/block-kit/blocks#context
+/**
+ * Context block - Displays message context, which can include both images and text.
+ *
+ * https://api.slack.com/reference/block-kit/blocks#context
+ */
 export const Context = (
   elements: ContextBlock['elements'],
   limiterOverrides?: LimiterFuncs,
@@ -54,7 +65,11 @@ export const Context = (
     limiterOverrides,
   );
 
-// --- Divider --- https://api.slack.com/reference/block-kit/blocks#divider
+/**
+ * Divider block - A content divider, like an `<hr>`, to split up different blocks inside of a message.
+ *
+ * https://api.slack.com/reference/block-kit/blocks#divider
+ */
 export const Divider = (
   block_id?: string,
   limiterOverrides?: LimiterFuncs,
@@ -68,22 +83,65 @@ export const Divider = (
     limiterOverrides,
   );
 
-// --- File --- https://api.slack.com/reference/block-kit/blocks#file
+/**
+ * Displays a [remote file](https://api.slack.com/messaging/files/remote).
+ *
+ * Note: only supported in Messages surface (not in modals or home tabs)
+ *
+ * https://api.slack.com/reference/block-kit/blocks#file
+ */
+export const FileRemote = (
+  external_id: string,
+  block_id?: string,
+  limiterOverrides?: LimiterFuncs,
+): FileBlock =>
+  applyLimitersWithOverrides<FileBlock>(
+    {
+      type: 'file',
+      source: 'remote',
+      external_id,
+      block_id,
+    },
+    { block_id: [255, disallow] },
+    limiterOverrides,
+  );
 
-// {
-//   block_id: [255, disallow],
-// }
+/**
+ * Image: A simple image block, designed to make those cat photos really pop.
+ *
+ * https://api.slack.com/reference/block-kit/blocks#image
+ */
+export const ImageBlock = (
+  image_url: string,
+  alt_text: string,
+  title = '',
+  block_id?: string,
+  limiterOverrides?: LimiterFuncs,
+): TImageBlock =>
+  applyLimitersWithOverrides<TImageBlock>(
+    {
+      type: 'image',
+      image_url,
+      alt_text,
+      title: title.length > 0 ? PlainText(title) : undefined,
+      block_id,
+    },
+    {
+      image_url: [3000, truncate],
+      alt_text: [2000, ellipsis],
+      title: [2000, ellipsis],
+      block_id: [255, disallow],
+    },
+    limiterOverrides,
+  );
 
-// --- Image --- https://api.slack.com/reference/block-kit/blocks#image
-
-// {
-//   image_url: [3000, truncate],
-//   alt_text: [2000, ellipsis],
-//   title: [2000, ellipsis],
-//   block_id: [255, disallow],
-// }
-
-// --- Input --- https://api.slack.com/reference/block-kit/blocks#input
+/**
+ * Input block - A block that collects information from users - it can hold a plain-text input element, a select menu element, a multi-select menu element, or a datepicker.
+ *
+ * Note: only supported in Modals surface (not in messages or home tabs)
+ *
+ * https://api.slack.com/reference/block-kit/blocks#input
+ */
 export const Input = (
   label: string,
   element: InputBlock['element'],
@@ -109,7 +167,11 @@ export const Input = (
     limiterOverrides,
   );
 
-// --- Section --- https://api.slack.com/reference/block-kit/blocks#section
+/**
+ * Section Block - A section is one of the most flexible blocks available - it can be used as a simple text block, in combination with text fields, or side-by-side with any of the available block elements.
+ *
+ * https://api.slack.com/reference/block-kit/blocks#section
+ */
 export const Section = (
   sectionBlock: Partial<SectionBlock>,
   limiterOverrides?: LimiterFuncs,
@@ -165,6 +227,8 @@ export const FieldsSection = (
 
 /**
  * Top-level blocks helper. filters out any null blocks, and if provided a `type` limits based on `limitFn`
+ *
+ * Current limits: You can include up to 50 blocks in each message, and 100 blocks in modals or home tabs.
  */
 export const Blocks = (
   blocks: (KnownBlock | null)[],

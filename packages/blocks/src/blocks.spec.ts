@@ -7,7 +7,9 @@ import {
   Context,
   Divider,
   FieldsSection,
+  FileRemote,
   HomeBlocks,
+  ImageBlock,
   Input,
   MdSection,
   MessageBlocks,
@@ -66,6 +68,53 @@ describe('Slack Block widgets', () => {
       expect.assertions(1);
       expect(
         Divider(dynamicText, { block_id: truncate }).block_id,
+      ).toHaveLength(255);
+    });
+  });
+
+  describe('file', () => {
+    it('renders', () => {
+      expect.assertions(1);
+      expect(FileRemote('ABCD1')).toMatchSnapshot();
+    });
+
+    it('allows providing limit overrides', () => {
+      expect.assertions(1);
+      expect(
+        FileRemote('ABCD1', dynamicText, { block_id: truncate }).block_id,
+      ).toHaveLength(255);
+    });
+  });
+
+  describe('image block', () => {
+    const url = 'http://placekitten.com/500/500';
+
+    it('renders', () => {
+      expect.assertions(1);
+      expect(
+        ImageBlock(
+          url,
+          'An incredibly cute kitten.',
+          'Please enjoy this photo of a kitten',
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('renders without title', () => {
+      expect.assertions(1);
+      expect(ImageBlock(url, 'An incredibly cute kitten.')).toMatchSnapshot();
+    });
+
+    it('allows providing limit overrides', () => {
+      expect.assertions(1);
+      expect(
+        ImageBlock(
+          url,
+          'An incredibly cute kitten.',
+          'Please enjoy this photo of a kitten',
+          dynamicText,
+          { block_id: truncate },
+        ).block_id,
       ).toHaveLength(255);
     });
   });

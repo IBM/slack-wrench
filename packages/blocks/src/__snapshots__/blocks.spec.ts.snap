@@ -190,6 +190,39 @@ Object {
 }
 `;
 
+exports[`Slack Block widgets file renders 1`] = `
+Object {
+  "block_id": undefined,
+  "external_id": "ABCD1",
+  "source": "remote",
+  "type": "file",
+}
+`;
+
+exports[`Slack Block widgets image block renders 1`] = `
+Object {
+  "alt_text": "An incredibly cute kitten.",
+  "block_id": undefined,
+  "image_url": "http://placekitten.com/500/500",
+  "title": Object {
+    "emoji": true,
+    "text": "Please enjoy this photo of a kitten",
+    "type": "plain_text",
+  },
+  "type": "image",
+}
+`;
+
+exports[`Slack Block widgets image block renders without title 1`] = `
+Object {
+  "alt_text": "An incredibly cute kitten.",
+  "block_id": undefined,
+  "image_url": "http://placekitten.com/500/500",
+  "title": undefined,
+  "type": "image",
+}
+`;
+
 exports[`Slack Block widgets input renders with block_id, hint, and as optional 1`] = `
 Object {
   "block_id": "title",

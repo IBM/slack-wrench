@@ -15,7 +15,7 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@slack-wrench/blocks": "^2.0.0",
+    "@slack-wrench/blocks": "^2.1.0",
     "aws-lambda": "^1.0.5",
     "serverless-http": "^2.3.1"
   },

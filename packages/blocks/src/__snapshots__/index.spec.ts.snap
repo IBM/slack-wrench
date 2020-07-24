@@ -5,6 +5,8 @@ Array [
   "Actions",
   "Context",
   "Divider",
+  "FileRemote",
+  "ImageBlock",
   "Input",
   "Section",
   "MdSection",
