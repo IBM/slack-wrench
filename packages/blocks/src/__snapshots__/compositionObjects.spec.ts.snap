@@ -1,9 +1,103 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Element composition confirm object renders 1`] = `
+Object {
+  "confirm": Object {
+    "emoji": true,
+    "text": "I did it",
+    "type": "plain_text",
+  },
+  "deny": Object {
+    "emoji": true,
+    "text": "I didn't do it",
+    "type": "plain_text",
+  },
+  "style": "primary",
+  "text": Object {
+    "text": "I'm not gonna do it girl; I was just thinking about it. I'm not gonna do it",
+    "type": "mrkdwn",
+  },
+  "title": Object {
+    "emoji": true,
+    "text": "Girl don't do it, it's not worth it",
+    "type": "plain_text",
+  },
+}
+`;
+
+exports[`Element composition filter renders 1`] = `
+Object {
+  "exclude_bot_users": false,
+  "exclude_external_shared_channels": false,
+  "include": Array [
+    "im",
+    "mpim",
+    "private",
+    "public",
+  ],
+}
+`;
+
+exports[`Element composition filter renders with excludes 1`] = `
+Object {
+  "exclude_bot_users": true,
+  "exclude_external_shared_channels": true,
+  "include": Array [
+    "im",
+  ],
+}
+`;
+
+exports[`Element composition filter renders with just string include 1`] = `
+Object {
+  "exclude_bot_users": false,
+  "exclude_external_shared_channels": false,
+  "include": Array [
+    "im",
+  ],
+}
+`;
+
 exports[`Element composition markdown object renders 1`] = `
 Object {
   "text": "Ravenclaw is obviously the best house.",
   "type": "mrkdwn",
+}
+`;
+
+exports[`Element composition option group object renders 1`] = `
+Object {
+  "label": Object {
+    "emoji": true,
+    "text": "Top-tier",
+    "type": "plain_text",
+  },
+  "options": Array [
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "3",
+        "type": "plain_text",
+      },
+      "value": "and the Prisoner of Azkaban",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "6",
+        "type": "plain_text",
+      },
+      "value": "and the Half-Blood Prince",
+    },
+    Object {
+      "text": Object {
+        "emoji": true,
+        "text": "7",
+        "type": "plain_text",
+      },
+      "value": "and the Deathly Hallows",
+    },
+  ],
 }
 `;
 

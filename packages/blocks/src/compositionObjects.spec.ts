@@ -1,7 +1,15 @@
 import { PlainTextElement } from '@slack/types';
+import { flatten, repeat } from 'ramda';
 
-import { Markdown, OptionObject, PlainText } from './compositionObjects';
-import { truncate } from './limitHelpers';
+import {
+  Confirm,
+  Filter,
+  Markdown,
+  OptionGroup,
+  OptionObject,
+  PlainText,
+} from './compositionObjects';
+import { disallow, truncate } from './limitHelpers';
 
 const dynamicText = '0123456789'.repeat(301); // 3010 characters long
 const dynamicTextElement: PlainTextElement = {
@@ -28,6 +36,69 @@ describe('Element composition', () => {
     it('renders without emoji', () => {
       expect.assertions(1);
       expect(PlainText(text, false)).toMatchSnapshot();
+    });
+  });
+
+  describe('filter', () => {
+    it('renders', () => {
+      expect.assertions(1);
+      expect(Filter(['im', 'mpim', 'private', 'public'])).toMatchSnapshot();
+    });
+
+    it('renders with just string include', () => {
+      expect.assertions(1);
+      expect(Filter('im')).toMatchSnapshot();
+    });
+
+    it('renders with excludes', () => {
+      expect.assertions(1);
+      expect(Filter('im', true, true)).toMatchSnapshot();
+    });
+  });
+
+  describe('confirm object', () => {
+    it('renders', () => {
+      expect.assertions(1);
+      expect(
+        Confirm(
+          `Girl don't do it, it's not worth it`,
+          `I'm not gonna do it girl; I was just thinking about it. I'm not gonna do it`,
+          'I did it',
+          `I didn't do it`,
+          'primary',
+        ),
+      ).toMatchSnapshot();
+    });
+
+    it('truncates ellipsis', () => {
+      expect.assertions(4);
+      const confirm = Confirm(
+        dynamicText,
+        dynamicText,
+        dynamicText,
+        dynamicText,
+      );
+      expect(confirm.title?.text).toEqual(`${dynamicText.substr(0, 98)} …`);
+      expect(confirm.text?.text).toEqual(`${dynamicText.substr(0, 298)} …`);
+      expect(confirm.confirm?.text).toEqual(`${dynamicText.substr(0, 28)} …`);
+      expect(confirm.deny?.text).toEqual(
+        `${dynamicTextElement.text.substr(0, 28)} …`,
+      );
+    });
+
+    it('allows override LimitOpts for too long value', () => {
+      expect.assertions(1);
+      const confirm = Confirm(
+        dynamicText,
+        dynamicText,
+        dynamicText,
+        dynamicText,
+        undefined,
+        {
+          title: truncate,
+        },
+      );
+      expect(confirm.title?.text).toEqual(dynamicText.substr(0, 100));
     });
   });
 
@@ -68,6 +139,41 @@ describe('Element composition', () => {
         value: truncate,
       });
       expect(option.value).toHaveLength(75);
+    });
+  });
+
+  describe('option group object', () => {
+    const options = [
+      OptionObject('3', 'and the Prisoner of Azkaban'),
+      OptionObject('6', 'and the Half-Blood Prince'),
+      OptionObject('7', 'and the Deathly Hallows'),
+    ];
+    const tooLongOptions = flatten(repeat(options, 35)); // 105 options
+
+    it('renders', () => {
+      expect.assertions(1);
+      expect(OptionGroup('Top-tier', options)).toMatchSnapshot();
+    });
+
+    it('truncates ellipsis for label', () => {
+      expect.assertions(1);
+      const optionGroup = OptionGroup(dynamicText, options);
+      expect(optionGroup.label?.text).toEqual(`${dynamicText.substr(0, 73)} …`);
+    });
+
+    it('truncates options', () => {
+      expect.assertions(1);
+      const option = OptionGroup('Top-tier', tooLongOptions);
+      expect(option.options).toHaveLength(100);
+    });
+
+    it('allows override LimitOpts for too long value', () => {
+      expect.assertions(1);
+      expect(() => {
+        return OptionGroup('Top-tier', tooLongOptions, {
+          options: disallow,
+        });
+      }).toThrow();
     });
   });
 });
