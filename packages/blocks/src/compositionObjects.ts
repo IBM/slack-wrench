@@ -136,7 +136,10 @@ export interface Filter {
   exclude_bot_users?: boolean;
 }
 
-// --- Filter Object --- https://api.slack.com/reference/block-kit/composition-objects#filter_conversations
+/** Filter Object - Provides a way to filter the list of options in a conversations select menu or conversations multi-select menu.
+ *
+ * https://api.slack.com/reference/block-kit/composition-objects#filter_conversations
+ */
 export const Filter = (
   include: ConversationType | Filter['include'],
   exclude_external_shared_channels = false,
