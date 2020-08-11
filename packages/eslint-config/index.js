@@ -1,6 +1,9 @@
+const path = require('path');
+
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
+    tsconfigRootDir: path.resolve(__dirname, '../../'),
     project: ['./tsconfig.json', './packages/**/tsconfig.json'],
   },
   env: {
@@ -21,6 +24,7 @@ module.exports = {
     },
   },
   rules: {
+    camelcase: 'off', // Slack uses snake_case data
     'simple-import-sort/sort': 'error',
     'sort-imports': 'off',
     'import/extensions': [
@@ -44,7 +48,6 @@ module.exports = {
       },
     ],
     'jest/prefer-expect-assertions': 'error',
-    '@typescript-eslint/camelcase': 'off', // Slack uses snake_case data
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
@@ -57,6 +60,19 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         // Incorrectly recognizes packages only used in tests as "dependencies"
         'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
+      files: ['jest.config.js'],
+      rules: {
+        '@typescript-eslint/no-unsafe-assignment': 'off',
+        '@typescript-eslint/no-unsafe-member-access': 'off',
+      },
+    },
+    {
+      files: ['*.js'],
+      rules: {
+        '@typescript-eslint/no-var-requires': 'off',
       },
     },
   ],

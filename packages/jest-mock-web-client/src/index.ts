@@ -1,4 +1,4 @@
-import { WebClient } from '@slack/web-api';
+import { WebClient, WebClientOptions } from '@slack/web-api';
 
 const mockApi = (): jest.Mock => jest.fn().mockResolvedValue({ ok: true });
 
@@ -34,6 +34,11 @@ export class MockWebClient implements Partial<WebClient> {
     },
     conversations: {
       setTeams: mockApi(),
+      restrictAccess: {
+        addGroup: mockApi(),
+        listGroups: mockApi(),
+        removeGroup: mockApi(),
+      },
     },
     inviteRequests: {
       approve: mockApi(),
@@ -66,6 +71,7 @@ export class MockWebClient implements Partial<WebClient> {
     },
     usergroups: {
       addChannels: mockApi(),
+      addTeams: mockApi(),
       listChannels: mockApi(),
       removeChannels: mockApi(),
     },
@@ -116,6 +122,7 @@ export class MockWebClient implements Partial<WebClient> {
     update: mockApi(),
     participants: {
       add: mockApi(),
+      remove: mockApi(),
     },
   };
 
@@ -172,6 +179,7 @@ export class MockWebClient implements Partial<WebClient> {
     kick: mockApi(),
     leave: mockApi(),
     list: mockApi(),
+    mark: mockApi(),
     members: mockApi(),
     open: mockApi(),
     rename: mockApi(),
@@ -416,13 +424,18 @@ export class MockWebClient implements Partial<WebClient> {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore Typing seems to be wrong, this can take a class
-export const MockedWebClient = jest.fn().mockImplementation(MockWebClient);
+export const MockedWebClient: jest.MockInstance<
+  MockWebClient,
+  [string?, WebClientOptions?]
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Typing seems to be wrong, this can take a class
+> = jest.fn().mockImplementation(MockWebClient);
 
-const mockWebApi = (jest: any): jest.Mock => {
-  const mock = jest.genMockFromModule('@slack/web-api');
+const mockWebApi = (jestModule: typeof jest): jest.Mock => {
+  const mock: jest.Mock = jestModule.genMockFromModule('@slack/web-api');
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore Based on previous ignore, unsure how to set this to the whole module
   mock.WebClient = MockedWebClient;
 
   return mock;

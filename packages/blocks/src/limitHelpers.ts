@@ -20,6 +20,12 @@ import R, {
   view,
 } from 'ramda';
 
+interface TruncateText {
+  text: string;
+}
+
+type TruncateArgs = Partial<TruncateText> & string;
+
 // space + smart ellipsis
 const ellipsisChars = ' …';
 
@@ -45,15 +51,17 @@ export const ellipsis = <T>(limit: number, value: T): T =>
     has('text'),
     over(lensProp('text'), ellipsisText(limit)),
     ellipsisText(limit),
-  )(value);
+  )(value) as T;
 
 /**
  * error function - throws error immediately on function call
  */
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const disallow = (limit: number, value: any): never => {
-  throw Error(
-    `Invalid length for property, max ${limit}: ${value.text || value}`,
-  );
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+  const text = (value.text || value) as string;
+
+  throw Error(`Invalid length for property, max ${limit}: ${text}`);
 };
 
 /**
@@ -65,10 +73,14 @@ export const identity = <T>(limit: number, value: T): T => R.identity(value);
  * truncate by just taking the first `limit` elements of `value`
  * works for list string, or object with text property
  */
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 export const truncate = <T>(limit: number, value: T): T =>
-  ifElse(has('text'), over(lensProp('text'), take(limit)), take(limit))(value);
+  ifElse(
+    has('text'),
+    over(lensProp('text'), take(limit)),
+    take(limit),
+  )(value) as T;
 
 export type Limiter = <T>(limit: number, value: T) => T;
 export type LimitTuple = [number, Limiter, LimitOpts?];
@@ -135,9 +147,9 @@ export const applyLimiters = <T extends Record<string, any>>(
   limitMap: Limits,
 ): T =>
   // typing isn't quite right on mapObjIndexed, and this is called recursively
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  // eslint-disable-next-line no-use-before-define
   mapObjIndexed(applyLimitInfo(limitFns, limitMap), obj);
 
 /**
@@ -176,12 +188,13 @@ const longerThan = curry((limit: number, value: any): boolean =>
 /**
  * returns true if the relevant length on `value` is greater than `limit`
  */
-const isTooLongForBlock = curry((limit: number, value: any): boolean =>
-  ifElse(
-    has('text'),
-    pipe(prop('text'), longerThan(limit)),
-    longerThan(limit),
-  )(value),
+const isTooLongForBlock = curry(
+  (limit: number, value: any): boolean =>
+    ifElse(
+      has('text'),
+      pipe(prop('text'), longerThan(limit)),
+      longerThan(limit),
+    )(value) as boolean,
 );
 
 /**

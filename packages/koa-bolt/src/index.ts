@@ -21,7 +21,7 @@ export default function koaBolt({
 > {
   const boltRouter = new Router();
 
-  const boltMiddleware: Middleware = ctx => {
+  const boltMiddleware: Middleware = (ctx) => {
     // Modifying these fields is a workaround to make koa behave like an Express App
     // Source: https://github.com/vcapretz/bull-board/issues/29#issuecomment-564489062
     // Koa Docs:
@@ -33,7 +33,7 @@ export default function koaBolt({
     receiver.app(ctx.req, ctx.res);
   };
 
-  Object.values(endpoints).forEach(endpoint =>
+  Object.values(endpoints).forEach((endpoint) =>
     boltRouter.post(endpoint, boltMiddleware),
   );
 

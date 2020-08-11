@@ -240,7 +240,7 @@ export const Blocks = (
   type?: 'message' | 'modal' | 'home',
   limitFn: Limiter = truncate,
 ): S.KnownBlock[] => {
-  const filteredBlocks = blocks.filter(block => block) as S.KnownBlock[];
+  const filteredBlocks = blocks.filter((block) => block) as S.KnownBlock[];
 
   if (type) {
     return limitFn(type === 'message' ? 50 : 100, filteredBlocks);

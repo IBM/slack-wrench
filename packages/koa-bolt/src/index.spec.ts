@@ -1,13 +1,13 @@
 import Router from '@koa/router';
 import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
-import { App, ExpressReceiver } from '@slack/bolt';
+import { App, ExpressReceiver, SlackCommandMiddlewareArgs } from '@slack/bolt';
 import Koa, { Middleware } from 'koa';
 
 import koaBolt from './index';
 
 const identityRoute = (path: string): Middleware<any, any> =>
   new Router()
-    .get(path, ctx => {
+    .get(path, (ctx) => {
       ctx.body = path;
     })
     .middleware();
@@ -27,8 +27,8 @@ describe('Koa Bolt Middleware', () => {
 
     const bolt = new App({ receiver, token: '' });
 
-    listener = jest.fn(({ ack }) => {
-      ack();
+    listener = jest.fn(async ({ ack }: SlackCommandMiddlewareArgs) => {
+      await ack();
     });
 
     bolt.command(command, listener);

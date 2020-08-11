@@ -240,7 +240,14 @@ describe('Slack Block widgets', () => {
     it('can compose blocks into bigger components', () => {
       expect.assertions(1);
 
-      const channels = [
+      interface Channel {
+        name: string;
+        purpose: string;
+        lastPost: number;
+        memberCount: number;
+      }
+
+      const channels: Channel[] = [
         {
           name: 'house-ravenclaw',
           purpose: 'Discuss Ravenclaw business',
@@ -263,7 +270,7 @@ describe('Slack Block widgets', () => {
           Divider(),
           MdSection('*Channels*'),
           ...chain(
-            (channel: any): KnownBlock[] => [
+            (channel: Channel): KnownBlock[] => [
               MdSection(`*${channel.name}*\n${channel.purpose}`),
               Context([
                 Markdown(

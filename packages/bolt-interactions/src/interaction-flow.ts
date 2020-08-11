@@ -2,6 +2,7 @@ import {
   ActionConstraints,
   AnyMiddlewareArgs,
   App,
+  BlockAction,
   ConversationStore,
   MemoryStore,
   Middleware,
@@ -9,7 +10,7 @@ import {
   SlackViewAction,
 } from '@slack/bolt';
 import { WebClient } from '@slack/web-api';
-import uuid from 'uuid/v4';
+import { v4 as uuid } from 'uuid';
 
 import { Interaction } from './types';
 
@@ -43,6 +44,8 @@ export class InteractionFlow<FlowState = unknown> {
 
   private interactionIds: string[] = [];
 
+  private store: ConversationStore<FlowState>;
+
   constructor(
     name: string,
     app: App,
@@ -60,6 +63,7 @@ export class InteractionFlow<FlowState = unknown> {
     this.name = name;
     this.app = app;
     this.client = app.client;
+    this.store = InteractionFlow.store as ConversationStore<FlowState>;
 
     controller(this, app);
   }
@@ -107,17 +111,17 @@ export class InteractionFlow<FlowState = unknown> {
   private static getFlowId({ body }: AnyMiddlewareArgs): string {
     /* istanbul ignore else */
     if ('actions' in body) {
-      const { flowId } = InteractionFlow.parseInteractionId(
-        body.actions[0].action_id,
+      const actionBody = body as BlockAction;
+      const { flowId } = this.parseInteractionId(
+        actionBody.actions[0].action_id,
       );
       return flowId;
     }
 
     /* istanbul ignore else */
     if ('view' in body) {
-      const { flowId } = InteractionFlow.parseInteractionId(
-        body.view.callback_id,
-      );
+      const viewBody = body as SlackViewAction;
+      const { flowId } = this.parseInteractionId(viewBody.view.callback_id);
 
       return flowId;
     }
@@ -154,7 +158,7 @@ export class InteractionFlow<FlowState = unknown> {
     };
   }
 
-  private contextMiddleware: Middleware<AnyMiddlewareArgs> = async args => {
+  private contextMiddleware: Middleware<AnyMiddlewareArgs> = async (args) => {
     const { context } = args;
     // Ignoring istanbul became hard.
     // `next` will never be undefined. It's only that way if it's the last middleware
@@ -164,9 +168,8 @@ export class InteractionFlow<FlowState = unknown> {
       args.next ||
       /* istanbul ignore next */ ((): Promise<void> => Promise.resolve());
 
-    const { store, getFlowId } = InteractionFlow;
-    const flowId = getFlowId(args);
-    const state = await store.get(flowId);
+    const flowId = InteractionFlow.getFlowId(args);
+    const state = await this.store.get(flowId);
 
     Object.assign(context, this.contextExtensions(flowId, state));
 

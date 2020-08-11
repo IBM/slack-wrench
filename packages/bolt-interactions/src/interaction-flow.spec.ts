@@ -10,6 +10,11 @@ const noop = () => {};
 
 const defaultInteractionIdGenerator = InteractionFlow.interactionIdGenerator;
 
+interface TestState {
+  foo: string;
+  baz?: string;
+}
+
 describe('Bolt interaction flows', () => {
   const flowName = 'test';
   const flowId = InteractionFlow.createFlowId(flowName, random);
@@ -17,7 +22,7 @@ describe('Bolt interaction flows', () => {
   let store: ConversationStore;
   let receiver: JestReceiver;
   let app: App;
-  let state: any;
+  let state: TestState;
 
   beforeEach(() => {
     InteractionFlow.interactionIdGenerator = () => random;
@@ -37,9 +42,9 @@ describe('Bolt interaction flows', () => {
   it('prevents duplicate flow names', () => {
     expect.assertions(1);
 
-    interactionFlow(flowName, noop)(app);
+    interactionFlow<TestState>(flowName, noop)(app);
 
-    expect(() => interactionFlow(flowName, noop)(app)).toThrow(
+    expect(() => interactionFlow<TestState>(flowName, noop)(app)).toThrow(
       /declared twice/,
     );
   });
@@ -51,7 +56,7 @@ describe('Bolt interaction flows', () => {
     const instanceId = 'a/lovely/instance';
     const customFlowId = InteractionFlow.createFlowId(flowName, instanceId);
 
-    interactionFlow(flowName, flow => {
+    interactionFlow<TestState>(flowName, (flow) => {
       app.command(command, async ({ ack }) => {
         await ack();
         await flow.start(state, instanceId);
@@ -69,7 +74,7 @@ describe('Bolt interaction flows', () => {
 
     const command = '/command';
 
-    interactionFlow(flowName, flow => {
+    interactionFlow<TestState>(flowName, (flow) => {
       app.command(command, async ({ ack }) => {
         await ack();
         await flow.start(state);
@@ -111,7 +116,7 @@ describe('Bolt interaction flows', () => {
     it('sets the previous state for stateful actions', async () => {
       expect.assertions(2);
 
-      interactionFlow(flowName, flow => {
+      interactionFlow<TestState>(flowName, (flow) => {
         flow.action(buttonId, async ({ context, ack }) => {
           expect(context.state).toEqual(state);
           await ack();
@@ -133,7 +138,7 @@ describe('Bolt interaction flows', () => {
       const id = 'test';
       const callback_id = InteractionFlow.createInteractionId(flowId, id);
 
-      interactionFlow(flowName, flow => {
+      interactionFlow<TestState>(flowName, (flow) => {
         flow.view(id, async ({ context, ack }) => {
           expect(context.state).toEqual(state);
           await ack();
@@ -153,7 +158,7 @@ describe('Bolt interaction flows', () => {
       expect.assertions(1);
       const block_id = 'BLOCK';
 
-      interactionFlow(flowName, flow => {
+      interactionFlow<TestState>(flowName, (flow) => {
         flow.action(
           { action_id: buttonId, block_id },
           async ({ context, ack }) => {
@@ -174,12 +179,12 @@ describe('Bolt interaction flows', () => {
     it('allows actions to set state', async () => {
       expect.assertions(1);
 
-      const newState = {
+      const newState: TestState = {
         ...state,
         baz: 'faz',
       };
 
-      interactionFlow(flowName, flow => {
+      interactionFlow<TestState>(flowName, (flow) => {
         flow.action(buttonId, async ({ context }) => {
           await context.setState(newState);
         });
@@ -197,7 +202,7 @@ describe('Bolt interaction flows', () => {
     it('removes state when a flow ends', async () => {
       expect.assertions(1);
 
-      interactionFlow(flowName, flow => {
+      interactionFlow<TestState>(flowName, (flow) => {
         flow.action(buttonId, async ({ context }) => {
           await context.endFlow();
         });
