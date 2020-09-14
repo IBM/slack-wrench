@@ -1,3 +1,4 @@
+import * as SlackWebApi from '@slack/web-api';
 import { WebClient } from '@slack/web-api';
 
 import { MockedWebClient, MockWebClient } from './index';
@@ -18,7 +19,9 @@ describe('Mocked @slack/web-api', () => {
 
   it('mocks all api families', () => {
     expect.assertions(1);
-    const { WebClient: RealWebClient } = jest.requireActual('@slack/web-api');
+    const { WebClient: RealWebClient } = jest.requireActual<typeof SlackWebApi>(
+      '@slack/web-api',
+    );
     const realClient = new RealWebClient();
     // Keys defined in the client that aren't api families
     const notFamilyKeys = [
@@ -31,11 +34,11 @@ describe('Mocked @slack/web-api', () => {
     const apiFamilies = (clientInstance: WebClient | MockWebClient) =>
       Object.keys(clientInstance)
         .filter(
-          key =>
+          (key) =>
             typeof (clientInstance as Record<string, any>)[key] === 'object',
         )
-        .filter(key => !key.startsWith('_'))
-        .filter(key => !notFamilyKeys.includes(key));
+        .filter((key) => !key.startsWith('_'))
+        .filter((key) => !notFamilyKeys.includes(key));
 
     const expectedApiFamilies = apiFamilies(realClient);
     const actualApiFamilies = apiFamilies(client);

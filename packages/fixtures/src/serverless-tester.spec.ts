@@ -1,5 +1,6 @@
 import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
-import { App, ExpressReceiver } from '@slack/bolt';
+import { App, ExpressReceiver, SlackCommandMiddlewareArgs } from '@slack/bolt';
+import { RequestHandler } from 'express';
 
 describe('Serverless Tester', () => {
   let handler: ServerlessTester;
@@ -13,11 +14,12 @@ describe('Serverless Tester', () => {
     const receiver = new ExpressReceiver({ signingSecret, endpoints });
     const app = new App({ receiver, token: '' });
 
-    listener = jest.fn(({ ack }) => {
-      ack();
+    listener = jest.fn(async ({ ack }: SlackCommandMiddlewareArgs) => {
+      await ack();
     });
 
-    expressMiddleware = jest.fn((req, res) => res.send(200));
+    const mockHandler: RequestHandler = (req, res) => res.send(200);
+    expressMiddleware = jest.fn(mockHandler);
 
     app.command(command, listener);
     handler = new ServerlessTester(receiver.app, signingSecret);
