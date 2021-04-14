@@ -28,15 +28,13 @@ export interface FlowMiddlewareArgs<FlowState> {
 export interface FlowActionMiddlewareArgs<
   FlowState,
   ActionType extends SlackAction = SlackAction
->
-  extends FlowMiddlewareArgs<FlowState>,
+> extends FlowMiddlewareArgs<FlowState>,
     SlackActionMiddlewareArgs<ActionType> {}
 
 export interface FlowViewMiddlewareArgs<
   FlowState,
   ViewActionType extends SlackViewAction = SlackViewAction
->
-  extends FlowMiddlewareArgs<FlowState>,
+> extends FlowMiddlewareArgs<FlowState>,
     SlackViewMiddlewareArgs<ViewActionType> {}
 
 export interface ActionConstraints {
