@@ -20,12 +20,12 @@
     "@types/koa__router": "^8.0.2"
   },
   "peerDependencies": {
-    "@slack/bolt": ">=1.0.0 <3.0.0",
+    "@slack/bolt": ">=1.0.0 <4.0.0",
     "koa": "^2.0.0",
     "koa-compose": "^4.0.0"
   },
   "devDependencies": {
-    "@slack/bolt": "^2.1.1",
+    "@slack/bolt": "^3.3.0",
     "@slack-wrench/fixtures": "^2.0.1",
     "koa": "^2.11.0",
     "koa-compose": "^4.1.0",
