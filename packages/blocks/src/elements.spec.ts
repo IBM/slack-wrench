@@ -186,21 +186,11 @@ describe('Slack Element widgets', () => {
       ).toMatchSnapshot();
     });
 
-    it('truncates placeholder and initial_value', () => {
-      expect.assertions(2);
+    it('truncates placeholder', () => {
+      expect.assertions(1);
       const truncatedString = `${dynamicText.substr(0, 148)} …`;
       const truncated = PlainTextInput('TBD', dynamicText, dynamicText);
-      expect(truncated.initial_value).toEqual(truncatedString);
       expect(truncated.placeholder?.text).toEqual(truncatedString);
-    });
-
-    it('allows override LimitOpts for too long initial_value', () => {
-      expect.assertions(1);
-      expect(
-        PlainTextInput('TBD', dynamicText, undefined, undefined, {
-          initial_value: truncate,
-        }).initial_value,
-      ).toHaveLength(150);
     });
   });
 
