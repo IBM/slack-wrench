@@ -311,8 +311,6 @@ export const PlainTextInput = (
     {
       action_id: [255, disallow],
       placeholder: [150, ellipsis],
-      // note, initial_value not documented, but max 150 based on testing
-      initial_value: [150, ellipsis],
     },
     limiterOverrides,
   );
