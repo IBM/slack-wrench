@@ -101,7 +101,7 @@ export const Option = (
 
 export const OptionObject = Option;
 
-export interface OptionGroup {
+export interface SlackOptionGroup {
   label: S.PlainTextElement;
   options: S.Option[];
 }
@@ -113,10 +113,10 @@ export interface OptionGroup {
  */
 export const OptionGroup = (
   label: string,
-  options: OptionGroup['options'],
+  options: SlackOptionGroup['options'],
   limiterOverrides?: LimiterFuncs,
-): OptionGroup =>
-  applyLimitersWithOverrides<OptionGroup>(
+): SlackOptionGroup =>
+  applyLimitersWithOverrides<SlackOptionGroup>(
     {
       label: PlainText(label),
       options,
@@ -130,7 +130,7 @@ export const OptionGroup = (
 
 export type ConversationType = 'im' | 'mpim' | 'private' | 'public';
 
-export interface Filter {
+export interface SlackFilter {
   include?: ConversationType[];
   exclude_external_shared_channels?: boolean;
   exclude_bot_users?: boolean;
@@ -141,10 +141,10 @@ export interface Filter {
  * https://api.slack.com/reference/block-kit/composition-objects#filter_conversations
  */
 export const Filter = (
-  include: ConversationType | Filter['include'],
+  include: ConversationType | SlackFilter['include'],
   exclude_external_shared_channels = false,
   exclude_bot_users = false,
-): Filter => ({
+): SlackFilter => ({
   include: typeof include === 'string' ? [include] : include,
   exclude_external_shared_channels,
   exclude_bot_users,

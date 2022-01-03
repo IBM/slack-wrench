@@ -1,5 +1,5 @@
-import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
 import { App, ExpressReceiver, SlackCommandMiddlewareArgs } from '@slack/bolt';
+import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
 import { RequestHandler } from 'express';
 
 describe('Serverless Tester', () => {

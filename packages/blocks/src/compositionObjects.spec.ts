@@ -169,11 +169,11 @@ describe('Element composition', () => {
 
     it('allows override LimitOpts for too long value', () => {
       expect.assertions(1);
-      expect(() => {
-        return OptionGroup('Top-tier', tooLongOptions, {
+      expect(() =>
+        OptionGroup('Top-tier', tooLongOptions, {
           options: disallow,
-        });
-      }).toThrow();
+        }),
+      ).toThrow();
     });
   });
 });

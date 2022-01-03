@@ -77,9 +77,7 @@ describe('Slack Element widgets', () => {
 
     it('throws for invalidly formatted date', () => {
       expect.assertions(1);
-      expect(() => {
-        return Datepicker('datepicker', undefined, 'Tomorrow');
-      }).toThrow();
+      expect(() => Datepicker('datepicker', undefined, 'Tomorrow')).toThrow();
     });
 
     it('allows override LimitOpts for too long value', () => {
@@ -111,11 +109,11 @@ describe('Slack Element widgets', () => {
 
     it('allows override LimitOpts for too long url', () => {
       expect.assertions(1);
-      expect(() => {
-        return ImageElement(dynamicText, text, {
+      expect(() =>
+        ImageElement(dynamicText, text, {
           image_url: disallow,
-        });
-      }).toThrow();
+        }),
+      ).toThrow();
     });
   });
 
@@ -234,11 +232,11 @@ describe('Slack Element widgets', () => {
 
     it('allows override LimitOpts for too long initial_options', () => {
       expect.assertions(1);
-      expect(() => {
-        return Checkboxes('title', options, tooLongOptions, undefined, {
+      expect(() =>
+        Checkboxes('title', options, tooLongOptions, undefined, {
           initial_options: disallow,
-        });
-      }).toThrow();
+        }),
+      ).toThrow();
     });
   });
 
@@ -273,11 +271,11 @@ describe('Slack Element widgets', () => {
 
     it('allows override LimitOpts for too long options', () => {
       expect.assertions(1);
-      expect(() => {
-        return RadioButtons('title', tooLongOptions, undefined, undefined, {
+      expect(() =>
+        RadioButtons('title', tooLongOptions, undefined, undefined, {
           options: disallow,
-        });
-      }).toThrow();
+        }),
+      ).toThrow();
     });
   });
 
@@ -319,8 +317,8 @@ describe('Slack Element widgets', () => {
 
       it('allows override LimitOpts for too long options', () => {
         expect.assertions(1);
-        expect(() => {
-          return StaticSelect(
+        expect(() =>
+          StaticSelect(
             'title',
             'Select a book',
             tooLongOptions,
@@ -329,8 +327,8 @@ describe('Slack Element widgets', () => {
             {
               options: disallow,
             },
-          );
-        }).toThrow();
+          ),
+        ).toThrow();
       });
     });
 
@@ -370,8 +368,8 @@ describe('Slack Element widgets', () => {
 
       it('allows override LimitOpts for too long options', () => {
         expect.assertions(1);
-        expect(() => {
-          return MultiStaticSelect(
+        expect(() =>
+          MultiStaticSelect(
             'title',
             'Select a book',
             tooLongOptions,
@@ -380,8 +378,8 @@ describe('Slack Element widgets', () => {
             {
               options: disallow,
             },
-          );
-        }).toThrow();
+          ),
+        ).toThrow();
       });
     });
 

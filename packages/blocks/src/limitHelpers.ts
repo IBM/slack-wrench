@@ -20,12 +20,6 @@ import R, {
   view,
 } from 'ramda';
 
-interface TruncateText {
-  text: string;
-}
-
-type TruncateArgs = Partial<TruncateText> & string;
-
 // space + smart ellipsis
 const ellipsisChars = ' …';
 
@@ -56,7 +50,7 @@ export const ellipsis = <T>(limit: number, value: T): T =>
 /**
  * error function - throws error immediately on function call
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
 export const disallow = (limit: number, value: any): never => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   const text = (value.text || value) as string;
@@ -149,7 +143,7 @@ export const applyLimiters = <T extends Record<string, any>>(
   // typing isn't quite right on mapObjIndexed, and this is called recursively
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
-  // eslint-disable-next-line no-use-before-define
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   mapObjIndexed(applyLimitInfo(limitFns, limitMap), obj);
 
 /**

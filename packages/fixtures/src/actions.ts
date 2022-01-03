@@ -1,4 +1,3 @@
-import { PlainText } from '@slack-wrench/blocks';
 import {
   BasicElementAction,
   BlockAction,
@@ -10,6 +9,7 @@ import {
   OverflowAction,
   StaticSelectAction,
 } from '@slack/bolt';
+import { PlainText } from '@slack-wrench/blocks';
 
 import fields from './fields';
 

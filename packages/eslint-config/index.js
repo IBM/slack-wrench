@@ -9,15 +9,15 @@ module.exports = {
   env: {
     'jest/globals': true,
   },
+  plugins: ['@typescript-eslint', 'jest', 'simple-import-sort'],
   extends: [
     'airbnb-base',
+    'airbnb-typescript/base',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
-    'prettier',
-    'prettier/@typescript-eslint',
     'plugin:jest/recommended',
+    'prettier',
   ],
-  plugins: ['@typescript-eslint', 'jest', 'simple-import-sort'],
   settings: {
     'import/resolver': {
       typescript: {},
@@ -25,7 +25,8 @@ module.exports = {
   },
   rules: {
     camelcase: 'off', // Slack uses snake_case data
-    'simple-import-sort/sort': 'error',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
     'sort-imports': 'off',
     'import/extensions': [
       'error',
@@ -52,6 +53,26 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'default',
+        format: ['camelCase', 'snake_case'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+
+      {
+        selector: 'variable',
+        format: ['camelCase', 'snake_case', 'UPPER_CASE', 'PascalCase'],
+        leadingUnderscore: 'allow',
+        trailingUnderscore: 'allow',
+      },
+      {
+        selector: 'typeLike',
+        format: ['PascalCase'],
+      },
+    ],
   },
   overrides: [
     {
@@ -60,11 +81,13 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         // Incorrectly recognizes packages only used in tests as "dependencies"
         'import/no-extraneous-dependencies': 'off',
+        'import/no-import-module-exports': 'off',
       },
     },
     {
       files: ['jest.config.js'],
       rules: {
+        '@typescript-eslint/no-unsafe-argument': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
       },

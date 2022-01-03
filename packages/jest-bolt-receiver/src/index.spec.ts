@@ -1,5 +1,5 @@
-import { actions, events, slashCommand } from '@slack-wrench/fixtures';
 import { App } from '@slack/bolt';
+import { actions, events, slashCommand } from '@slack-wrench/fixtures';
 
 import JestReceiver from './index';
 
