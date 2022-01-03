@@ -25,6 +25,10 @@ export interface InteractionIdParts extends FlowIdParts {
   interactionId: string; // combination flowId and action
 }
 
+export interface Controller<FlowState> {
+  (flow: InteractionFlow<FlowState>, app: App): void;
+}
+
 export class InteractionFlow<FlowState = unknown> {
   public static interactionIdGenerator: () => string = uuid;
 
@@ -46,11 +50,7 @@ export class InteractionFlow<FlowState = unknown> {
 
   private store: ConversationStore<FlowState>;
 
-  constructor(
-    name: string,
-    app: App,
-    controller: Interaction.Controller<FlowState>,
-  ) {
+  constructor(name: string, app: App, controller: Controller<FlowState>) {
     const flowNames = InteractionFlow.appFlows.get(app) || [];
 
     if (flowNames.includes(name)) {
@@ -241,7 +241,7 @@ export class InteractionFlow<FlowState = unknown> {
 
 export function interactionFlow<FlowState>(
   name: string,
-  controller: Interaction.Controller<FlowState>,
+  controller: Controller<FlowState>,
 ) {
   return (app: App): InteractionFlow =>
     new InteractionFlow<FlowState>(name, app, controller);

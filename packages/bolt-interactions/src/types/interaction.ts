@@ -1,16 +1,9 @@
 import {
-  App,
   SlackAction,
   SlackActionMiddlewareArgs,
   SlackViewAction,
   SlackViewMiddlewareArgs,
 } from '@slack/bolt';
-
-import { InteractionFlow } from '../interaction-flow';
-
-export interface Controller<FlowState> {
-  (flow: InteractionFlow<FlowState>, app: App): void;
-}
 
 export type FlowIds = Record<string, string>;
 

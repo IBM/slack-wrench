@@ -1,6 +1,6 @@
 import Router from '@koa/router';
-import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
 import { App, ExpressReceiver, SlackCommandMiddlewareArgs } from '@slack/bolt';
+import { ServerlessTester, slashCommand } from '@slack-wrench/fixtures';
 import Koa, { Middleware } from 'koa';
 
 import koaBolt from './index';

@@ -37,9 +37,7 @@ describe('Slack Block widgets', () => {
     it('allows providing limit overrides', () => {
       expect.assertions(1);
       const sixButtons = repeat(Button(text, buttonId), 6);
-      expect(() => {
-        return Actions(sixButtons, { elements: disallow });
-      }).toThrow();
+      expect(() => Actions(sixButtons, { elements: disallow })).toThrow();
     });
   });
 
@@ -52,9 +50,7 @@ describe('Slack Block widgets', () => {
     it('allows providing limit overrides', () => {
       expect.assertions(1);
       const twelveElements = repeat(PlainText(text), 12);
-      expect(() => {
-        return Context(twelveElements, { elements: disallow });
-      }).toThrow();
+      expect(() => Context(twelveElements, { elements: disallow })).toThrow();
     });
   });
 

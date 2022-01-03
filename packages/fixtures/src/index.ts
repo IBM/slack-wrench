@@ -5,4 +5,4 @@ import ServerlessTester from './serverless-tester';
 import slashCommand from './slashCommand';
 import * as view from './view';
 
-export { actions, events, view, fields, ServerlessTester, slashCommand };
+export { actions, events, fields, ServerlessTester, slashCommand, view };

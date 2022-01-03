@@ -1,11 +1,11 @@
+import { App, ConversationStore, MemoryStore } from '@slack/bolt';
 import { actions, slashCommand, view } from '@slack-wrench/fixtures';
 import JestReceiver from '@slack-wrench/jest-bolt-receiver';
-import { App, ConversationStore, MemoryStore } from '@slack/bolt';
 
 import { InteractionFlow, interactionFlow } from './index';
 
 const random = 'RANDOM';
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+
 const noop = () => {};
 
 const defaultInteractionIdGenerator = InteractionFlow.interactionIdGenerator;
