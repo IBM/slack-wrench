@@ -37,7 +37,7 @@ describe('FileStore', () => {
   });
 
   // Reference tests rewritten for jest:
-  // https://github.com/slackapi/bolt/blob/d59319c550804426d257009128d13312889c4d21/src/conversation-store.spec.ts#L115
+  // https://github.com/slackapi/bolt-js/blob/d59319c550804426d257009128d13312889c4d21/src/conversation-store.spec.ts#L115
   describe('tests from default bolt store', () => {
     it('should store conversation state', async () => {
       expect.assertions(1);

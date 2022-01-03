@@ -16,7 +16,7 @@ import fields from './fields';
  * This describes the entire JSON-encoded body of a request from Slack's Events API.
  *
  * Non-exported type from bolt:
- * https://github.com/slackapi/bolt/blob/master/src/types/events/index.ts#L22
+ * https://github.com/slackapi/bolt-js/blob/main/src/types/events/index.ts#L22
  */
 interface EnvelopedEvent<Event = BasicSlackEvent> extends Record<string, any> {
   token: string;
