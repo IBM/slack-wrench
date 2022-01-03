@@ -8,7 +8,7 @@ const mockApi = (): jest.Mock => jest.fn().mockResolvedValue({ ok: true });
  * copied from its source, and modified to expose a mockApi instead of its
  * actual call. When modifying this file, please keep it in line with its source.
  *
- * Source File: https://github.com/slackapi/node-slack-sdk/blob/master/packages/web-api/src/WebClient.ts
+ * Source File: https://github.com/slackapi/node-slack-sdk/blob/main/packages/web-api/src/WebClient.ts
  *
  * Disabling prefer-default-export as jest doesn't like modules, but typescript does
  */
@@ -415,7 +415,7 @@ export class MockWebClient implements Partial<WebClient> {
 
   public constructor() {
     // Default for bolt apps
-    // https://github.com/slackapi/bolt/blob/1655999346077e9521722a667414758da856ede2/src/App.ts#L579
+    // https://github.com/slackapi/bolt-js/blob/1655999346077e9521722a667414758da856ede2/src/App.ts#L579
     this.auth.test.mockResolvedValue({
       ok: true,
       user_id: 'BOT_USER_ID',

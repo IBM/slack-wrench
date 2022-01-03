@@ -49,7 +49,7 @@ Creates a message event.
 Arguments:
 
 - `text`: Text sent in the message
-- `options`: Any [MessageEvent fields](https://github.com/slackapi/bolt/blob/master/src/types/events/base-events.ts#L450) to override from default.
+- `options`: Any [MessageEvent fields](https://github.com/slackapi/bolt-js/blob/main/src/types/events/base-events.ts#L450) to override from default.
 
 Returns:
 Object containing a message event
@@ -78,7 +78,7 @@ slashCommand('/command', { text: 'I just used a command!' });
 Arguments:
 
 - `command`: command name
-- `options`: Any [SlashCommand fields](https://github.com/slackapi/bolt/blob/master/src/types/command/index.ts#L21) to override from default.
+- `options`: Any [SlashCommand fields](https://github.com/slackapi/bolt-js/blob/main/src/types/command/index.ts#L21) to override from default.
 
 Returns:
 Object containing a Slash Command event
@@ -103,8 +103,8 @@ Creates an event from a block button action.
 
 Arguments:
 
-- `action`: Overrides to [ButtonAction](https://github.com/slackapi/bolt/blob/master/src/types/actions/block-action.ts#L41) values (normally a subset of `{ action_id, block_id, value }`
-- `options`: Any fields to override on the default [BlockAction event](https://github.com/slackapi/bolt/blob/master/src/types/actions/block-action.ts#L193)
+- `action`: Overrides to [ButtonAction](https://github.com/slackapi/bolt-js/blob/main/src/types/actions/block-action.ts#L41) values (normally a subset of `{ action_id, block_id, value }`
+- `options`: Any fields to override on the default [BlockAction event](https://github.com/slackapi/bolt-js/blob/main/src/types/actions/block-action.ts#L193)
 
 Returns:
 Object containing a block action event
@@ -123,8 +123,8 @@ Creates an event from a view submit action.
 
 Arguments:
 
-- `view`: Overrides to [ViewOutput](https://github.com/slackapi/bolt/blob/master/src/types/view/index.ts#L73) values, on `ViewSubmitAction.view`
-- `options`: Any fields to override on the default [ViewSubmitAction event](https://github.com/slackapi/bolt/blob/master/src/types/view/index.ts#L31)
+- `view`: Overrides to [ViewOutput](https://github.com/slackapi/bolt-js/blob/main/src/types/view/index.ts#L73) values, on `ViewSubmitAction.view`
+- `options`: Any fields to override on the default [ViewSubmitAction event](https://github.com/slackapi/bolt-js/blob/main/src/types/view/index.ts#L31)
 
 Returns:
 Object containing a view submit action event

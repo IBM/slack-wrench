@@ -19,7 +19,7 @@ export function viewSubmitAction(
       app_id: api_app_id,
       callback_id,
       bot_id: '',
-      // can't use PlainText because weird bolt typings: https://github.com/slackapi/bolt/blob/master/src/types/view/index.ts#L20
+      // can't use PlainText because weird bolt typings: https://github.com/slackapi/bolt-js/blob/main/src/types/view/index.ts#L20
       title: { type: 'plain_text', text: '', emoji: false },
       type: '',
       blocks: [],

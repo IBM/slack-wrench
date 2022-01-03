@@ -2,7 +2,7 @@
 
 Use Bolt and Koa together. ⚡️ ❤️ Koa
 
-Koa [middleware](https://koajs.com/#application) that wraps the default Bolt ['ExpressReceiver`](https://github.com/slackapi/bolt/blob/master/src/ExpressReceiver.ts) into a Koa application.
+Koa [middleware](https://koajs.com/#application) that wraps the default Bolt ['ExpressReceiver`](https://github.com/slackapi/bolt-js/blob/main/src/receivers/ExpressReceiver.ts) into a Koa application.
 
 Useful for those who want to use promises in their app middleware and those wanting a little more control over their running application.
 

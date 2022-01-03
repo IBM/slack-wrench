@@ -1,6 +1,6 @@
 # Slack 🔧 Wrench
 
-[![Workflow badge](https://github.com/IBM/slack-wrench/workflows/main/badge.svg?branch=master)](https://github.com/IBM/slack-wrench/actions?query=workflow%3Amain+branch%3Amaster)
+[![Workflow badge](https://github.com/IBM/slack-wrench/workflows/main/badge.svg?branch=main)](https://github.com/IBM/slack-wrench/actions?query=workflow%3Amain+branch%3Amain)
 
 Tools to help build and test Slack applications.
 
@@ -36,5 +36,5 @@ $ git checkout -b release/v1.0.0
 $ yarn lerna:version major
 $ git push origin release/v1.0.0 --follow-tags
 
-# Open a pull request from `release/v1.0.0` => `master`
+# Open a pull request from `release/v1.0.0` => `main`
 ```

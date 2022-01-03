@@ -3,7 +3,7 @@ name: main
 on:
   pull_request:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   pre-commit:
@@ -75,7 +75,7 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: [pre-commit, lint, test]
 
     steps:
