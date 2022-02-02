@@ -26,6 +26,10 @@
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/jest-image-snapshot",
+      "**/@types/jest-image-snapshot"
     ]
   }
 }
