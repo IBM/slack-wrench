@@ -1,435 +1,100 @@
-import { WebClient, WebClientOptions } from '@slack/web-api';
+// Since the `@slack/web-api` is generally being mocked when this module is in
+// use, we have to treat the types and original implementations separately.
+// `Slack` represents the types, while we import the actual objects (which can
+// no longer be used as types) are imported via `jest.requireActual`.
+import type * as Slack from '@slack/web-api';
 
-const mockApi = (): jest.Mock => jest.fn().mockResolvedValue({ ok: true });
+const { WebClient } = jest.requireActual<typeof Slack>('@slack/web-api');
 
 /**
- * This class is mocking slack's `web-api` WebClient.ts. In order to get the
- * typings correct, this file needs to be pretty verbose. As such, this file is
- * copied from its source, and modified to expose a mockApi instead of its
- * actual call. When modifying this file, please keep it in line with its source.
+ * Creates a new type where functions in the original types are Jest mocks and
+ * other values are kept as is, and which works recusively (so if a property
+ * is an object with functions, it becomes and object with mocks).
+ */
+type ObjectWithMocks<Type> = {
+  [Property in keyof Type]: Type[Property] extends CallableFunction
+    ? jest.Mock<any>
+    : Type[Property] extends Record<string, unknown>
+    ? ObjectWithMocks<Type[Property]>
+    : Type[Property];
+};
+
+/** A basic, pre-configured mock for Slack API methods. */
+const mockApi = (): jest.Mock => jest.fn().mockResolvedValue({ ok: true });
+
+const primitiveTypes = new Set(['string', 'boolean', 'number', 'undefined']);
+
+/**
+ * Make a concrete `ObjectWithMocks` from another object.
+ */
+function deepCopyWithMocks<T>(original: T): ObjectWithMocks<T> {
+  const copy = {} as Record<string, any>;
+
+  // In this situation, we want to include elements from the prototype chain,
+  // so we can safely ignore ESLint here.
+  // eslint-disable-next-line
+  for (const key in original) {
+    const value = original[key];
+    if (typeof value === 'function') {
+      copy[key] = mockApi();
+    } else if (primitiveTypes.has(typeof value) || value == null) {
+      copy[key] = value;
+    } else {
+      copy[key] = deepCopyWithMocks(value);
+    }
+  }
+
+  return copy as ObjectWithMocks<T>;
+}
+
+/**
+ * A constructor function that creates mock WebClient objects.
  *
- * Source File: https://github.com/slackapi/node-slack-sdk/blob/main/packages/web-api/src/WebClient.ts
+ * This is a bit complicated! We need to construct a class (MockWebClient) with
+ * a dynamic set of properties that depend on whatever version of Slack's
+ * `WebClient` is in the current environment, but you can't use type mappings
+ * directly on a class in TypeScript. Instead, we declare this function as a
+ * constructor that returns objects of the appropriate mapped type (using
+ * `ObjectWithMocks`), and then declare a class that inherits it. The class
+ * winds up with the dynamic set of properties we want.
+ */
+const MockWebClientConstructor = (function mockWebClientConstructor(
+  this: ObjectWithMocks<Slack.WebClient>,
+) {
+  const exampleClientInstance = new WebClient('MOCK_TOKEN');
+  const instance = deepCopyWithMocks<Slack.WebClient>(exampleClientInstance);
+
+  // Default for bolt apps
+  // https://github.com/slackapi/bolt-js/blob/1655999346077e9521722a667414758da856ede2/src/App.ts#L579
+  instance.auth.test.mockResolvedValue({
+    ok: true,
+    user_id: 'BOT_USER_ID',
+    bot_id: 'BOT_ID',
+  });
+
+  Object.assign(this, instance);
+} as unknown) as new (
+  token?: string,
+  options?: Slack.WebClientOptions,
+) => ObjectWithMocks<Slack.WebClient>;
+
+/**
+ * This class mocks the `WebClient` class from `@slck/web-api` It constructs its
+ * properties dynamically based on the type of Slack `WebClient` available in
+ * its environment, and should result in something that matches the version you
+ * have installed.
+ *
+ * See Slack's WebClient source for more on it:
+ * https://github.com/slackapi/node-slack-sdk/blob/main/packages/web-api/src/WebClient.ts
  *
  * Disabling prefer-default-export as jest doesn't like modules, but typescript does
  */
-export class MockWebClient implements Partial<WebClient> {
-  public apiCall = mockApi();
+export class MockWebClient extends MockWebClientConstructor {}
 
-  /**
-   * admin method family
-   */
-  public readonly admin = {
-    apps: {
-      approve: mockApi(),
-      approved: {
-        list: mockApi(),
-      },
-      requests: {
-        list: mockApi(),
-      },
-      restrict: mockApi(),
-      restricted: {
-        list: mockApi(),
-      },
-    },
-    conversations: {
-      setTeams: mockApi(),
-      restrictAccess: {
-        addGroup: mockApi(),
-        listGroups: mockApi(),
-        removeGroup: mockApi(),
-      },
-    },
-    inviteRequests: {
-      approve: mockApi(),
-      deny: mockApi(),
-      list: mockApi(),
-      approved: {
-        list: mockApi(),
-      },
-      denied: {
-        list: mockApi(),
-      },
-    },
-    teams: {
-      admins: {
-        list: mockApi(),
-      },
-      create: mockApi(),
-      list: mockApi(),
-      owners: {
-        list: mockApi(),
-      },
-      settings: {
-        info: mockApi(),
-        setDefaultChannels: mockApi(),
-        setDescription: mockApi(),
-        setDiscoverability: mockApi(),
-        setIcon: mockApi(),
-        setName: mockApi(),
-      },
-    },
-    usergroups: {
-      addChannels: mockApi(),
-      addTeams: mockApi(),
-      listChannels: mockApi(),
-      removeChannels: mockApi(),
-    },
-    users: {
-      session: {
-        reset: mockApi(),
-      },
-      assign: mockApi(),
-      invite: mockApi(),
-      list: mockApi(),
-      remove: mockApi(),
-      setAdmin: mockApi(),
-      setExpiration: mockApi(),
-      setOwner: mockApi(),
-      setRegular: mockApi(),
-    },
-  };
-
-  /**
-   * api method family
-   */
-  public readonly api = {
-    test: mockApi(),
-  };
-
-  /**
-   * auth method family
-   */
-  public readonly auth = {
-    revoke: mockApi(),
-    test: mockApi(),
-  };
-
-  /**
-   * bots method family
-   */
-  public readonly bots = {
-    info: mockApi(),
-  };
-
-  /**
-   * calls method family
-   */
-  public readonly calls = {
-    add: mockApi(),
-    end: mockApi(),
-    info: mockApi(),
-    update: mockApi(),
-    participants: {
-      add: mockApi(),
-      remove: mockApi(),
-    },
-  };
-
-  /**
-   * channels method family
-   */
-  public readonly channels = {
-    archive: mockApi(),
-    create: mockApi(),
-    history: mockApi(),
-    info: mockApi(),
-    invite: mockApi(),
-    join: mockApi(),
-    kick: mockApi(),
-    leave: mockApi(),
-    list: mockApi(),
-    mark: mockApi(),
-    rename: mockApi(),
-    replies: mockApi(),
-    setPurpose: mockApi(),
-    setTopic: mockApi(),
-    unarchive: mockApi(),
-  };
-
-  /**
-   * chat method family
-   */
-  public readonly chat = {
-    delete: mockApi(),
-    deleteScheduledMessage: mockApi(),
-    getPermalink: mockApi(),
-    meMessage: mockApi(),
-    postEphemeral: mockApi(),
-    postMessage: mockApi(),
-    scheduleMessage: mockApi(),
-    scheduledMessages: {
-      list: mockApi(),
-    },
-    unfurl: mockApi(),
-    update: mockApi(),
-  };
-
-  /**
-   * conversations method family
-   */
-  public readonly conversations = {
-    archive: mockApi(),
-    close: mockApi(),
-    create: mockApi(),
-    history: mockApi(),
-    info: mockApi(),
-    invite: mockApi(),
-    join: mockApi(),
-    kick: mockApi(),
-    leave: mockApi(),
-    list: mockApi(),
-    mark: mockApi(),
-    members: mockApi(),
-    open: mockApi(),
-    rename: mockApi(),
-    replies: mockApi(),
-    setPurpose: mockApi(),
-    setTopic: mockApi(),
-    unarchive: mockApi(),
-  };
-
-  /**
-   * view method family
-   */
-  public readonly views = {
-    open: mockApi(),
-    publish: mockApi(),
-    push: mockApi(),
-    update: mockApi(),
-  };
-
-  /**
-   * dialog method family
-   */
-  public readonly dialog = {
-    open: mockApi(),
-  };
-
-  /**
-   * dnd method family
-   */
-  public readonly dnd = {
-    endDnd: mockApi(),
-    endSnooze: mockApi(),
-    info: mockApi(),
-    setSnooze: mockApi(),
-    teamInfo: mockApi(),
-  };
-
-  /**
-   * emoji method family
-   */
-  public readonly emoji = {
-    list: mockApi(),
-  };
-
-  /**
-   * files method family
-   */
-  public readonly files = {
-    delete: mockApi(),
-    info: mockApi(),
-    list: mockApi(),
-    revokePublicURL: mockApi(),
-    sharedPublicURL: mockApi(),
-    upload: mockApi(),
-    comments: {
-      delete: mockApi(),
-    },
-    remote: {
-      info: mockApi(),
-      list: mockApi(),
-      add: mockApi(),
-      update: mockApi(),
-      remove: mockApi(),
-      share: mockApi(),
-    },
-  };
-
-  /**
-   * groups method family
-   */
-  public readonly groups = {
-    archive: mockApi(),
-    create: mockApi(),
-    createChild: mockApi(),
-    history: mockApi(),
-    info: mockApi(),
-    invite: mockApi(),
-    kick: mockApi(),
-    leave: mockApi(),
-    list: mockApi(),
-    mark: mockApi(),
-    open: mockApi(),
-    rename: mockApi(),
-    replies: mockApi(),
-    setPurpose: mockApi(),
-    setTopic: mockApi(),
-    unarchive: mockApi(),
-  };
-
-  /**
-   * im method family
-   */
-  public readonly im = {
-    close: mockApi(),
-    history: mockApi(),
-    list: mockApi(),
-    mark: mockApi(),
-    open: mockApi(),
-    replies: mockApi(),
-  };
-
-  /**
-   * migration method family
-   */
-  public readonly migration = {
-    exchange: mockApi(),
-  };
-
-  /**
-   * mpim method family
-   */
-  public readonly mpim = {
-    close: mockApi(),
-    history: mockApi(),
-    list: mockApi(),
-    mark: mockApi(),
-    open: mockApi(),
-    replies: mockApi(),
-  };
-
-  /**
-   * oauth method family
-   */
-  public readonly oauth = {
-    access: mockApi(),
-    v2: {
-      access: mockApi(),
-    },
-  };
-
-  /**
-   * pins method family
-   */
-  public readonly pins = {
-    add: mockApi(),
-    list: mockApi(),
-    remove: mockApi(),
-  };
-
-  /**
-   * reactions method family
-   */
-  public readonly reactions = {
-    add: mockApi(),
-    get: mockApi(),
-    list: mockApi(),
-    remove: mockApi(),
-  };
-
-  /**
-   * reminders method family
-   */
-  public readonly reminders = {
-    add: mockApi(),
-    complete: mockApi(),
-    delete: mockApi(),
-    info: mockApi(),
-    list: mockApi(),
-  };
-
-  /**
-   * rtm method family
-   */
-  public readonly rtm = {
-    connect: mockApi(),
-    start: mockApi(),
-  };
-
-  /**
-   * search method family
-   */
-  public readonly search = {
-    all: mockApi(),
-    files: mockApi(),
-    messages: mockApi(),
-  };
-
-  /**
-   * stars method family
-   */
-  public readonly stars = {
-    add: mockApi(),
-    list: mockApi(),
-    remove: mockApi(),
-  };
-
-  /**
-   * team method family
-   */
-  public readonly team = {
-    accessLogs: mockApi(),
-    billableInfo: mockApi(),
-    info: mockApi(),
-    integrationLogs: mockApi(),
-    profile: {
-      get: mockApi(),
-    },
-  };
-
-  /**
-   * usergroups method family
-   */
-  public readonly usergroups = {
-    create: mockApi(),
-    disable: mockApi(),
-    enable: mockApi(),
-    list: mockApi(),
-    update: mockApi(),
-    users: {
-      list: mockApi(),
-      update: mockApi(),
-    },
-  };
-
-  /**
-   * users method family
-   */
-  public readonly users = {
-    conversations: mockApi(),
-    deletePhoto: mockApi(),
-    getPresence: mockApi(),
-    identity: mockApi(),
-    info: mockApi(),
-    list: mockApi(),
-    lookupByEmail: mockApi(),
-    setPhoto: mockApi(),
-    setPresence: mockApi(),
-    profile: {
-      get: mockApi(),
-      set: mockApi(),
-    },
-  };
-
-  public constructor() {
-    // Default for bolt apps
-    // https://github.com/slackapi/bolt-js/blob/1655999346077e9521722a667414758da856ede2/src/App.ts#L579
-    this.auth.test.mockResolvedValue({
-      ok: true,
-      user_id: 'BOT_USER_ID',
-      bot_id: 'BOT_ID',
-    });
-  }
-}
-
-export const MockedWebClient: jest.MockInstance<
+export const MockedWebClient: jest.MockedClass<typeof MockWebClient> = jest.fn(
+  // @ts-expect-error: Typing seems to be wrong, this can take a class
   MockWebClient,
-  [string?, WebClientOptions?]
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore Typing seems to be wrong, this can take a class
-> = jest.fn().mockImplementation(MockWebClient);
+);
 
 const mockWebApi = (jestModule: typeof jest): jest.Mock => {
   const mock: jest.Mock = jestModule.genMockFromModule('@slack/web-api');
