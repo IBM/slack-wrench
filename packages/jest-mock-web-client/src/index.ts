@@ -79,7 +79,7 @@ const MockWebClientConstructor = (function mockWebClientConstructor(
 ) => ObjectWithMocks<Slack.WebClient>;
 
 /**
- * This class mocks the `WebClient` class from `@slck/web-api` It constructs its
+ * This class mocks the `WebClient` class from `@slack/web-api` It constructs its
  * properties dynamically based on the type of Slack `WebClient` available in
  * its environment, and should result in something that matches the version you
  * have installed.
@@ -97,7 +97,17 @@ export const MockedWebClient: jest.MockedClass<typeof MockWebClient> = jest.fn(
 );
 
 const mockWebApi = (jestModule: typeof jest): jest.Mock => {
-  const mock: jest.Mock = jestModule.genMockFromModule('@slack/web-api');
+  const mock =
+    // genMockFromModule is deprecated, support more versions of jest by testing
+    // prettier-ignore
+    (
+    // @ts-expect-error: Until jest is updated for this to exist
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    /* istanbul ignore next */ jestModule.createMockFromModule ||
+    jestModule.genMockFromModule
+  )(
+    '@slack/web-api',
+  ) as jest.Mock;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore Based on previous ignore, unsure how to set this to the whole module
