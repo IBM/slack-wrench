@@ -19,7 +19,8 @@
     "@slack/web-api": "^5.10.0"
   },
   "peerDependencies": {
-    "@slack/web-api": "^5.10.0"
+    "@slack/web-api": ">=5.10.0",
+    "jest": ">=20"
   },
   "publishConfig": {
     "access": "public"

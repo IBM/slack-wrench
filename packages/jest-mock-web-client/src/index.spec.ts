@@ -85,4 +85,10 @@ describe('Mocked @slack/web-api', () => {
     expect(MockedWebClient.mock.instances.length).toEqual(1);
     expect(MockedWebClient.mock.instances[0]).toBe(client);
   });
+
+  it('allows MockedWebClient to be constructable', () => {
+    expect.assertions(1);
+    const instance = new MockedWebClient();
+    expect(jest.isMockFunction(instance.chat.postMessage)).toBeTruthy();
+  });
 });
