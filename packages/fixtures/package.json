@@ -20,10 +20,10 @@
     "serverless-http": "^2.3.1"
   },
   "peerDependencies": {
-    "@slack/bolt": ">=1.0.0 <3.0.0"
+    "@slack/bolt": ">=1.0.0 <4.0.0"
   },
   "devDependencies": {
-    "@slack/bolt": "^2.1.1",
+    "@slack/bolt": "^3.11.3",
     "@slack-wrench/standards": "^1.1.0"
   },
   "publishConfig": {

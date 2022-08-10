@@ -16,10 +16,10 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@slack-wrench/standards": "^1.1.0",
-    "@slack/web-api": "^5.10.0"
+    "@slack/web-api": "^6.7.2"
   },
   "peerDependencies": {
-    "@slack/web-api": ">=5.10.0",
+    "@slack/web-api": ">=6.7.2",
     "jest": ">=20"
   },
   "publishConfig": {
